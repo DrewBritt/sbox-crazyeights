@@ -11,6 +11,7 @@ public partial class Game : Sandbox.Game
 {
 	public Game()
 	{
+        Deck deck = new Deck();
 	}
 
 	/// <summary>
