@@ -95,11 +95,11 @@ public partial class Deck : Entity
     /// <summary>
     /// Shuffles the cards in this deck for randomization
     /// </summary>
-    public void ShuffleDeck()
+    public void Shuffle()
     {
         // Fisher-Yates bitch!
         Random random = new();
-        for(int i = Cards.Count; i > 1; i--)
+        for(int i = Cards.Count-1; i > 1; i--)
         {
             int rand = random.Next(i + 1);
             var temp = Cards[rand];

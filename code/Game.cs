@@ -12,7 +12,7 @@ public partial class Game : Sandbox.Game
     {
         Deck deck = new Deck();
 
-        deck.ShuffleDeck();
+        deck.Shuffle();
 
         for(int i = 0; i < 10; i++)
             Log.Info(deck.Cards[i]);
