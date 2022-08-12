@@ -10,12 +10,6 @@ public partial class Game : Sandbox.Game
 
     public Game() : base()
     {
-        Deck deck = new Deck();
-
-        deck.Shuffle();
-
-        for(int i = 0; i < 10; i++)
-            Log.Info(deck.Cards[i]);
     }
 
     /// <summary>

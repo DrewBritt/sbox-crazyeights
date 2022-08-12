@@ -5,7 +5,7 @@ namespace CrazyEights;
 public partial class Game
 {
     #region States
-    protected class BaseState
+    public class BaseState
     {
         public virtual string StateName() => GetType().ToString();
 
@@ -17,14 +17,14 @@ public partial class Game
 
         protected void SetState(BaseState state)
         {
-            //Current.CurrentState
+            Current.CurrentState = state;
         }
     }
 
     /// <summary>
     /// Waiting for more players to connect before beginning game
     /// </summary>
-    private class WaitingForPlayersState : BaseState
+    public class WaitingForPlayersState : BaseState
     {
         public override string StateName() => "Waiting for Players";
 
@@ -42,7 +42,7 @@ public partial class Game
     /// <summary>
     /// Preparing the game to be played
     /// </summary>
-    private class StagingState : BaseState
+    public class StagingState : BaseState
     {
         public override string StateName() => "Staging";
 
@@ -53,9 +53,18 @@ public partial class Game
 
             deck.Shuffle();
 
-            for(int i = 0; i < 10; i++)
-                Log.Info(deck.Cards[i]);
             // Distribute cards to players
+            for(int i = 0; i < Client.All.Count; i++)
+            {
+                Pawn player = Client.All[i].Pawn as Pawn;
+
+                // 7 cards for each player
+                for(int j = 0; j < 7; j++)
+                    player.Hand.AddCard(deck.GetTopCard());
+            }
+
+            Log.Info(deck.Cards.Count);
+
             // Game plays starting card from top of deck
             // SetState(PlayingState());
         }
@@ -64,6 +73,20 @@ public partial class Game
         {
             base.Tick();
         }
+    }
+
+    #endregion
+
+    #region State Management
+
+    public BaseState CurrentState = new WaitingForPlayersState();
+
+    [Event.Tick]
+    public void OnTick()
+    {
+        if(Host.IsClient) return;
+
+        CurrentState.Tick();
     }
 
     #endregion

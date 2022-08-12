@@ -44,12 +44,14 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Remove a card from the deck
+    /// Grabs card off the "top" of the deck/pile
     /// </summary>
-    /// <param name="card"></param>
-    public void RemoveCard(Card card)
+    /// <returns></returns>
+    public Card GetTopCard()
     {
-        Cards.Remove(card);
+        Card c = Cards[0];
+        Cards.Remove(c);
+        return c;
     }
 
     /// <summary>
