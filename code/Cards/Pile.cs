@@ -8,7 +8,7 @@ namespace CrazyEights;
 public partial class Pile : Deck
 {
     public Pile() : base() { }
-    
+
     public override void Spawn()
     {
         // Do nothing on spawn, as we simply want an empty list of cards to add to.

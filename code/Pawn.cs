@@ -1,6 +1,4 @@
 ﻿using Sandbox;
-using System;
-using System.Linq;
 
 namespace CrazyEights;
 
@@ -11,17 +9,17 @@ partial class Pawn : AnimatedEntity
     /// </summary>
     [Net, Local] public Hand Hand { get; set; }
 
-	/// <summary>
-	/// Called when the entity is first created 
-	/// </summary>
-	public override void Spawn()
-	{
-		base.Spawn();
+    /// <summary>
+    /// Called when the entity is first created 
+    /// </summary>
+    public override void Spawn()
+    {
+        base.Spawn();
 
-		SetModel( "models/citizen.vmdl" );
+        SetModel("models/citizen/citizen.vmdl");
 
-		EnableDrawing = true;
-		EnableHideInFirstPerson = true;
-		EnableShadowInFirstPerson = true;
-	}
+        EnableDrawing = true;
+        EnableHideInFirstPerson = true;
+        EnableShadowInFirstPerson = true;
+    }
 }

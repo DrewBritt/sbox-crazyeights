@@ -1,9 +1,6 @@
-﻿using Sandbox;
-using Sandbox.UI.Construct;
-using System;
-using System.IO;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -11,33 +8,39 @@ public partial class Game : Sandbox.Game
 {
     public static new Game Current => Sandbox.Game.Current as Game;
 
-	public Game() : base()
-	{
-	}
+    public Game() : base()
+    {
+        Deck deck = new Deck();
 
-	/// <summary>
-	/// A client has joined the server. Make them a pawn to play with
-	/// </summary>
-	public override void ClientJoined( Client client )
-	{
-		base.ClientJoined( client );
+        deck.ShuffleDeck();
 
-		// Create a pawn for this client to play with
-		var pawn = new Pawn();
-		client.Pawn = pawn;
+        for(int i = 0; i < 10; i++)
+            Log.Info(deck.Cards[i]);
+    }
 
-		// Get all of the spawnpoints
-		var spawnpoints = Entity.All.OfType<SpawnPoint>();
+    /// <summary>
+    /// A client has joined the server. Make them a pawn to play with
+    /// </summary>
+    public override void ClientJoined(Client client)
+    {
+        base.ClientJoined(client);
 
-		// chose a random one
-		var randomSpawnPoint = spawnpoints.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+        // Create a pawn for this client to play with
+        var pawn = new Pawn();
+        client.Pawn = pawn;
 
-		// if it exists, place the pawn there
-		if ( randomSpawnPoint != null )
-		{
-			var tx = randomSpawnPoint.Transform;
-			tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
-			pawn.Transform = tx;
-		}
-	}
+        // Get all of the spawnpoints
+        var spawnpoints = Entity.All.OfType<SpawnPoint>();
+
+        // chose a random one
+        var randomSpawnPoint = spawnpoints.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
+
+        // if it exists, place the pawn there
+        if(randomSpawnPoint != null)
+        {
+            var tx = randomSpawnPoint.Transform;
+            tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
+            pawn.Transform = tx;
+        }
+    }
 }

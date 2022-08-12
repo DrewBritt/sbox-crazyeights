@@ -46,12 +46,15 @@ public partial class Game
     {
         public override string StateName() => "Staging";
 
-        public StagingState() : base() 
+        public StagingState() : base()
         {
             // Generate deck to be used in play
             Deck deck = new Deck();
 
-            // Shuffle deck
+            deck.ShuffleDeck();
+
+            for(int i = 0; i < 10; i++)
+                Log.Info(deck.Cards[i]);
             // Distribute cards to players
             // Game plays starting card from top of deck
             // SetState(PlayingState());

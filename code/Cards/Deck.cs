@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sandbox;
 
 namespace CrazyEights;
@@ -22,7 +23,7 @@ public partial class Deck : Entity
     {
         GenerateDeck();
     }
-    
+
     /// <summary>
     /// Add a card into the deck
     /// </summary>
@@ -89,5 +90,21 @@ public partial class Deck : Entity
                 };
                 Cards.Add(wildCard);
             }
+    }
+
+    /// <summary>
+    /// Shuffles the cards in this deck for randomization
+    /// </summary>
+    public void ShuffleDeck()
+    {
+        // Fisher-Yates bitch!
+        Random random = new();
+        for(int i = Cards.Count; i > 1; i--)
+        {
+            int rand = random.Next(i + 1);
+            var temp = Cards[rand];
+            Cards[rand] = Cards[i];
+            Cards[i] = temp;
+        }
     }
 }
