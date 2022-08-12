@@ -9,9 +9,10 @@ namespace CrazyEights;
 
 public partial class Game : Sandbox.Game
 {
-	public Game()
+    public static new Game Current => Sandbox.Game.Current as Game;
+
+	public Game() : base()
 	{
-        Deck deck = new Deck();
 	}
 
 	/// <summary>
