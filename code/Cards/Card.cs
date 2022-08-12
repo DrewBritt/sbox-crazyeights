@@ -4,7 +4,13 @@ namespace CrazyEights;
 
 public partial class Card : Entity
 {
+    /// <summary>
+    /// Suit/Color value of the card
+    /// </summary>
     [Net, Local] public CardSuit Suit { get; set; }
+    /// <summary>
+    /// Rank/Number/Action value of the card
+    /// </summary>
     [Net, Local] public CardRank Rank { get; set; }
 
     public override void Spawn()

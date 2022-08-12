@@ -3,9 +3,15 @@ using Sandbox;
 
 namespace CrazyEights;
 
+/// <summary>
+/// A deck/list of cards with deck management functionality to be used for a variety of purposes.
+/// </summary>
 public partial class Deck : Entity
 {
-    private IList<Card> cards;
+    /// <summary>
+    /// All cards in this deck
+    /// </summary>
+    [Net, Local] public IList<Card> Cards { get; set; }
 
     public Deck()
     {
@@ -14,9 +20,35 @@ public partial class Deck : Entity
 
     public override void Spawn()
     {
-        base.Spawn();
-
         GenerateDeck();
+    }
+    
+    /// <summary>
+    /// Add a card into the deck
+    /// </summary>
+    /// <param name="card"></param>
+    public virtual void AddCard(Card card)
+    {
+        Cards.Add(card);
+    }
+
+    /// <summary>
+    /// Add a range of cards into the deck
+    /// </summary>
+    /// <param name="cards"></param>
+    public virtual void AddCards(IList<Card> cards)
+    {
+        foreach(var c in cards)
+            Cards.Add(c);
+    }
+
+    /// <summary>
+    /// Remove a card from the deck
+    /// </summary>
+    /// <param name="card"></param>
+    public void RemoveCard(Card card)
+    {
+        Cards.Remove(card);
     }
 
     /// <summary>
@@ -24,7 +56,7 @@ public partial class Deck : Entity
     /// </summary>
     private void GenerateDeck()
     {
-        cards = new List<Card>();
+        Cards = new List<Card>();
 
         // 112 cards: 80 numbered, 24 action, 8 wild
         // First, colored cards
@@ -41,7 +73,7 @@ public partial class Deck : Entity
                         Suit = (CardSuit)suit,
                         Rank = (CardRank)num
                     };
-                    cards.Add(card);
+                    Cards.Add(card);
                 }
             }
         }
@@ -55,7 +87,7 @@ public partial class Deck : Entity
                     Suit = CardSuit.Wild,
                     Rank = (CardRank)rank
                 };
-                cards.Add(wildCard);
+                Cards.Add(wildCard);
             }
     }
 }
