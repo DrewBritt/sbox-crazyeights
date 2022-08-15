@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -7,6 +8,9 @@ namespace CrazyEights;
 /// </summary>
 public partial class Pile : Deck
 {
+    // Separate property in order to network to entire lobby (Deck has [Net, Local])
+    [Net] public new IList<Card> Cards { get; set; }
+
     public Pile() : base() { }
 
     public override void Spawn()

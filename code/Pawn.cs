@@ -2,7 +2,7 @@
 
 namespace CrazyEights;
 
-partial class Pawn : AnimatedEntity
+public partial class Pawn : AnimatedEntity
 {
     /// <summary>
     /// Player's current Hand of cards
@@ -18,7 +18,10 @@ partial class Pawn : AnimatedEntity
 
         SetModel("models/citizen/citizen.vmdl");
 
-        Hand = new();
+        Hand = new()
+        {
+            Owner = this
+        };
 
         EnableDrawing = true;
         EnableHideInFirstPerson = true;

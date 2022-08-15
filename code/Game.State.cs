@@ -49,9 +49,8 @@ public partial class Game
         public StagingState() : base()
         {
             // Generate deck to be used in play
-            Deck deck = new Deck();
-
-            deck.Shuffle();
+            Current.PlayingDeck = new Deck();
+            Current.PlayingDeck.Shuffle();
 
             // Distribute cards to players
             for(int i = 0; i < Client.All.Count; i++)
@@ -60,18 +59,29 @@ public partial class Game
 
                 // 7 cards for each player
                 for(int j = 0; j < 7; j++)
-                    player.Hand.AddCard(deck.GetTopCard());
+                    player.Hand.AddCard(Current.PlayingDeck.GetTopCard());
             }
 
-            Log.Info(deck.Cards.Count);
-
             // Game plays starting card from top of deck
-            // SetState(PlayingState());
+            Current.PlayingPile = new Pile();
+            Current.PlayingPile.AddCard(Current.PlayingDeck.GetTopCard());
+
+            SetState(new PlayingState());
         }
 
         public override void Tick()
         {
             base.Tick();
+        }
+    }
+
+    public class PlayingState : BaseState
+    {
+        public override string StateName() => "Playing";
+
+        public PlayingState() : base()
+        {
+
         }
     }
 
@@ -88,6 +98,25 @@ public partial class Game
 
         CurrentState.Tick();
     }
+
+    #endregion
+
+    #region Card Management
+
+    /// <summary>
+    /// Persistent deck used for drawing cards
+    /// </summary>
+    public Deck PlayingDeck { get; set; }
+    /// <summary>
+    /// Pile in which player's cards are played onto
+    /// </summary>
+    [Net] public Pile PlayingPile { get; set; }
+
+    #endregion
+
+    #region Player Management
+
+    [Net] public Pawn CurrentPlayer { get; set; }
 
     #endregion
 }
