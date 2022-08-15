@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using System.Collections.Generic;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -115,8 +116,16 @@ public partial class Game
     #endregion
 
     #region Player Management
-
-    [Net] public Pawn CurrentPlayer { get; set; }
+    
+    /// <summary>
+    /// All players in this round. Separate from Client.All as players are not dealt in if they join after round start
+    /// </summary>
+    [Net] public IList<Pawn> Players { get; set; }
+    [Net] private int CurrentPlayerIndex { get; set; } = 0;
+    /// <summary>
+    /// Player that should play the next card
+    /// </summary>
+    public Pawn CurrentPlayer => Players[CurrentPlayerIndex];
 
     #endregion
 }
