@@ -44,12 +44,37 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Grabs card off the "top" of the deck/pile
+    /// Remove a card from the deck
+    /// </summary>
+    /// <param name="card"></param>
+    public void RemoveCard(Card card)
+    {
+        Cards.Remove(card);
+    }
+
+    /// <summary>
+    /// Remove a range of cards from the deck
+    /// </summary>
+    /// <param name="cards"></param>
+    public void RemoveCards(IList<Card> cards)
+    {
+        foreach(var c in cards)
+            Cards.Remove(c);
+    }
+
+    /// <summary>
+    /// Returns card from top/"front" of pile
     /// </summary>
     /// <returns></returns>
-    public Card GetTopCard()
+    public Card GetTopCard() => Cards[0];
+
+    /// <summary>
+    /// Returns (AND REMOVES FROM DECK) card from top/"front" of pile
+    /// </summary>
+    /// <returns></returns>
+    public Card GrabTopCard()
     {
-        Card c = Cards[0];
+        Card c = GetTopCard();
         Cards.Remove(c);
         return c;
     }
