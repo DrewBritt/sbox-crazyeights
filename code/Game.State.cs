@@ -60,12 +60,12 @@ public partial class Game
 
                 // 7 cards for each player
                 for(int j = 0; j < 7; j++)
-                    player.Hand.AddCard(Current.PlayingDeck.GetTopCard());
+                    player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
             }
 
             // Game plays starting card from top of deck
             Current.PlayingPile = new Pile();
-            Current.PlayingPile.AddCard(Current.PlayingDeck.GetTopCard());
+            Current.PlayingPile.AddCard(Current.PlayingDeck.GrabTopCard());
 
             SetState(new PlayingState());
         }
