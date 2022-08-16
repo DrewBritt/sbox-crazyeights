@@ -21,10 +21,18 @@ public partial class Game
     /// Player wishes to play a card
     /// </summary>
     /// <param name="cardIdent">NetworkIdent of the Card to be played</param>
-    [ConCmd.Server]
+    [ConCmd.Server("crazyeights_playcard", Help = "Play a card from your hand")]
     public static void PlayCard(int cardIdent)
     {
         Pawn player = ConsoleSystem.Caller.Pawn as Pawn;
+
+        // Stop player if not in playing state
+        if(Current.CurrentState is not PlayingState)
+        {
+            Log.Info(Current.CurrentState);
+            Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You're not currently playing!");
+            return;
+        }
 
         // Stop player if they're not the current player
         if(player != Current.CurrentPlayer)
@@ -54,8 +62,29 @@ public partial class Game
         player.Hand.RemoveCard(card);
         Current.PlayingPile.AddCard(card);
 
+        Current.PrintPlay(To.Everyone);
+
+        // TODO: Action/Wildcard abilities
+
         // Next player's turn (modulo to wrap)
-        Current.CurrentPlayerIndex += 1 % Current.Players.Count;
+        Current.CurrentPlayerIndex = (Current.CurrentPlayerIndex + 1) % Current.Players.Count;
+
+        Current.PrintCards(To.Everyone);
+    }
+
+    [ClientRpc]
+    public void PrintPlay()
+    {
+        var lastCard = Current.PlayingPile.GetTopCard();
+        Log.Info($"{Current.CurrentPlayer} played {lastCard.Suit} {lastCard.Rank}");
+    }
+
+    [ClientRpc]
+    public void PrintCards()
+    {
+        var p = Local.Pawn as Pawn;
+        foreach(var c in p.Hand.Cards)
+            Log.Info($"{c.Suit} {c.Rank} ({c.NetworkIdent})");
     }
 
     #endregion

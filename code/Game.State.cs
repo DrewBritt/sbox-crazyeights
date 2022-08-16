@@ -35,19 +35,16 @@ public partial class Game
         {
             if(Client.All.Count > 1)
             {
-                SetState(new StagingState());
+                SetState(new PlayingState());
             }
         }
     }
 
-    /// <summary>
-    /// Preparing the game to be played
-    /// </summary>
-    public class StagingState : BaseState
+    public class PlayingState : BaseState
     {
-        public override string StateName() => "Staging";
+        public override string StateName() => "Playing";
 
-        public StagingState() : base()
+        public PlayingState() : base()
         {
             // Generate deck to be used in play
             Current.PlayingDeck = new Deck();
@@ -57,6 +54,7 @@ public partial class Game
             for(int i = 0; i < Client.All.Count; i++)
             {
                 Pawn player = Client.All[i].Pawn as Pawn;
+                Current.Players.Add(player);
 
                 // 7 cards for each player
                 for(int j = 0; j < 7; j++)
@@ -67,22 +65,10 @@ public partial class Game
             Current.PlayingPile = new Pile();
             Current.PlayingPile.AddCard(Current.PlayingDeck.GrabTopCard());
 
-            SetState(new PlayingState());
-        }
+            var c = Current.PlayingPile.GetTopCard();
+            Log.Info($"Starting card is: {c.Suit} {c.Rank}");
 
-        public override void Tick()
-        {
-            base.Tick();
-        }
-    }
-
-    public class PlayingState : BaseState
-    {
-        public override string StateName() => "Playing";
-
-        public PlayingState() : base()
-        {
-
+            Current.PrintCards(To.Everyone);
         }
     }
 
@@ -90,7 +76,7 @@ public partial class Game
 
     #region State Management
 
-    public BaseState CurrentState = new WaitingForPlayersState();
+    public BaseState CurrentState { get; set; } = new WaitingForPlayersState();
 
     [Event.Tick]
     public void OnTick()
