@@ -36,4 +36,21 @@ public partial class Pile : Deck
         foreach(var c in cards)
             Cards.Insert(0, c);
     }
+
+    /// <summary>
+    /// Returns card from top/"front" of pile
+    /// </summary>
+    /// <returns></returns>
+    public override Card GetTopCard() => Cards[0];
+
+    /// <summary>
+    /// Returns (AND REMOVES FROM DECK) card from top/"front" of pile
+    /// </summary>
+    /// <returns></returns>
+    public override Card GrabTopCard()
+    {
+        Card c = GetTopCard();
+        Cards.Remove(c);
+        return c;
+    }
 }
