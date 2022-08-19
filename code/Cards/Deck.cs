@@ -53,13 +53,13 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Remove a range of cards from the deck
+    /// Clear cards in deck
     /// </summary>
-    /// <param name="cards"></param>
-    public void RemoveCards(IList<Card> cards)
+    public virtual void ClearCards()
     {
-        foreach(var c in cards)
-            Cards.Remove(c);
+        foreach(var card in Cards)
+            card.Delete();
+        Cards.Clear();
     }
 
     /// <summary>

@@ -38,6 +38,16 @@ public partial class Pile : Deck
     }
 
     /// <summary>
+    /// Clear cards in pile
+    /// </summary>
+    public override void ClearCards()
+    {
+        foreach(var card in Cards)
+            card.Delete();
+        Cards.Clear();
+    }
+
+    /// <summary>
     /// Returns card from top/"front" of pile
     /// </summary>
     /// <returns></returns>

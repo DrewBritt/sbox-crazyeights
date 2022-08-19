@@ -87,7 +87,6 @@ public partial class Game
     [ConCmd.Server("crazyeights_drawcard", Help = "Draw a card from the playing deck")]
     public static void DrawCard()
     {
-
         // Add 1 card from top of pile to player hand, and end their turn
         Pawn player = ConsoleSystem.Caller.Pawn as Pawn;
         player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());

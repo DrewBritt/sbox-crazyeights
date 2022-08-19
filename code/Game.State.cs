@@ -29,7 +29,26 @@ public partial class Game
     {
         public override string StateName() => "Waiting for Players";
 
-        public WaitingForPlayersState() : base() { }
+        public WaitingForPlayersState() : base() 
+        {
+            // Don't run on game startup (current returns null always)
+            // Should only run when players disconnect and Client.All.Count <= 1
+            if(Current == null) return;
+
+            Current.PlayingDeck.ClearCards();
+            Current.PlayingDeck.Delete();
+
+            Current.PlayingPile.ClearCards();
+            Current.PlayingPile.Delete();
+
+            foreach(var p in Current.Players)
+            {
+                p.Hand.ClearCards();
+                p.Hand.Delete();
+            }
+
+            Current.Players.Clear();
+        }
 
         public override void Tick()
         {
@@ -55,6 +74,7 @@ public partial class Game
             {
                 Pawn player = Client.All[i].Pawn as Pawn;
                 Current.Players.Add(player);
+                player.Hand = new Hand();
 
                 // 7 cards for each player
                 for(int j = 0; j < 7; j++)
@@ -69,6 +89,28 @@ public partial class Game
             Log.Info($"Starting card is: {c.Suit} {c.Rank}");
 
             Current.PrintCards(To.Everyone);
+        }
+
+        public override void Tick()
+        {
+            base.Tick();
+        }
+    }
+
+    public class GameOverState : BaseState
+    {
+        public override string StateName() => "Game Over";
+        private RealTimeSince stateStart { get; }
+
+        public GameOverState() : base()
+        {
+            stateStart = 0;
+        }
+
+        public override void Tick()
+        {
+            if(stateStart > 10)
+                SetState(new WaitingForPlayersState());
         }
     }
 
