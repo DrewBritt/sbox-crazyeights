@@ -8,7 +8,7 @@ namespace CrazyEights;
 /// </summary>
 public partial class Pile : Deck
 {
-    // Separate property in order to network to entire lobby (Deck has [Net, Local])
+    // Separate property in order to network to entire lobby (Deck has [Net, Local]).
     [Net] public new IList<Card> Cards { get; set; }
 
     public Pile() : base() { }
@@ -19,7 +19,7 @@ public partial class Pile : Deck
     }
 
     /// <summary>
-    /// Put card on "top" of pile (beginning of list)
+    /// Put card on "top" of pile (beginning of list).
     /// </summary>
     /// <param name="card"></param>
     public override void AddCard(Card card)
@@ -28,7 +28,7 @@ public partial class Pile : Deck
     }
 
     /// <summary>
-    /// Put cards on "top" of pile (beginning of list)
+    /// Put cards on "top" of pile (beginning of list).
     /// </summary>
     /// <param name="cards"></param>
     public override void AddCards(IList<Card> cards)
@@ -38,7 +38,7 @@ public partial class Pile : Deck
     }
 
     /// <summary>
-    /// Clear cards in pile
+    /// Clear cards in pile.
     /// </summary>
     public override void ClearCards()
     {
@@ -48,13 +48,13 @@ public partial class Pile : Deck
     }
 
     /// <summary>
-    /// Returns card from top/"front" of pile
+    /// Returns card from top/"front" of pile.
     /// </summary>
     /// <returns></returns>
     public override Card GetTopCard() => Cards[0];
 
     /// <summary>
-    /// Returns (AND REMOVES FROM DECK) card from top/"front" of pile
+    /// Returns (AND REMOVES FROM DECK) card from top/"front" of pile.
     /// </summary>
     /// <returns></returns>
     public override Card GrabTopCard()

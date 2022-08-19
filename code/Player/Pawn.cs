@@ -5,12 +5,12 @@ namespace CrazyEights;
 public partial class Pawn : AnimatedEntity
 {
     /// <summary>
-    /// Player's current Hand of cards
+    /// Player's current Hand of cards.
     /// </summary>
     [Net, Local] public Hand Hand { get; set; }
 
     /// <summary>
-    /// Called when the entity is first created 
+    /// Called when the entity is first created.
     /// </summary>
     public override void Spawn()
     {

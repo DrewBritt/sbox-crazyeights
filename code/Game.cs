@@ -13,23 +13,23 @@ public partial class Game : Sandbox.Game
     }
 
     /// <summary>
-    /// A client has joined the server. Make them a pawn to play with
+    /// A client has joined the server. Make them a pawn to play with.
     /// </summary>
     public override void ClientJoined(Client client)
     {
         base.ClientJoined(client);
 
-        // Create a pawn for this client to play with
+        // Create a pawn for this client to play with.
         var pawn = new Pawn();
         client.Pawn = pawn;
 
-        // Get all of the spawnpoints
+        // Get all of the spawnpoints.
         var spawnpoints = Entity.All.OfType<SpawnPoint>();
 
-        // chose a random one
+        // choose a random one.
         var randomSpawnPoint = spawnpoints.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
 
-        // if it exists, place the pawn there
+        // if it exists, place the pawn there.
         if(randomSpawnPoint != null)
         {
             var tx = randomSpawnPoint.Transform;

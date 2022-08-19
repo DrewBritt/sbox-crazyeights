@@ -23,7 +23,7 @@ public partial class Game
     }
 
     /// <summary>
-    /// Waiting for more players to connect before beginning game
+    /// Waiting for more players to connect before beginning game.
     /// </summary>
     public class WaitingForPlayersState : BaseState
     {
@@ -31,8 +31,8 @@ public partial class Game
 
         public WaitingForPlayersState() : base() 
         {
-            // Don't run on game startup (current returns null always)
-            // Should only run when players disconnect and Client.All.Count <= 1
+            // Don't run on game startup (current returns null always).
+            // Should only run when players disconnect and Client.All.Count <= 1.
             if(Current == null) return;
 
             Current.PlayingDeck.ClearCards();
@@ -59,29 +59,32 @@ public partial class Game
         }
     }
 
+    /// <summary>
+    /// Players are currently playing cards.
+    /// </summary>
     public class PlayingState : BaseState
     {
         public override string StateName() => "Playing";
 
         public PlayingState() : base()
         {
-            // Generate deck to be used in play
+            // Generate deck to be used in play.
             Current.PlayingDeck = new Deck();
             Current.PlayingDeck.Shuffle();
 
-            // Distribute cards to players
+            // Distribute cards to players.
             for(int i = 0; i < Client.All.Count; i++)
             {
                 Pawn player = Client.All[i].Pawn as Pawn;
                 Current.Players.Add(player);
                 player.Hand = new Hand();
 
-                // 7 cards for each player
+                // 7 cards for each player.
                 for(int j = 0; j < 7; j++)
                     player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
             }
 
-            // Game plays starting card from top of deck
+            // Game plays starting card from top of deck.
             Current.PlayingPile = new Pile();
             Current.PlayingPile.AddCard(Current.PlayingDeck.GrabTopCard());
 
@@ -97,6 +100,9 @@ public partial class Game
         }
     }
 
+    /// <summary>
+    /// A player has won and game is over. Loops back to WaitingForPlayersState to reset game and begin a new one.
+    /// </summary>
     public class GameOverState : BaseState
     {
         public override string StateName() => "Game Over";
@@ -133,11 +139,12 @@ public partial class Game
     #region Card Management
 
     /// <summary>
-    /// Persistent deck used for drawing cards
+    /// Persistent deck used for drawing cards.
     /// </summary>
     public Deck PlayingDeck { get; set; }
+
     /// <summary>
-    /// Pile in which player's cards are played onto
+    /// Pile in which player's cards are played onto.
     /// </summary>
     [Net] public Pile PlayingPile { get; set; }
 
@@ -146,27 +153,27 @@ public partial class Game
     #region Player Management
     
     /// <summary>
-    /// All players in this round. Separate from Client.All as players are not dealt in if they join after round start
+    /// All players in this round. Separate from Client.All as players are not dealt in if they join after round start.
     /// </summary>
     [Net] public IList<Pawn> Players { get; set; }
     [Net] private int CurrentPlayerIndex { get; set; } = 0;
 
     /// <summary>
-    /// Calculates the next player's index, needed for counter-clockwise direction play (going from index 0 to index Players.Count)
+    /// Calculates the next player's index, needed for counter-clockwise direction play (going from index 0 to index Players.Count).
     /// </summary>
     /// <returns></returns>
     private int GetNextPlayerIndex()
     {
-        // If next index is -1, wrap to last index in Players
+        // If next index is -1, wrap to last index in Players.
         if(CurrentPlayerIndex + DirectionValue == -1)
             return Players.Count - 1;
 
-        // Else just wrap with modulo (or no wrapping is needed)
+        // Else just wrap with modulo (or no wrapping is needed).
         return (CurrentPlayerIndex + DirectionValue) % Players.Count;
     }
 
     /// <summary>
-    /// Player that should play the next card
+    /// Player that should play the next card.
     /// </summary>
     public Pawn CurrentPlayer => Players[CurrentPlayerIndex];
 

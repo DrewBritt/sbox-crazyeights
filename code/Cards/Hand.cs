@@ -1,7 +1,7 @@
 ﻿namespace CrazyEights;
 
 /// <summary>
-/// Encapsulates a player's current hand of cards, using Deck functionality
+/// Encapsulates a player's current hand of cards, using Deck functionality.
 /// </summary>
 public partial class Hand : Deck
 {

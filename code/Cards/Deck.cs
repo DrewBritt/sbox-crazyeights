@@ -10,7 +10,7 @@ namespace CrazyEights;
 public partial class Deck : Entity
 {
     /// <summary>
-    /// All cards in this deck
+    /// All cards in this deck.
     /// </summary>
     [Net, Local] public IList<Card> Cards { get; set; }
 
@@ -25,7 +25,7 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Add a card into the deck
+    /// Add a card into the deck.
     /// </summary>
     /// <param name="card"></param>
     public virtual void AddCard(Card card)
@@ -34,7 +34,7 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Add a range of cards into the deck
+    /// Add a range of cards into the deck.
     /// </summary>
     /// <param name="cards"></param>
     public virtual void AddCards(IList<Card> cards)
@@ -44,7 +44,7 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Remove a card from the deck
+    /// Remove a card from the deck.
     /// </summary>
     /// <param name="card"></param>
     public void RemoveCard(Card card)
@@ -53,7 +53,7 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Clear cards in deck
+    /// Clear cards in deck.
     /// </summary>
     public virtual void ClearCards()
     {
@@ -63,13 +63,13 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Returns card from top/"front" of pile
+    /// Returns card from top/"front" of pile.
     /// </summary>
     /// <returns></returns>
     public virtual Card GetTopCard() => Cards[0];
 
     /// <summary>
-    /// Returns (AND REMOVES FROM DECK) card from top/"front" of pile
+    /// Returns (AND REMOVES FROM DECK) card from top/"front" of pile.
     /// </summary>
     /// <returns></returns>
     public virtual Card GrabTopCard()
@@ -80,20 +80,20 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Generate initial deck of cards to be used in play
+    /// Generate initial deck of cards to be used in play.
     /// </summary>
     private void GenerateDeck()
     {
         Cards = new List<Card>();
 
-        // 112 cards: 80 numbered, 24 action, 8 wild
-        // First, colored cards
+        // 112 cards: 80 numbered, 24 action, 8 wild.
+        // First, colored cards.
         for(int suit = 0; suit < 4; suit++)
         {
-            // Generate two of each colored card
+            // Generate two of each colored card.
             for(int i = 0; i < 2; i++)
             {
-                // Generate one of every number + action card
+                // Generate one of every number + action card.
                 for(int num = 0; num < 13; num++)
                 {
                     Card card = new Card()
@@ -106,7 +106,7 @@ public partial class Deck : Entity
             }
         }
 
-        // Then, 4 of each wild card
+        // Then, 4 of each wild card.
         for(int i = 0; i < 4; i++)
             for(int rank = 13; rank < 15; rank++)
             {
@@ -120,7 +120,7 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Shuffles the cards in this deck for randomization
+    /// Shuffles the cards in this deck for randomization.
     /// </summary>
     public virtual void Shuffle()
     {

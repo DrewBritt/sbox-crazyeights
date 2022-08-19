@@ -5,11 +5,11 @@ namespace CrazyEights;
 public partial class Card : Entity
 {
     /// <summary>
-    /// Suit/Color value of the card
+    /// Suit/Color value of the card.
     /// </summary>
     [Net] public CardSuit Suit { get; set; }
     /// <summary>
-    /// Rank/Number/Action value of the card
+    /// Rank/Number/Action value of the card.
     /// </summary>
     [Net] public CardRank Rank { get; set; }
 
