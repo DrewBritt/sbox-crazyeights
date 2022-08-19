@@ -108,6 +108,21 @@ public partial class Game
     /// </summary>
     [Net] public IList<Pawn> Players { get; set; }
     [Net] private int CurrentPlayerIndex { get; set; } = 0;
+
+    /// <summary>
+    /// Calculates the next player's index, needed for counter-clockwise direction play (going from index 0 to index Players.Count)
+    /// </summary>
+    /// <returns></returns>
+    private int GetNextPlayerIndex()
+    {
+        // If next index is -1, wrap to last index in Players
+        if(CurrentPlayerIndex + DirectionValue == -1)
+            return Players.Count - 1;
+
+        // Else just wrap with modulo (or no wrapping is needed)
+        return (CurrentPlayerIndex + DirectionValue) % Players.Count;
+    }
+
     /// <summary>
     /// Player that should play the next card
     /// </summary>
