@@ -21,8 +21,9 @@ public partial class Game
     /// Player wishes to play a card
     /// </summary>
     /// <param name="cardIdent">NetworkIdent of the Card to be played</param>
+    /// <param name="selectedWildSuit">Selected Wildcard color/suit. Only checked if cardIdent's card is a Wild or Draw4</param>
     [ConCmd.Server("crazyeights_playcard", Help = "Play a card from your hand")]
-    public static void PlayCard(int cardIdent)
+    public static void PlayCard(int cardIdent, CardSuit selectedWildSuit = 0)
     {
         Pawn player = ConsoleSystem.Caller.Pawn as Pawn;
 
@@ -56,7 +57,14 @@ public partial class Game
             {
                 Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: That card is not a legal play! (Wrong suit and rank)");
                 return;
-            }    
+            }
+
+        // Selected suit cannot be wild and therefore is an illegal play
+        if(selectedWildSuit == CardSuit.Wild)
+        {
+            Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You cannot select Wild as a color! (Illegal play)");
+            return;
+        }
 
         // Remove card from player's hand, and play it onto PlayingPile
         player.Hand.RemoveCard(card);
@@ -64,10 +72,11 @@ public partial class Game
 
         Current.PrintPlay(To.Everyone);
 
-        // TODO: Action/Wildcard abilities
+        // Action/Wildcard abilities
+        Current.CheckActionCard(card, selectedWildSuit);
 
-        // Next player's turn (modulo to wrap)
-        Current.CurrentPlayerIndex = (Current.CurrentPlayerIndex + 1) % Current.Players.Count;
+        // Next player's turn
+        Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
 
         Current.PrintCards(To.Everyone);
     }
