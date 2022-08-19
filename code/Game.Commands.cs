@@ -81,6 +81,30 @@ public partial class Game
         Current.PrintCards(To.Everyone);
     }
 
+    /// <summary>
+    /// Player wishes to draw a card from the persistent deck. This will end their turn.
+    /// </summary>
+    [ConCmd.Server("crazyeights_drawcard", Help = "Draw a card from the playing deck")]
+    public static void DrawCard()
+    {
+
+        // Add 1 card from top of pile to player hand, and end their turn
+        Pawn player = ConsoleSystem.Caller.Pawn as Pawn;
+        player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
+
+        Current.PrintDraw(To.Everyone);
+
+        Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
+
+        Current.PrintCards(To.Everyone);
+    }
+
+    [ClientRpc]
+    public void PrintDraw()
+    {
+        Log.Info($"{Current.CurrentPlayer} drew a card and ended their turn");
+    }
+
     [ClientRpc]
     public void PrintPlay()
     {
