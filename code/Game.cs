@@ -37,4 +37,17 @@ public partial class Game : Sandbox.Game
             pawn.Transform = tx;
         }
     }
+
+    public override CameraSetup BuildCamera(CameraSetup camSetup)
+    {
+        var pawnRot = Local.Pawn.Rotation;
+
+        camSetup.Rotation = Rotation.From(new Angles(90f, pawnRot.Angles().yaw, 0f));
+        camSetup.Position = new Vector3(0f, 0f, 500f);
+        camSetup.FieldOfView = 75;
+        camSetup.Ortho = false;
+        camSetup.Viewer = null;
+
+        return camSetup;
+    }
 }
