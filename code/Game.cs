@@ -27,7 +27,7 @@ public partial class Game : Sandbox.Game
         }
 
         // Otherwise let's pawn for this client to play with.
-        var pawn = new Pawn();
+        var pawn = new Pawn(client);
         client.Pawn = pawn;
 
         // Get un-occupied chair and spawn pawn at said chair.

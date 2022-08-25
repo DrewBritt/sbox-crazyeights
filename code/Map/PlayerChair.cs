@@ -36,7 +36,6 @@ public partial class PlayerChair : ModelEntity
         var transform = this.Transform;
         transform.Position = transform.Position + Vector3.Up * 50.0f;
         player.Transform = transform;
-        player.SetParent(this);
         HasPlayer = true;
     }
 }
