@@ -19,22 +19,23 @@ public partial class Game : Sandbox.Game
     {
         base.ClientJoined(client);
 
-        // Create a pawn for this client to play with.
+        // Spawn player as spectator if game is already in session
+        if(Current.CurrentState is PlayingState)
+        {
+            // Spawn spectator pawn
+            return;
+        }
+
+        // Otherwise let's pawn for this client to play with.
         var pawn = new Pawn();
         client.Pawn = pawn;
 
-        // Get all of the spawnpoints.
-        var spawnpoints = Entity.All.OfType<SpawnPoint>();
-
-        // choose a random one.
-        var randomSpawnPoint = spawnpoints.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
-
-        // if it exists, place the pawn there.
-        if(randomSpawnPoint != null)
+        // Get un-occupied chair and spawn pawn at said chair.
+        var chairs = Entity.All.OfType<PlayerChair>();
+        var randomChair = chairs.OrderBy(x => Guid.NewGuid()).Where(x => !x.HasPlayer).FirstOrDefault();
+        if(randomChair.IsValid())
         {
-            var tx = randomSpawnPoint.Transform;
-            tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
-            pawn.Transform = tx;
+            randomChair.SeatPlayer(pawn);
         }
     }
 
@@ -43,11 +44,16 @@ public partial class Game : Sandbox.Game
         var pawnRot = Local.Pawn.Rotation;
 
         camSetup.Rotation = Rotation.From(new Angles(90f, pawnRot.Angles().yaw, 0f));
-        camSetup.Position = new Vector3(0f, 0f, 500f);
+        camSetup.Position = new Vector3(0f, 0f, 400f);
         camSetup.FieldOfView = 75;
         camSetup.Ortho = false;
         camSetup.Viewer = null;
 
         return camSetup;
+    }
+
+    public override void DoPlayerDevCam(Client client)
+    {
+        base.DoPlayerDevCam(client);
     }
 }
