@@ -19,6 +19,8 @@ public partial class Card : Entity
 
         Transmit = TransmitType.Always;
     }
+
+    public string FileName => $"ui/cards/{Suit}_{Rank}.png";
 }
 
 public enum CardSuit
