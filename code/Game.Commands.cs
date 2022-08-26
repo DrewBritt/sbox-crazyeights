@@ -30,7 +30,6 @@ public partial class Game
         // Stop player if not in playing state.
         if(Current.CurrentState is not PlayingState)
         {
-            Log.Info(Current.CurrentState);
             Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You're not currently playing!");
             return;
         }
@@ -70,6 +69,7 @@ public partial class Game
         player.Hand.RemoveCard(card);
         Current.PlayingPile.AddCard(card);
 
+        // Update everyone's play pile
         Current.PrintPlay(To.Everyone);
 
         // Action/Wildcard abilities.
@@ -87,8 +87,23 @@ public partial class Game
     [ConCmd.Server("crazyeights_drawcard", Help = "Draw a card from the playing deck")]
     public static void DrawCard()
     {
-        // Add 1 card from top of pile to player hand, and end their turn.
         Pawn player = ConsoleSystem.Caller.Pawn as Pawn;
+
+        // Stop player if not in playing state.
+        if(Current.CurrentState is not PlayingState)
+        {
+            Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You're not currently playing!");
+            return;
+        }
+
+        // Stop player if they're not the current player.
+        if(player != Current.CurrentPlayer)
+        {
+            Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You are not the current player!");
+            return;
+        }
+
+        // Add 1 card from top of pile to player hand, and end their turn.
         player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
 
         Current.PrintDraw(To.Everyone);
@@ -109,6 +124,8 @@ public partial class Game
     {
         var lastCard = Current.PlayingPile.GetTopCard();
         Log.Info($"{Current.CurrentPlayer} played {lastCard.Suit} {lastCard.Rank}");
+
+        Current.Hud.UpdatePlayedCard();
     }
 
     [ClientRpc]
