@@ -30,6 +30,8 @@ public partial class Pawn : AnimatedEntity
     {
         SetModel("models/citizen/citizen.vmdl");
 
+        Hand = new Hand();
+
         EnableDrawing = true;
         EnableHideInFirstPerson = true;
         EnableShadowInFirstPerson = true;
