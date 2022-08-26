@@ -5,8 +5,9 @@ namespace CrazyEights;
 
 public partial class CardPanel : Panel
 {
-    public CardPanel()
+    public CardPanel(Card card)
     {
-        StyleSheet.Load("UI/CardPanel.scss");
+        StyleSheet.Load("/UI/Cards/CardPanel.scss");
+        Style.BackgroundImage = Texture.Load(FileSystem.Mounted, card.FileName);
     }
 }
