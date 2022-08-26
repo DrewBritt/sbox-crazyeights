@@ -3,12 +3,13 @@ using Sandbox.UI;
 
 namespace CrazyEights;
 
-//[UseTemplate] - Doesn't work?
-public partial class Hud : HudEntity<RootPanel>
+[UseTemplate]
+public partial class Hud : RootPanel
 {
-    public Hud()
+    public TableCards TableCards { get; set; }
+
+    public void UpdatePlayedCard()
     {
-        if(IsClient)
-            RootPanel.SetTemplate("Code/UI/Hud.html");
+        TableCards.SetPlayCard(Game.Current.PlayingPile.GetTopCard());
     }
 }

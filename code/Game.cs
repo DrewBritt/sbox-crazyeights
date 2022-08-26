@@ -7,13 +7,14 @@ namespace CrazyEights;
 public partial class Game : Sandbox.Game
 {
     public static new Game Current => Sandbox.Game.Current as Game;
+    public Hud Hud { get; set; }
 
     public Game() : base()
     {
-        if(IsClient) return;
+        if(IsServer) return;
 
         // Initialize HUD
-        _ = new Hud();
+        Hud = new Hud();
     }
 
     /// <summary>
