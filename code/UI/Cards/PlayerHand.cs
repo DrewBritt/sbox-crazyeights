@@ -42,7 +42,7 @@ public partial class PlayerHand : Panel
         {
             if(CardPanels.ContainsKey(c)) continue;
 
-            var panel = new CardPanel(c);
+            var panel = new CardPanel(c, true);
             AddChild(panel);
             CardPanels.Add(c, panel);
         }
