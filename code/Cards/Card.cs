@@ -27,8 +27,8 @@ public enum CardSuit
 {
     Red,
     Yellow,
-    Green,
     Blue,
+    Green,
     Wild
 }
 
