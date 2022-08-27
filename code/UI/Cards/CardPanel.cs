@@ -9,34 +9,42 @@ namespace CrazyEights;
 /// </summary>
 public partial class CardPanel : Panel
 {
-    public CardPanel(bool clickable = false)
+    public CardPanel()
     {
         StyleSheet.Load("/UI/Cards/CardPanel.scss");
-
-        // Setup OnClick if clickable
-        if(!clickable) return;
-
-        // No card = draw pile card
-        AddEventListener("onclick", () => ConsoleSystem.Run("crazyeights_drawcard"));
     }
 
-    public CardPanel(Card c, bool clickable = false)
+    /// <summary>
+    /// Creates a CardPanel for use in Hand
+    /// </summary>
+    /// <param name="c"></param>
+    public CardPanel(Card c)
     {
         StyleSheet.Load("/UI/Cards/CardPanel.scss");
         SetCard(c);
 
-        // Setup OnClick if clickable
-        if(!clickable) return;
+        // Open suit selection overlay if card is a wildcard
+        if(c.Suit == CardSuit.Wild)
+        { 
+           AddEventListener("onclick", () => OpenSuitSelection(c)); 
+           return;
+        }
 
-        /*if(card.Suit == CardSuit.Wild)
-         * AddEventListener("onclick", () => ToggleWildSelection()); 
-           return;  */
-
+        // Otherwise, play the card
         AddEventListener("onclick", () => ConsoleSystem.Run($"crazyeights_playcard {c.NetworkIdent}"));
     }
 
+    /// <summary>
+    /// Set card texture to match argument
+    /// </summary>
+    /// <param name="c"></param>
     public void SetCard(Card c)
     {
         Style.BackgroundImage = Texture.Load(FileSystem.Mounted, c.FileName);
+    }
+
+    private void OpenSuitSelection(Card c)
+    {
+        Game.Current.Hud.OpenSuitSelection(c);
     }
 }

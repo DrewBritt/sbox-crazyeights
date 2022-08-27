@@ -14,9 +14,11 @@ public partial class TableCards : Panel
     {
         SetTemplate("Code/UI/Cards/TableCards.html");
 
-        DrawPile.AddChild(new CardPanel(true));
+        var drawCard = new CardPanel();
+        drawCard.AddEventListener("onclick", () => ConsoleSystem.Run("crazyeights_drawcard"));
+        DrawPile.AddChild(drawCard);
 
-        playCard = new CardPanel(false);
+        playCard = new CardPanel();
         PlayPile.AddChild(playCard);
     }
 
