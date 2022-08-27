@@ -88,8 +88,7 @@ public partial class Game
             Current.PlayingPile = new Pile();
             Current.PlayingPile.AddCard(Current.PlayingDeck.GrabTopCard());
 
-            var c = Current.PlayingPile.GetTopCard();
-            Log.Info($"Starting card is: {c.Suit} {c.Rank}");
+            Current.PrintPlay(To.Everyone);
 
             Current.PrintCards(To.Everyone);
         }
