@@ -1,0 +1,56 @@
+﻿suitselectionoverlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(20px) brightness(0.5);
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    justify-content: center;
+    align-items: center;
+
+    &.open {
+        opacity: 1;
+    }
+
+    .red {
+        &.changecolor {
+            background-image: url("ui/cards/red_changecolor.png");
+        }
+
+        &.draw4 {
+            background-image: url("ui/cards/red_draw4.png");
+        }
+    }
+
+    .yellow {
+        &.changecolor {
+            background-image: url("ui/cards/yellow_changecolor.png");
+        }
+
+        &.draw4 {
+            background-image: url("ui/cards/yellow_draw4.png");
+        }
+    }
+
+    .blue {
+        &.changecolor {
+            background-image: url("ui/cards/blue_changecolor.png");
+        }
+
+        &.draw4 {
+            background-image: url("ui/cards/blue_draw4.png");
+        }
+    }
+
+    .green {
+        &.changecolor {
+            background-image: url("ui/cards/green_changecolor.png");
+        }
+
+        &.draw4 {
+            background-image: url("ui/cards/green_draw4.png");
+        }
+    }
+}
