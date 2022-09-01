@@ -70,7 +70,7 @@ public partial class Game
         Current.PlayingPile.AddCard(card);
 
         // Update everyone's play pile
-        Current.PrintPlay(To.Everyone);
+        Current.PrintPlay(To.Everyone, Current.CurrentPlayer.Client);
 
         // Action/Wildcard abilities.
         Current.CheckActionCard(card, selectedWildSuit);
@@ -106,7 +106,7 @@ public partial class Game
         // Add 1 card from top of pile to player hand, and end their turn.
         player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
 
-        Current.PrintDraw(To.Everyone);
+        Current.PrintDraw(To.Everyone, Current.CurrentPlayer.Client);
 
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
 
@@ -114,18 +114,20 @@ public partial class Game
     }
 
     [ClientRpc]
-    public void PrintDraw()
+    public void PrintDraw(Client lastPlayedCl)
     {
         Log.Info($"{Current.CurrentPlayer} drew a card and ended their turn");
+        Current.Hud.DrewCardNotification(lastPlayedCl);
     }
 
     [ClientRpc]
-    public void PrintPlay()
+    public void PrintPlay(Client lastPlayedCl)
     {
         var lastCard = Current.PlayingPile.GetTopCard();
-        Log.Info($"{Current.CurrentPlayer} played {lastCard.Suit} {lastCard.Rank}");
+        Log.Info($"{lastPlayedCl.Name} played {lastCard.Suit} {lastCard.Rank}");
 
         Current.Hud.UpdatePlayedCard();
+        Current.Hud.PlayedCardNotification(lastPlayedCl);
     }
 
     [ClientRpc]

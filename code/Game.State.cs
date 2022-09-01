@@ -88,7 +88,7 @@ public partial class Game
             Current.PlayingPile = new Pile();
             Current.PlayingPile.AddCard(Current.PlayingDeck.GrabTopCard());
 
-            Current.PrintPlay(To.Everyone);
+            Current.PrintPlay(To.Everyone, Current.Players[0].Client);
 
             Current.PrintCards(To.Everyone);
         }
