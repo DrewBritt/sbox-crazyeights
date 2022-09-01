@@ -1,6 +1,12 @@
 ﻿tablecards {
     width: 100%;
     height: 50%;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+
+    &.open {
+        opacity: 1;
+    }
 
     .pile {
         width: 50%;
