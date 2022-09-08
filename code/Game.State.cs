@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Sandbox;
 
 namespace CrazyEights;
@@ -174,7 +175,7 @@ public partial class Game
     /// <summary>
     /// Player that should play the next card.
     /// </summary>
-    public Pawn CurrentPlayer => Players[CurrentPlayerIndex];
+    public Pawn? CurrentPlayer => Players.ElementAtOrDefault(CurrentPlayerIndex);
 
     #endregion
 }

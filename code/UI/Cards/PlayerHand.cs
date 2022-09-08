@@ -19,6 +19,8 @@ public partial class PlayerHand : Panel
     public PlayerHand()
     {
         StyleSheet.Load("/UI/Cards/PlayerHand.scss");
+
+        BindClass("isPlayersTurn", () => Game.Current.CurrentPlayer == Local.Pawn);
     }
 
     public override void Tick()
