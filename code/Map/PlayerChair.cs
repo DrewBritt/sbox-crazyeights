@@ -29,13 +29,10 @@ public partial class PlayerChair : ModelEntity
     public void SeatPlayer(Pawn player)
     {
         // Enable chair
-        EnableAllCollisions = true;
         EnableDrawing = true;
 
         // Teleport and parent player to chair
-        var transform = this.Transform;
-        transform.Position = transform.Position + Vector3.Up * 50.0f;
-        player.Transform = transform;
+        player.Transform = this.Transform;
         HasPlayer = true;
     }
 }

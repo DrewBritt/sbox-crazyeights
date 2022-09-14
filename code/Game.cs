@@ -14,7 +14,9 @@ public partial class Game : Sandbox.Game
         if(IsServer) return;
 
         // Initialize HUD
-        Hud = new Hud();
+        //Hud = new Hud();
+
+        Log.Info(Global.ServerSteamId);
     }
 
     /// <summary>
@@ -28,11 +30,15 @@ public partial class Game : Sandbox.Game
         if(Current.CurrentState is PlayingState)
         {
             // Spawn spectator pawn
-            return;
+            //return;
         }
 
         // Otherwise let's pawn for this client to play with.
-        var pawn = new Pawn(client);
+        var pawn = new Pawn(client)
+        {
+            CameraMode = new CardsCamera(),
+            Animator = new PawnAnimator()
+        };
         client.Pawn = pawn;
 
         // Get un-occupied chair and spawn pawn at said chair.
@@ -42,19 +48,6 @@ public partial class Game : Sandbox.Game
         {
             randomChair.SeatPlayer(pawn);
         }
-    }
-
-    public override CameraSetup BuildCamera(CameraSetup camSetup)
-    {
-        var pawnRot = Local.Pawn.Rotation;
-
-        camSetup.Rotation = Rotation.From(new Angles(90f, pawnRot.Angles().yaw, 0f));
-        camSetup.Position = new Vector3(0f, 0f, 400f);
-        camSetup.FieldOfView = 75;
-        camSetup.Ortho = false;
-        camSetup.Viewer = null;
-
-        return camSetup;
     }
 
     public override void DoPlayerDevCam(Client client)
