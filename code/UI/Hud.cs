@@ -15,7 +15,7 @@ public partial class Hud : RootPanel
     /// </summary>
     public void UpdatePlayedCard()
     {
-        TableCards.SetPlayCard(Game.Current.PlayingPile.GetTopCard());
+        //TableCards.SetPlayCard(Game.Current.PlayingPile.GetTopCard());
     }
 
     /// <summary>

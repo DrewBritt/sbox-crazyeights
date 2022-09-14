@@ -239,4 +239,24 @@ public class ClothingContainer
 
         return created;
     }
+
+    public void LoadRandomClothes()
+    {
+        var allClothes = ResourceLibrary.GetAll<Clothing>().GroupBy(c => c.Category).ToList();
+        var randomClothes = allClothes.Select(c => Rand.FromArray(c.ToArray()));
+
+        foreach(var item in randomClothes)
+        {
+            // Random chance to skip this item
+            if(Rand.Int(0, 9) == 0)
+                continue;
+
+            // Check for incompatible clothing
+            if(Clothing.Where(c => !c.CanBeWornWith(item)).Any())
+                continue;
+
+            // Otherwise add
+            Clothing.Add(item);
+        }
+    }
 }

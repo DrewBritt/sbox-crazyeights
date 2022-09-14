@@ -12,7 +12,11 @@ public partial class Pawn : AnimatedEntity
 
     public Pawn(Client cl) : this()
     {
-        Clothing.LoadFromClient(cl);
+        if(cl.IsBot)
+            Clothing.LoadRandomClothes();
+        else
+            Clothing.LoadFromClient(cl);
+
         Clothing.DressEntity(this);
     }
 
@@ -74,8 +78,6 @@ public partial class Pawn : AnimatedEntity
         var eyes = GetAttachment("eyes", false) ?? default;
         EyeLocalPosition = eyes.Position + Vector3.Up * 2f - Vector3.Forward * 4f;
         EyeLocalRotation = Input.Rotation;
-
-        Position = Position.WithZ(35);
     }
 
     private void UpdateBodyGroups()

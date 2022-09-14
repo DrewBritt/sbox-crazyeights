@@ -16,7 +16,7 @@ public class PawnAnimator : Sandbox.PawnAnimator
         if(Pawn.LifeState != LifeState.Alive)
             return;
 
-        if(Input.Down(InputButton.Use))
+        if(Input.Down(InputButton.PrimaryAttack))
             SetAnimParameter("game_action", 2);
         else
             SetAnimParameter("game_action", 0);

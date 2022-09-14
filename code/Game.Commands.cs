@@ -126,8 +126,8 @@ public partial class Game
         var lastCard = Current.PlayingPile.GetTopCard();
         Log.Info($"{lastPlayedCl.Name} played {lastCard.Suit} {lastCard.Rank}");
 
-        Current.Hud.UpdatePlayedCard();
-        Current.Hud.PlayedCardNotification(lastPlayedCl);
+        //Current.Hud.UpdatePlayedCard();
+        //Current.Hud.PlayedCardNotification(lastPlayedCl);
     }
 
     [ClientRpc]
