@@ -8,7 +8,7 @@
 }
 
 playerlistentry {
-    width: 50%;
+    width: 45%;
     height: 10%;
     background-color: rgba(0, 150, 250, .3);
     border-radius: 25%;
@@ -19,6 +19,7 @@ playerlistentry {
 
     &.currentplayer {
         opacity: 1;
+        background-color: rgba(0, 200, 255, .5);
     }
 
     .avatar {
@@ -27,7 +28,7 @@ playerlistentry {
 
     .name {
         color: white;
-        font-size: 25px;
+        font-size: 20px;
         margin-left: 10px;
     }
 }
