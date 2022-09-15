@@ -111,7 +111,7 @@ public partial class Pawn : AnimatedEntity
 
     private void CheckNameplates()
     {
-        var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
+        var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 300f)
             .UseHitboxes()
             .WithTag("player")
             .Ignore(this)
