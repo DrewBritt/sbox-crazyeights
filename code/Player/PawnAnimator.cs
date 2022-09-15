@@ -16,12 +16,12 @@ public class PawnAnimator : Sandbox.PawnAnimator
         if(Pawn.LifeState != LifeState.Alive)
             return;
 
+        SetAnimParameter("sit_pose", sitPose);
+
         if(Input.Down(InputButton.PrimaryAttack))
             SetAnimParameter("game_action", 2);
         else
             SetAnimParameter("game_action", 0);
-
-        SetAnimParameter("sit_pose", sitPose);
 
         Vector3 lookPos = Pawn.EyePosition + EyeRotation.Forward * 512;
         SetLookAt("aim_head", lookPos);

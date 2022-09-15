@@ -8,6 +8,8 @@ public partial class Pawn : AnimatedEntity
     [Net, Local] public Hand Hand { get; set; }
     [Net, Predicted] public PawnAnimator Animator { get; set; }
 
+    private WorldNameplate Nameplate;
+
     public Pawn() { }
 
     public Pawn(Client cl) : this()
@@ -34,12 +36,24 @@ public partial class Pawn : AnimatedEntity
 
         EnableDrawing = true;
         EnableAllCollisions = true;
+        EnableHitboxes = true;
         EnableHideInFirstPerson = false;
+
+        Tags.Add("player");
 
         base.Spawn();
     }
 
-	public override void Simulate(Client cl)
+    public override void ClientSpawn()
+    {
+        base.ClientSpawn();
+
+        // Spawn nameplate if not local player's pawn
+        if(Local.Pawn != this)
+            Nameplate = new(this);
+    }
+
+    public override void Simulate(Client cl)
     {
         base.Simulate(cl);
         Animator.Simulate(cl, this, null);
@@ -54,6 +68,7 @@ public partial class Pawn : AnimatedEntity
 
         UpdateEyesTransforms();
         UpdateBodyGroups();
+        CheckNameplates();
     }
 
 	public override void BuildInput(InputBuilder input)
@@ -73,6 +88,12 @@ public partial class Pawn : AnimatedEntity
         input.ViewAngles = clampedAngles;
     }
 
+    public override void PostCameraSetup(ref CameraSetup setup)
+    {
+        setup.ZNear = 0.1f;
+        base.PostCameraSetup(ref setup);
+    }
+
     private void UpdateEyesTransforms()
     {
         var eyes = GetAttachment("eyes", false) ?? default;
@@ -88,9 +109,25 @@ public partial class Pawn : AnimatedEntity
             SetBodyGroup("Head", 0);
     }
 
-    public override void PostCameraSetup(ref CameraSetup setup)
+    private void CheckNameplates()
     {
-        setup.ZNear = 0.1f;
-        base.PostCameraSetup(ref setup);
+        var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
+            .UseHitboxes()
+            .WithTag("player")
+            .Ignore(this)
+            .Run();
+
+        Log.Info(tr.Entity);
+        if(!tr.Hit) return;
+
+        var pawn = tr.Entity as Pawn;
+        pawn.Nameplate.Appeared = 0;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        Nameplate?.Delete();
     }
 }

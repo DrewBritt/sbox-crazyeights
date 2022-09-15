@@ -40,7 +40,7 @@ public partial class CardsCamera : CameraMode
         Rotation = Rotation.Lerp(Rotation, targetRotation, 10f * Time.Delta);
 
         Position = Position.LerpTo(pawn.EyePosition, 1.0f - fac);
-        Rotation = Rotation.Lerp(Rotation, pawn.EyeRotation, 1.0f - fac);
+        Rotation = Rotation.Lerp(Rotation, pawn.EyeRotation, 0.5f - fac);
 
         FieldOfView = FieldOfView.LerpTo(targetFOV, 10f * Time.Delta);
     }

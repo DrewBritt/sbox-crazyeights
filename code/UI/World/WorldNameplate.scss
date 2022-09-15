@@ -1,0 +1,23 @@
+﻿worldnameplate {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity .25s ease-out;
+
+    &.active {
+        opacity: 1;
+    }
+
+    .avatar {
+        height: 15%;
+        width: 15%;
+        border-radius: 50%;
+    }
+
+    .name {
+        font-size: 64px;
+        color: white;
+        text-stroke: 20px black;
+    }
+}
