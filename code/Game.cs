@@ -14,7 +14,7 @@ public partial class Game : Sandbox.Game
         if(IsServer) return;
 
         // Initialize HUD
-        //Hud = new Hud();
+        Hud = new Hud();
 
         Log.Info(Global.ServerSteamId);
     }

@@ -117,7 +117,6 @@ public partial class Game
     public void PrintDraw(Client lastPlayedCl)
     {
         Log.Info($"{Current.CurrentPlayer} drew a card and ended their turn");
-        Current.Hud.DrewCardNotification(lastPlayedCl);
     }
 
     [ClientRpc]
@@ -125,9 +124,6 @@ public partial class Game
     {
         var lastCard = Current.PlayingPile.GetTopCard();
         Log.Info($"{lastPlayedCl.Name} played {lastCard.Suit} {lastCard.Rank}");
-
-        //Current.Hud.UpdatePlayedCard();
-        //Current.Hud.PlayedCardNotification(lastPlayedCl);
     }
 
     [ClientRpc]
