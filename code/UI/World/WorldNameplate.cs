@@ -37,7 +37,7 @@ public partial class WorldNameplate : WorldPanel
         if(!hasSet)
         {
             Avatar.SetTexture($"avatarbig:{pawn.Client.PlayerId}");
-            Name.Text = pawn.Client.Name;
+            Name.Text = pawn.Client.Name.Truncate(23, "...");
             hasSet = true;
         }
     }

@@ -117,7 +117,6 @@ public partial class Pawn : AnimatedEntity
             .Ignore(this)
             .Run();
 
-        Log.Info(tr.Entity);
         if(!tr.Hit) return;
 
         var pawn = tr.Entity as Pawn;
