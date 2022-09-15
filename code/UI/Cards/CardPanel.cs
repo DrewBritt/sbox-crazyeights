@@ -22,16 +22,6 @@ public partial class CardPanel : Panel
     {
         StyleSheet.Load("/UI/Cards/CardPanel.scss");
         SetCard(c);
-
-        // Open suit selection overlay if card is a wildcard
-        if(c.Suit == CardSuit.Wild)
-        { 
-           AddEventListener("onclick", () => OpenSuitSelection(c)); 
-           return;
-        }
-
-        // Otherwise, play the card
-        AddEventListener("onclick", () => ConsoleSystem.Run($"crazyeights_playcard {c.NetworkIdent}"));
     }
 
     /// <summary>
@@ -41,10 +31,5 @@ public partial class CardPanel : Panel
     public void SetCard(Card c)
     {
         Style.BackgroundImage = Texture.Load(FileSystem.Mounted, c.FileName);
-    }
-
-    private void OpenSuitSelection(Card c)
-    {
-        Game.Current.Hud.OpenSuitSelection(c);
     }
 }
