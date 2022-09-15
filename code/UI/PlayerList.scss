@@ -1,0 +1,33 @@
+﻿playerlist {
+    position: absolute;
+    bottom: 0;
+    width: 20%;
+    height: 60%;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+}
+
+playerlistentry {
+    width: 50%;
+    height: 10%;
+    background-color: rgba(0, 150, 250, .3);
+    border-radius: 25%;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    align-items: center;
+    opacity: .5;
+
+    &.currentplayer {
+        opacity: 1;
+    }
+
+    .avatar {
+        border-radius: 50%;
+    }
+
+    .name {
+        color: white;
+        font-size: 25px;
+        margin-left: 10px;
+    }
+}
