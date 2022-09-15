@@ -81,7 +81,7 @@ public partial class Pawn : AnimatedEntity
         var inputAngles = input.ViewAngles;
         var clampedAngles = new Angles(
             inputAngles.pitch.Clamp(-45, 60),
-            inputAngles.yaw.Clamp(-75, 75),
+            inputAngles.yaw.Clamp(-85, 85),
             inputAngles.roll
         );
 
