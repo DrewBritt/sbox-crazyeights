@@ -33,7 +33,7 @@ public partial class Game
         if(!isBot)
             player = ConsoleSystem.Caller.Pawn as Pawn;
         else
-            player = Game.Current.CurrentPlayer;
+            player = Current.CurrentPlayer;
 
         // Stop player if not in playing state.
         if(Current.CurrentState is not PlayingState)
@@ -85,6 +85,7 @@ public partial class Game
 
         // Next player's turn.
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
+        (Current.CurrentState as PlayingState).TurnStarted = 0;
 
         Current.PrintCards(To.Everyone);
     }
@@ -102,7 +103,7 @@ public partial class Game
         if(!isBot)
             player = ConsoleSystem.Caller.Pawn as Pawn;
         else
-            player = Game.Current.CurrentPlayer;
+            player = Current.CurrentPlayer;
 
         // Stop player if not in playing state.
         if(Current.CurrentState is not PlayingState)
@@ -124,6 +125,7 @@ public partial class Game
         Current.PrintDraw(To.Everyone, Current.CurrentPlayer.Client);
 
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
+        (Current.CurrentState as PlayingState).TurnStarted = 0;
 
         Current.PrintCards(To.Everyone);
     }

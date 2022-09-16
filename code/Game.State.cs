@@ -94,9 +94,12 @@ public partial class Game
             Current.PrintCards(To.Everyone);
         }
 
+        public TimeSince TurnStarted = 0;
         public override void Tick()
         {
             base.Tick();
+            if(TurnStarted > 5)
+                Game.Current.CurrentPlayer.ForcePlayCard();
         }
     }
 
