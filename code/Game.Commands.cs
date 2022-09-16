@@ -80,6 +80,13 @@ public partial class Game
         // Update everyone's play pile
         Current.PrintPlay(To.Everyone, Current.CurrentPlayer.Client);
 
+        // Check if player has won.
+        if(player.Hand.GetTopCard() == null)
+        {
+            Current.CurrentState = new GameOverState();
+            return;
+        }
+
         // Action/Wildcard abilities.
         Current.CheckActionCard(card, selectedWildSuit);
 
@@ -117,6 +124,26 @@ public partial class Game
         {
             Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You are not the current player!");
             return;
+        }
+
+        // Check if PlayingDeck is empty, and if so, swap it with DiscardPile (except for last played card)
+        var deck = Current.PlayingDeck;
+        var discard = Current.DiscardPile;
+        if(!deck.Cards.Any())
+        {
+            // Add discard (except for top card) to playing deck
+            var discardTop = discard.GrabTopCard();
+            deck.AddCards(discard.Cards);
+            deck.Shuffle();
+
+            // Clear played Wild cards back to Wild (instead of their played color)
+            var wilds = deck.Cards.Where(c => c.Rank > (CardRank)12).ToList();
+            foreach(var c in wilds)
+                c.Suit = CardSuit.Wild;
+
+            // Clear discard and add old top card back
+            discard.Cards.Clear();
+            discard.AddCard(discardTop);
         }
 
         // Add 1 card from top of pile to player hand, and end their turn.
