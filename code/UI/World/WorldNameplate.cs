@@ -21,7 +21,7 @@ public partial class WorldNameplate : WorldPanel
         PanelBounds = new Rect(-width * .5f, -height * .5f, width, height);
 
         Position = pawn.EyePosition + Vector3.Up * 16;
-        BindClass("active", () => Appeared <= 1);
+        BindClass("active", () => Appeared <= 0.05 || pawn == Game.Current.CurrentPlayer);
     }
 
     [Event.Frame]
