@@ -22,10 +22,18 @@ public partial class Game
     /// </summary>
     /// <param name="cardIdent">NetworkIdent of the Card to be played.</param>
     /// <param name="selectedWildSuit">Selected Wildcard color/suit. Only checked if cardIdent's card is a Wild or Draw4.</param>
+    /// <param name="isBot">Is the caller a bot? (Bots can't have a ConsoleSystem.Caller)</param>
     [ConCmd.Server("ce_playcard", Help = "Play a card from your hand")]
-    public static void PlayCard(int cardIdent, CardSuit selectedWildSuit = 0)
+    public static void PlayCard(int cardIdent, CardSuit selectedWildSuit = 0, bool isBot = false)
     {
-        Pawn player = ConsoleSystem.Caller.Pawn as Pawn;
+        // As bots can't call a command and have a ConsoleSystem.Caller,
+        // we have to manually track if a bots calling this command.
+        // Assume the bot is the current player (this gets verified)
+        Pawn player;
+        if(!isBot)
+            player = ConsoleSystem.Caller.Pawn as Pawn;
+        else
+            player = Game.Current.CurrentPlayer;
 
         // Stop player if not in playing state.
         if(Current.CurrentState is not PlayingState)
@@ -85,9 +93,16 @@ public partial class Game
     /// Player wishes to draw a card from the persistent deck. This will end their turn.
     /// </summary>
     [ConCmd.Server("ce_drawcard", Help = "Draw a card from the playing deck")]
-    public static void DrawCard()
+    public static void DrawCard(bool isBot = false)
     {
-        Pawn player = ConsoleSystem.Caller.Pawn as Pawn;
+        // As bots can't call a command and have a ConsoleSystem.Caller,
+        // we have to manually track if a bots calling this command.
+        // Assume the bot is the current player (this gets verified)
+        Pawn player;
+        if(!isBot)
+            player = ConsoleSystem.Caller.Pawn as Pawn;
+        else
+            player = Game.Current.CurrentPlayer;
 
         // Stop player if not in playing state.
         if(Current.CurrentState is not PlayingState)
