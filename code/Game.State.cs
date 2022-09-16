@@ -39,8 +39,8 @@ public partial class Game
             Current.PlayingDeck.ClearCards();
             Current.PlayingDeck.Delete();
 
-            Current.PlayingPile.ClearCards();
-            Current.PlayingPile.Delete();
+            Current.DiscardPile.ClearCards();
+            Current.DiscardPile.Delete();
 
             foreach(var p in Current.Players)
             {
@@ -59,6 +59,7 @@ public partial class Game
                 // Set startGame if it hasnt been set recently
                 if(startGame <= -1) startGame = 10;
 
+                // After delay, goto next state
                 if(startGame <= 0)
                     SetState(new PlayingState());
             }
@@ -91,8 +92,8 @@ public partial class Game
             }
 
             // Game plays starting card from top of deck.
-            Current.PlayingPile = new Pile();
-            Current.PlayingPile.AddCard(Current.PlayingDeck.GrabTopCard());
+            Current.DiscardPile = new Pile();
+            Current.DiscardPile.AddCard(Current.PlayingDeck.GrabTopCard());
 
             Current.PrintPlay(To.Everyone, Current.Players[0].Client);
 
@@ -157,7 +158,7 @@ public partial class Game
     /// <summary>
     /// Pile in which player's cards are played onto.
     /// </summary>
-    [Net] public Pile PlayingPile { get; set; }
+    [Net] public Pile DiscardPile { get; set; }
 
     #endregion
 

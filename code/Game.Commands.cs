@@ -58,7 +58,7 @@ public partial class Game
         }
 
         // Stop player if the card is not a valid play (wrong suit and rank).
-        Card topCard = Current.PlayingPile.GetTopCard();
+        Card topCard = Current.DiscardPile.GetTopCard();
         if(card.Suit != CardSuit.Wild)
             if(card.Suit != topCard.Suit && card.Rank != topCard.Rank)
             {
@@ -73,9 +73,9 @@ public partial class Game
             return;
         }
 
-        // Remove card from player's hand, and play it onto PlayingPile.
+        // Remove card from player's hand, and play it onto DiscardPile.
         player.Hand.RemoveCard(card);
-        Current.PlayingPile.AddCard(card);
+        Current.DiscardPile.AddCard(card);
 
         // Update everyone's play pile
         Current.PrintPlay(To.Everyone, Current.CurrentPlayer.Client);
@@ -139,7 +139,7 @@ public partial class Game
     [ClientRpc]
     public void PrintPlay(Client lastPlayedCl)
     {
-        var lastCard = Current.PlayingPile.GetTopCard();
+        var lastCard = Current.DiscardPile.GetTopCard();
         Log.Info($"{lastPlayedCl.Name} played {lastCard.Suit} {lastCard.Rank}");
     }
 

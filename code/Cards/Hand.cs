@@ -30,7 +30,7 @@ public partial class Hand : Deck
     }
 
     /// <summary>
-    /// Checks if a given card is playable given the PlayingPile.GetTopCard().
+    /// Checks if a given card is playable given the DiscardPile.GetTopCard().
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
@@ -41,7 +41,7 @@ public partial class Hand : Deck
             return true;
 
         // Then check for same suit or rank.
-        var lastPlayed = Game.Current.PlayingPile.GetTopCard();
+        var lastPlayed = Game.Current.DiscardPile.GetTopCard();
         if(c.Suit == lastPlayed.Suit || c.Rank == lastPlayed.Rank)
             return true;
 
