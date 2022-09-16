@@ -22,7 +22,7 @@ public partial class Game
     /// </summary>
     /// <param name="cardIdent">NetworkIdent of the Card to be played.</param>
     /// <param name="selectedWildSuit">Selected Wildcard color/suit. Only checked if cardIdent's card is a Wild or Draw4.</param>
-    [ConCmd.Server("crazyeights_playcard", Help = "Play a card from your hand")]
+    [ConCmd.Server("ce_playcard", Help = "Play a card from your hand")]
     public static void PlayCard(int cardIdent, CardSuit selectedWildSuit = 0)
     {
         Pawn player = ConsoleSystem.Caller.Pawn as Pawn;
@@ -84,7 +84,7 @@ public partial class Game
     /// <summary>
     /// Player wishes to draw a card from the persistent deck. This will end their turn.
     /// </summary>
-    [ConCmd.Server("crazyeights_drawcard", Help = "Draw a card from the playing deck")]
+    [ConCmd.Server("ce_drawcard", Help = "Draw a card from the playing deck")]
     public static void DrawCard()
     {
         Pawn player = ConsoleSystem.Caller.Pawn as Pawn;
