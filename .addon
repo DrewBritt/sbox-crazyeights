@@ -34,6 +34,18 @@
       "VelocityIterations": 8,
       "SoftBodyIterations": 1,
       "SoftBodySubsteps": 1
+    },
+    "GameSettings": {
+      "ce_maxturntime": {
+        "DisplayType": "Integer",
+        "Choices": [],
+        "ConVarName": "ce_maxturntime",
+        "DisplayName": "Max Turn Time",
+        "DefaultValue": "30",
+        "Description": "How long players have to play a card before their turn is forced.",
+        "Minimum": 1,
+        "Maximum": 60
+      }
     }
   }
 }

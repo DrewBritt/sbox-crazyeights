@@ -98,8 +98,8 @@ public partial class Game
         public override void Tick()
         {
             base.Tick();
-            if(TurnStarted > 5)
-                Game.Current.CurrentPlayer.ForcePlayCard();
+            if(TurnStarted > Game.MaxTurnTime)
+                Current.CurrentPlayer.ForcePlayCard();
         }
     }
 
@@ -136,6 +136,9 @@ public partial class Game
 
         CurrentState.Tick();
     }
+
+    [ConVar.Server("ce_maxturntime", Help = "How long players have to play a card before their turn is forced.")]
+    public static int MaxTurnTime { get; set; }
 
     #endregion
 
