@@ -21,9 +21,7 @@ public partial class Bot : Sandbox.Bot
     {
         Host.AssertServer();
         while(Bot.All.Count > 0)
-        {
             Bot.All[0].Client.Kick();
-        }
     }
 
     public override void BuildInput(InputBuilder input)

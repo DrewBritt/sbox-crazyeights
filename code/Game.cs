@@ -50,6 +50,15 @@ public partial class Game : Sandbox.Game
         }
     }
 
+    public override void ClientDisconnect(Client cl, NetworkDisconnectionReason reason)
+    {
+        // Free player's chair up for use before disconnecting
+        var pawn = (cl.Pawn as Pawn);
+        pawn.PlayerChair.RemovePlayer();
+
+        base.ClientDisconnect(cl, reason);
+    }
+
     public override void DoPlayerDevCam(Client client)
     {
         base.DoPlayerDevCam(client);

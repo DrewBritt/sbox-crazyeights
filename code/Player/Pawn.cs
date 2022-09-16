@@ -7,6 +7,7 @@ public partial class Pawn : AnimatedEntity
     public ClothingContainer Clothing = new();
     [Net, Local] public Hand Hand { get; set; }
     [Net, Predicted] public PawnAnimator Animator { get; set; }
+    public PlayerChair PlayerChair { get; set; }
 
     private WorldNameplate Nameplate;
 
