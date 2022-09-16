@@ -9,6 +9,12 @@
         opacity: 1;
     }
 
+    &.currentplayer {
+        .name {
+            color: rgba(200, 170, 0, 1);
+        }
+    }
+
     .avatar {
         height: 15%;
         width: 15%;

@@ -22,6 +22,7 @@ public partial class WorldNameplate : WorldPanel
 
         Position = pawn.EyePosition + Vector3.Up * 16;
         BindClass("active", () => Appeared <= 0.05 || pawn == Game.Current.CurrentPlayer);
+        BindClass("currentPlayer", () => pawn == Game.Current.CurrentPlayer);
     }
 
     [Event.Frame]
