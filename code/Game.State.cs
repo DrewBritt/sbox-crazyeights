@@ -51,11 +51,16 @@ public partial class Game
             Current.Players.Clear();
         }
 
+        TimeUntil startGame = -1;
         public override void Tick()
         {
             if(Client.All.Count > 1)
             {
-                SetState(new PlayingState());
+                // Set startGame if it hasnt been set recently
+                if(startGame <= -1) startGame = 10;
+
+                if(startGame <= 0)
+                    SetState(new PlayingState());
             }
         }
     }
