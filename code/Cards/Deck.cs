@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sandbox;
 
 namespace CrazyEights;
@@ -66,7 +67,7 @@ public partial class Deck : Entity
     /// Returns card from top/"front" of pile.
     /// </summary>
     /// <returns></returns>
-    public virtual Card GetTopCard() => Cards[0];
+    public virtual Card? GetTopCard() => Cards.FirstOrDefault();
 
     /// <summary>
     /// Returns (AND REMOVES FROM DECK) card from top/"front" of pile.

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Sandbox;
+using static CrazyEights.Game;
 
 namespace CrazyEights;
 
@@ -39,6 +40,8 @@ public partial class Bot : Sandbox.Bot
     public override void Tick()
     {
         base.Tick();
+
+        if(Game.Current.CurrentState is not PlayingState) return;
 
         if(!Game.Current.CurrentPlayer.IsValid() || Game.Current.CurrentPlayer != Client.Pawn) return;
 

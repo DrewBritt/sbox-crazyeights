@@ -34,8 +34,6 @@ public partial class Pawn : AnimatedEntity
     {
         SetModel("models/citizen/crazyeights_citizen.vmdl");
 
-        Hand = new Hand();
-
         EnableDrawing = true;
         EnableAllCollisions = true;
         EnableHitboxes = true;
