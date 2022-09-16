@@ -13,6 +13,8 @@ public partial class Card : Entity
     /// </summary>
     [Net] public CardRank Rank { get; set; }
 
+    public string FileName => $"ui/cards/{Suit}_{Rank}.png";
+
     public override void Spawn()
     {
         base.Spawn();
@@ -20,7 +22,21 @@ public partial class Card : Entity
         Transmit = TransmitType.Always;
     }
 
-    public string FileName => $"ui/cards/{Suit}_{Rank}.png";
+    /// <summary>
+    /// Checks if this card is playable given the DiscardPile.GetTopCard().
+    /// </summary>
+    /// <returns></returns>
+    public bool IsPlayable()
+    {
+        if(Suit == CardSuit.Wild)
+            return true;
+
+        var lastPlayed = Game.Current.DiscardPile.GetTopCard();
+        if(Suit == lastPlayed.Suit || Rank == lastPlayed.Rank)
+            return true;
+
+        return false;
+    }
 }
 
 public enum CardSuit

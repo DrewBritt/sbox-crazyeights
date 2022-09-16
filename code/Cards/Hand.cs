@@ -25,27 +25,8 @@ public partial class Hand : Deck
     {
         var playableCards = Cards.OrderBy(c => c.Suit)
             .ThenBy(c => c.Rank)
-            .Where(c => IsPlayable(c));
+            .Where(c => c.IsPlayable());
         return playableCards;
-    }
-
-    /// <summary>
-    /// Checks if a given card is playable given the DiscardPile.GetTopCard().
-    /// </summary>
-    /// <param name="c"></param>
-    /// <returns></returns>
-    private bool IsPlayable(Card c)
-    {
-        // Check for wild.
-        if(c.Suit == CardSuit.Wild)
-            return true;
-
-        // Then check for same suit or rank.
-        var lastPlayed = Game.Current.DiscardPile.GetTopCard();
-        if(c.Suit == lastPlayed.Suit || c.Rank == lastPlayed.Rank)
-            return true;
-
-        return false;
     }
 
     /// <summary>

@@ -54,7 +54,7 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Clear cards in deck.
+    /// Clear (AND DELETE) cards in deck.
     /// </summary>
     public virtual void ClearCards()
     {
