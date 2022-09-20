@@ -27,13 +27,9 @@ public partial class Deck : Entity
         GenerateDeck();
 
         // Position this entity relative to the GameTable entity placed on the map.
-        var table = Entity.All.OfType<GameTable>().FirstOrDefault();
-        if(table.IsValid())
-        {
-            Transform = table.Transform;
-            Position = Position.WithZ(55);
-            Position = Position.WithX(Position.x - 10);
-        }
+        var spawn = Entity.All.OfType<DeckSpawn>().Where(d => d.SpawnTarget == SpawnTarget.Deck).FirstOrDefault();
+        if(spawn.IsValid())
+            Transform = spawn.Transform;
     }
 
     public override void ClientSpawn()
