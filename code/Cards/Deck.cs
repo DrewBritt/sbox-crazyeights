@@ -15,6 +15,9 @@ public partial class Deck : Entity
     /// </summary>
     public IList<Card> Cards { get; set; }
 
+    public Particles CardStackParticles { get; set; }
+    [Net] public int Count { get; set; }
+
     public Deck()
     {
         Transmit = TransmitType.Always;
@@ -23,6 +26,44 @@ public partial class Deck : Entity
     public override void Spawn()
     {
         GenerateDeck();
+    }
+
+    public override void ClientSpawn()
+    {
+        base.ClientSpawn();
+        UpdateParticles();
+    }
+
+    [Event.Tick.Client]
+    public void OnTickClient()
+    {
+        UpdateParticles();
+    }
+
+    [Event.Tick.Server]
+    public void OnTickServer()
+    {
+        Count = Cards.Count;
+    }
+
+    private void UpdateParticles()
+    {
+        if(CardStackParticles == null)
+        {
+            CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
+            CardStackParticles.SetEntity(0, this, true);
+            return;
+        }
+
+        CardStackParticles.SetPositionComponent(1, 0, Count);
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        if(IsClient && CardStackParticles != null)
+            CardStackParticles.Destroy(true);
     }
 
     /// <summary>
