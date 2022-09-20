@@ -32,7 +32,16 @@ public partial class Pile : Deck
 
     protected override void UpdateParticles()
     {
-        base.UpdateParticles();
+        if(CardStackParticles == null)
+        {
+            CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
+            return;
+        }
+
+        CardStackParticles.SetPosition(0, Position);
+
+        // Count - 1 as the top card is handled by TopCardEntity
+        CardStackParticles.SetPositionComponent(1, 0, Count-1);
     }
 
     public override void OnTickServer()
