@@ -2,8 +2,15 @@
 
 namespace CrazyEights;
 
+/// <summary>
+/// World Model representation of a Card, spawned on Server and replicated on Client.
+/// Card value is set on Server, and manually networked to Clients via RPC to avoid networking every single Card.
+/// </summary>
 public partial class CardEntity : ModelEntity
 {
+    /// <summary>
+    /// Underlying Card value.
+    /// </summary>
     public Card Card { get; set; }
 
     private Texture tex;
@@ -21,6 +28,13 @@ public partial class CardEntity : ModelEntity
         Transmit = TransmitType.Always;
     }
 
+    /// <summary>
+    /// Set Card value on the Client.
+    /// TODO: Look at passing Card, error was throwing earlier regarding not being able to pass Card as a type.
+    /// I call bullshit?
+    /// </summary>
+    /// <param name="rank"></param>
+    /// <param name="suit"></param>
     [ClientRpc]
     public void SetCard(CardRank rank, CardSuit suit)
     {

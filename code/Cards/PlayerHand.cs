@@ -5,28 +5,46 @@ using Sandbox;
 namespace CrazyEights;
 
 /// <summary>
-/// Encapsulates a player's current hand of cards
+/// Encapsulates a player's current hand of cards.
 /// </summary>
 public partial class PlayerHand : BaseNetworkable
 {
+    /// <summary>
+    /// Pawn in which this Hand belongs to.
+    /// </summary>
     [Net] public Pawn Owner { get; set; }
+    /// <summary>
+    /// CardEntity's (and therefore Cards) in this hand.
+    /// </summary>
     [Net] public IList<CardEntity> Cards { get; set; }
 
+    /// <summary>
+    /// Spawn a CardEntity into the world, set its value on the appropriate client, and add it to this Hand.
+    /// </summary>
+    /// <param name="card"></param>
     public void AddCard(Card card)
     {
         CardEntity cardEnt = new CardEntity();
         cardEnt.Transform = Owner.Transform;
-        cardEnt.Card = card;
-        cardEnt.SetCard(To.Single(Owner.Client), card.Rank, card.Suit);
+        cardEnt.Card = card; // Set on server
         Cards.Add(cardEnt);
+        cardEnt.SetCard(To.Single(Owner.Client), card.Rank, card.Suit); // Then on client
     }
 
+    /// <summary>
+    /// Spawn and add a list of CardEntity's and add it to this Hand.
+    /// </summary>
+    /// <param name="cards"></param>
     public void AddCards(IList<Card> cards)
     {
         foreach(var c in cards)
             AddCard(c);
     }
 
+    /// <summary>
+    /// Despawn and remove a CardEntity from this Hand.
+    /// </summary>
+    /// <param name="card"></param>
     public void RemoveCard(CardEntity card)
     {
         if(card.IsValid())
@@ -36,6 +54,9 @@ public partial class PlayerHand : BaseNetworkable
         }
     }
 
+    /// <summary>
+    /// Despawn and remove all CardEntity's from this Hand.
+    /// </summary>
     public void ClearCards()
     {
         foreach(var c in Cards)

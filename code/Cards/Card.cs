@@ -2,6 +2,9 @@
 
 namespace CrazyEights;
 
+/// <summary>
+/// Server/Game logic representation of a card. Generated in Decks and distributed by State logic.
+/// </summary>
 public partial class Card
 {
     /// <summary>
@@ -12,7 +15,9 @@ public partial class Card
     /// Rank/Number/Action value of the card.
     /// </summary>
     public CardRank Rank { get; set; }
-
+    /// <summary>
+    /// FileName of the texture for the given suit/rank combo.
+    /// </summary>
     public string FileName => $"ui/cards/{Suit}_{Rank}.png";
 
     /// <summary>
