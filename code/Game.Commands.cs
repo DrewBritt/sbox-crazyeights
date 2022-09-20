@@ -95,7 +95,7 @@ public partial class Game
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
         (Current.CurrentState as PlayingState).TurnStarted = 0;
 
-        //Current.PrintCards(To.Everyone);
+        Current.PrintCards(To.Everyone);
     }
 
     /// <summary>
@@ -150,25 +150,18 @@ public partial class Game
         // Add 1 card from top of pile to player hand, and end their turn.
         player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
 
-        //Current.PrintDraw(To.Everyone, Current.CurrentPlayer.Client);
+        Current.PrintDraw(To.Everyone, Current.CurrentPlayer.Client);
 
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
         (Current.CurrentState as PlayingState).TurnStarted = 0;
 
-        //Current.PrintCards(To.Everyone);
+        Current.PrintCards(To.Everyone);
     }
 
     [ClientRpc]
     public void PrintDraw(Client lastPlayedCl)
     {
         Log.Info($"{Current.CurrentPlayer} drew a card and ended their turn");
-    }
-
-    [ClientRpc]
-    public void PrintPlay(Client lastPlayedCl)
-    {
-        var lastCard = Current.DiscardPile.GetTopCard();
-        Log.Info($"{lastPlayedCl.Name} played {lastCard.Suit} {lastCard.Rank}");
     }
 
     [ClientRpc]

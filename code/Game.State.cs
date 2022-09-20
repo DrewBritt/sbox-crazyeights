@@ -96,7 +96,6 @@ public partial class Game
             var firstCard = Current.PlayingDeck.GrabTopCard();
             Current.DiscardPile.AddCard(firstCard);
 
-            //Current.PrintPlay(To.Everyone, Current.Players[0].Client);
             Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
 
             Current.PrintCards(To.Everyone);
