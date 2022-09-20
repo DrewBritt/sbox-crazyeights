@@ -12,7 +12,7 @@ public partial class Hud : RootPanel
     /// Opens suit selection overlay for draw 4 and wild cards.
     /// </summary>
     /// <param name="c"></param>
-    public void OpenSuitSelection(Card c)
+    public void OpenSuitSelection(CardEntity c)
     {
         SuitSelectionOverlay.OpenPanel(c);
     }

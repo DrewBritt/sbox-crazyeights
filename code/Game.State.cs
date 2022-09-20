@@ -36,17 +36,17 @@ public partial class Game
             // Should only run when players disconnect and Client.All.Count <= 1.
             if(Current == null) return;
 
+            foreach(var p in Current.Players)
+            {
+                p.Hand.ClearCards();
+                p.Hand = null;
+            }
+
             Current.PlayingDeck.ClearCards();
             Current.PlayingDeck.Delete();
 
             Current.DiscardPile.ClearCards();
             Current.DiscardPile.Delete();
-
-            foreach(var p in Current.Players)
-            {
-                p.Hand.ClearCards();
-                p.Hand.Delete();
-            }
 
             Current.Players.Clear();
         }
@@ -84,18 +84,22 @@ public partial class Game
             {
                 Pawn player = Client.All[i].Pawn as Pawn;
                 Current.Players.Add(player);
-                player.Hand = new Hand();
+                player.Hand = new PlayerHand();
+                player.Hand.Owner = player;
 
                 // 7 cards for each player.
                 for(int j = 0; j < 7; j++)
-                    player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
+                {
+                    var card = Current.PlayingDeck.GrabTopCard();
+                    player.Hand.AddCard(card);
+                }
             }
 
             // Game plays starting card from top of deck.
             Current.DiscardPile = new Pile();
             Current.DiscardPile.AddCard(Current.PlayingDeck.GrabTopCard());
 
-            Current.PrintPlay(To.Everyone, Current.Players[0].Client);
+            //Current.PrintPlay(To.Everyone, Current.Players[0].Client);
 
             Current.PrintCards(To.Everyone);
         }

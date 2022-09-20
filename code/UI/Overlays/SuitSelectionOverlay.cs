@@ -6,7 +6,7 @@ namespace CrazyEights;
 [UseTemplate]
 public partial class SuitSelectionOverlay : Panel
 {
-    private Card CardToPlay;
+    private CardEntity CardToPlay;
 
     public SuitSelectionOverlay()
     {
@@ -18,7 +18,7 @@ public partial class SuitSelectionOverlay : Panel
             panel.AddEventListener("onclick", () => SelectSuit(CardToPlay.NetworkIdent, GetChildIndex(panel)));
     }
 
-    public void OpenPanel(Card c)
+    public void OpenPanel(CardEntity c)
     {
         CardToPlay = c;
 

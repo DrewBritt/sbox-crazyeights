@@ -6,7 +6,7 @@ namespace CrazyEights;
 public partial class Pawn : AnimatedEntity
 {
     public ClothingContainer Clothing = new();
-    [Net, Local] public Hand Hand { get; set; }
+    [Net] public PlayerHand Hand { get; set; }
     [Net, Predicted] public PawnAnimator Animator { get; set; }
     public PlayerChair PlayerChair { get; set; }
 
@@ -86,12 +86,6 @@ public partial class Pawn : AnimatedEntity
         );
 
         input.ViewAngles = clampedAngles;
-    }
-
-    public override void PostCameraSetup(ref CameraSetup setup)
-    {
-        setup.ZNear = 0.1f;
-        base.PostCameraSetup(ref setup);
     }
 
     private void UpdateEyesTransforms()

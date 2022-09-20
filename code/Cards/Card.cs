@@ -2,25 +2,18 @@
 
 namespace CrazyEights;
 
-public partial class Card : Entity
+public partial class Card
 {
     /// <summary>
     /// Suit/Color value of the card.
     /// </summary>
-    [Net] public CardSuit Suit { get; set; }
+    public CardSuit Suit { get; set; }
     /// <summary>
     /// Rank/Number/Action value of the card.
     /// </summary>
-    [Net] public CardRank Rank { get; set; }
+    public CardRank Rank { get; set; }
 
     public string FileName => $"ui/cards/{Suit}_{Rank}.png";
-
-    public override void Spawn()
-    {
-        base.Spawn();
-
-        Transmit = TransmitType.Always;
-    }
 
     /// <summary>
     /// Checks if this card is playable given the DiscardPile.GetTopCard().

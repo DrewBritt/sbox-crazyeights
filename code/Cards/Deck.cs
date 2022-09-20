@@ -13,7 +13,7 @@ public partial class Deck : Entity
     /// <summary>
     /// All cards in this deck.
     /// </summary>
-    [Net, Local] public IList<Card> Cards { get; set; }
+    public IList<Card> Cards { get; set; }
 
     public Deck()
     {
@@ -58,8 +58,6 @@ public partial class Deck : Entity
     /// </summary>
     public virtual void ClearCards()
     {
-        foreach(var card in Cards)
-            card.Delete();
         Cards.Clear();
     }
 

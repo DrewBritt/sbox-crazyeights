@@ -50,8 +50,8 @@ public partial class Game
         }
 
         // Stop player if the card they want to play isn't in their hand (or it isn't valid).
-        Card card = player.Hand.Cards.Where(c => c.NetworkIdent == cardIdent).FirstOrDefault();
-        if(!card.IsValid())
+        CardEntity cardEnt = player.Hand.Cards.Where(c => c.NetworkIdent == cardIdent).FirstOrDefault();
+        if(!cardEnt.IsValid())
         {
             Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: That card isn't in your hand (or doesn't exist...)");
             return;
@@ -59,8 +59,8 @@ public partial class Game
 
         // Stop player if the card is not a valid play (wrong suit and rank).
         Card topCard = Current.DiscardPile.GetTopCard();
-        if(card.Suit != CardSuit.Wild)
-            if(card.Suit != topCard.Suit && card.Rank != topCard.Rank)
+        if(cardEnt.Suit != CardSuit.Wild)
+            if(cardEnt.Suit != topCard.Suit && cardEnt.Rank != topCard.Rank)
             {
                 Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: That card is not a legal play! (Wrong suit and rank)");
                 return;
@@ -74,27 +74,27 @@ public partial class Game
         }
 
         // Remove card from player's hand, and play it onto DiscardPile.
-        player.Hand.RemoveCard(card);
-        Current.DiscardPile.AddCard(card);
+        player.Hand.RemoveCard(cardEnt);
+        Current.DiscardPile.AddCard(cardEnt.Card);
 
         // Update everyone's play pile
-        Current.PrintPlay(To.Everyone, Current.CurrentPlayer.Client);
+        //Current.PrintPlay(To.Everyone, Current.CurrentPlayer.Client);
 
         // Check if player has won.
-        if(player.Hand.GetTopCard() == null)
+        if(player.Hand.Cards.Count == 0)
         {
             Current.CurrentState = new GameOverState();
             return;
         }
 
         // Action/Wildcard abilities.
-        Current.CheckActionCard(card, selectedWildSuit);
+        Current.CheckActionCard(cardEnt.Card, selectedWildSuit);
 
         // Next player's turn.
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
         (Current.CurrentState as PlayingState).TurnStarted = 0;
 
-        Current.PrintCards(To.Everyone);
+        //Current.PrintCards(To.Everyone);
     }
 
     /// <summary>
@@ -149,12 +149,12 @@ public partial class Game
         // Add 1 card from top of pile to player hand, and end their turn.
         player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
 
-        Current.PrintDraw(To.Everyone, Current.CurrentPlayer.Client);
+        //Current.PrintDraw(To.Everyone, Current.CurrentPlayer.Client);
 
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
         (Current.CurrentState as PlayingState).TurnStarted = 0;
 
-        Current.PrintCards(To.Everyone);
+        //Current.PrintCards(To.Everyone);
     }
 
     [ClientRpc]
