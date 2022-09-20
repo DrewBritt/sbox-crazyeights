@@ -152,6 +152,7 @@ public partial class Game
 
         Current.PrintDraw(To.Everyone, Current.CurrentPlayer.Client);
 
+        // Next player's turn.
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
         (Current.CurrentState as PlayingState).TurnStarted = 0;
 

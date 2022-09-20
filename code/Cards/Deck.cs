@@ -14,7 +14,6 @@ public partial class Deck : Entity
     /// All cards in this deck.
     /// </summary>
     public IList<Card> Cards { get; set; }
-
     public Particles CardStackParticles { get; set; }
     [Net, Change] public int Count { get; set; }
 
@@ -23,20 +22,11 @@ public partial class Deck : Entity
         Transmit = TransmitType.Always;
     }
 
-    public void OnCountChanged(int oldValue, int newValue)
-    {
-        if(oldValue == newValue) return;
-
-        if(CardStackParticles != null)
-        {
-            CardStackParticles.Destroy(true);
-            CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
-        }
-    }
-
     public override void Spawn()
     {
         GenerateDeck();
+
+        // Position this entity relative to the GameTable entity placed on the map.
         var table = Entity.All.OfType<GameTable>().FirstOrDefault();
         if(table.IsValid())
         {
@@ -48,40 +38,49 @@ public partial class Deck : Entity
 
     public override void ClientSpawn()
     {
+        // Create particle system on Deck creation.
         base.ClientSpawn();
-        UpdateParticles();
+        CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
     }
 
     [Event.Tick.Client]
     public void OnTickClient()
     {
+        // Update particle system every tick.
         UpdateParticles();
     }
 
     [Event.Tick.Server]
     public virtual void OnTickServer()
     {
+        // Update Count every tick.
         Count = Cards.Count;
     }
 
-    protected virtual void UpdateParticles()
+    /// <summary>
+    /// Called on Client when Count variable has changed. Used to update CardStackParticles to display current Count size.
+    /// As card_stack.vpcf uses an Instant Emitter, the particle system has to be recreated to repopulate it with a new Count.
+    /// </summary>
+    /// <param name="oldValue"></param>
+    /// <param name="newValue"></param>
+    public void OnCountChanged(int oldValue, int newValue)
     {
-        if(CardStackParticles == null)
-        {
-            CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
-            return;
-        }
+        if(oldValue == newValue) return;
 
-        CardStackParticles.SetPosition(0, Position);
-        CardStackParticles.SetPositionComponent(1, 0, Count);
+        if(CardStackParticles != null)
+        {
+            CardStackParticles.Destroy(true);
+            CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
+        }
     }
 
-    protected override void OnDestroy()
+    /// <summary>
+    /// Update Control Points of the CardStackParticles.
+    /// </summary>
+    protected virtual void UpdateParticles()
     {
-        base.OnDestroy();
-
-        if(IsClient && CardStackParticles != null)
-            CardStackParticles.Destroy(true);
+        CardStackParticles.SetPosition(0, Position);
+        CardStackParticles.SetPositionComponent(1, 0, Count);
     }
 
     /// <summary>
@@ -191,5 +190,13 @@ public partial class Deck : Entity
             Cards[rand] = Cards[i];
             Cards[i] = temp;
         }
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        if(IsClient && CardStackParticles != null)
+            CardStackParticles.Destroy(true);
     }
 }

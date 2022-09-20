@@ -32,8 +32,9 @@ public partial class Game
 
         public WaitingForPlayersState() : base() 
         {
-            // Don't run on game startup (current returns null always).
-            // Should only run when players disconnect and Client.All.Count <= 1.
+            // CLEANUP GAME ENTITIES
+            // Won't run on game startup (Current will return null for some reason).
+            // Should only run when players disconnect and Client.All.Count == 1.
             if(Current == null) return;
 
             foreach(var p in Current.Players)
@@ -96,6 +97,7 @@ public partial class Game
             var firstCard = Current.PlayingDeck.GrabTopCard();
             Current.DiscardPile.AddCard(firstCard);
 
+            // Update last played card for clients
             Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
 
             Current.PrintCards(To.Everyone);

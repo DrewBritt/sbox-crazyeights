@@ -11,11 +11,17 @@ public partial class Pile : Deck
 {
     public Pile() : base() { }
 
+    /// <summary>
+    /// Displays the last played card/the top card on the pile.
+    /// </summary>
     [Net] public CardEntity TopCardEntity { get; set; }
 
     public override void Spawn()
     {
+        // Pile should generate empty, not with a fresh deck.
         Cards = new List<Card>();
+
+        // Position relative to table.
         var table = Entity.All.OfType<GameTable>().FirstOrDefault();
         if(table.IsValid())
         {
@@ -24,6 +30,7 @@ public partial class Pile : Deck
             Position = Position.WithX(Position.x + 10);
         }
 
+        // Position/Rotate TopCardEntity relative to pile and particle system
         TopCardEntity = new CardEntity();
         TopCardEntity.Transform = table.Transform;
         TopCardEntity.Position = TopCardEntity.Position.WithZ(55).WithX(Position.x);
@@ -32,12 +39,6 @@ public partial class Pile : Deck
 
     protected override void UpdateParticles()
     {
-        if(CardStackParticles == null)
-        {
-            CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
-            return;
-        }
-
         CardStackParticles.SetPosition(0, Position);
 
         // Count - 1 as the top card is handled by TopCardEntity
