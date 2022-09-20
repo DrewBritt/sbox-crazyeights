@@ -16,16 +16,34 @@ public partial class Deck : Entity
     public IList<Card> Cards { get; set; }
 
     public Particles CardStackParticles { get; set; }
-    [Net] public int Count { get; set; }
+    [Net, Change] public int Count { get; set; }
 
     public Deck()
     {
         Transmit = TransmitType.Always;
     }
 
+    public void OnCountChanged(int oldValue, int newValue)
+    {
+        if(oldValue == newValue) return;
+
+        if(CardStackParticles != null)
+        {
+            CardStackParticles.Destroy(true);
+            CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
+        }
+    }
+
     public override void Spawn()
     {
         GenerateDeck();
+        var table = Entity.All.OfType<GameTable>().FirstOrDefault();
+        if(table.IsValid())
+        {
+            Transform = table.Transform;
+            Position = Position.WithZ(55);
+            Position = Position.WithX(Position.x - 10);
+        }
     }
 
     public override void ClientSpawn()
@@ -41,20 +59,20 @@ public partial class Deck : Entity
     }
 
     [Event.Tick.Server]
-    public void OnTickServer()
+    public virtual void OnTickServer()
     {
         Count = Cards.Count;
     }
 
-    private void UpdateParticles()
+    protected virtual void UpdateParticles()
     {
         if(CardStackParticles == null)
         {
             CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
-            CardStackParticles.SetEntity(0, this, true);
             return;
         }
 
+        CardStackParticles.SetPosition(0, Position);
         CardStackParticles.SetPositionComponent(1, 0, Count);
     }
 
@@ -95,7 +113,7 @@ public partial class Deck : Entity
     }
 
     /// <summary>
-    /// Clear (AND DELETE) cards in deck.
+    /// Clear cards in deck.
     /// </summary>
     public virtual void ClearCards()
     {

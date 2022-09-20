@@ -79,6 +79,7 @@ public partial class Game
 
         // Update everyone's play pile
         //Current.PrintPlay(To.Everyone, Current.CurrentPlayer.Client);
+        Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, cardEnt.Card.Rank, cardEnt.Card.Suit);
 
         // Check if player has won.
         if(player.Hand.Cards.Count == 0)

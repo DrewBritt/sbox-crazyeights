@@ -42,12 +42,8 @@ public partial class Game
                 p.Hand = null;
             }
 
-            Current.PlayingDeck.ClearCards();
             Current.PlayingDeck.Delete();
-
-            Current.DiscardPile.ClearCards();
             Current.DiscardPile.Delete();
-
             Current.Players.Clear();
         }
 
@@ -97,9 +93,11 @@ public partial class Game
 
             // Game plays starting card from top of deck.
             Current.DiscardPile = new Pile();
-            Current.DiscardPile.AddCard(Current.PlayingDeck.GrabTopCard());
+            var firstCard = Current.PlayingDeck.GrabTopCard();
+            Current.DiscardPile.AddCard(firstCard);
 
             //Current.PrintPlay(To.Everyone, Current.Players[0].Client);
+            Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
 
             Current.PrintCards(To.Everyone);
         }
