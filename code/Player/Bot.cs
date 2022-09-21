@@ -26,14 +26,9 @@ public partial class Bot : Sandbox.Bot
             Bot.All[0].Client.Kick();
     }
 
-    TimeUntil toggleDab;
     public override void BuildInput(InputBuilder input)
     {
         base.BuildInput(input);
-
-        if(toggleDab > 0) return;
-        input.SetButton(InputButton.PrimaryAttack, !input.Down(InputButton.PrimaryAttack));
-        toggleDab = Rand.Int(3, 19);
     }
 
     TimeUntil playCardDelay;
