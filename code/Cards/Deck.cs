@@ -8,7 +8,7 @@ namespace CrazyEights;
 /// <summary>
 /// A deck/list of cards with deck management functionality to be used for a variety of purposes.
 /// </summary>
-public partial class Deck : Entity
+public partial class Deck : ModelEntity
 {
     /// <summary>
     /// All cards in this deck.
@@ -30,6 +30,10 @@ public partial class Deck : Entity
         var spawn = Entity.All.OfType<DeckSpawn>().Where(d => d.SpawnTarget == SpawnTarget.Deck).FirstOrDefault();
         if(spawn.IsValid())
             Transform = spawn.Transform;
+
+        Tags.Add("deck");
+        EnableAllCollisions = true;
+        SetupPhysicsFromAABB(PhysicsMotionType.Keyframed, new Vector3(-5, -4, 0), new Vector3(5, 4, 5));
     }
 
     public override void ClientSpawn()
