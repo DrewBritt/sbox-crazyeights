@@ -13,7 +13,6 @@ public partial class Pawn : AnimatedEntity
     private WorldNameplate Nameplate;
 
     public Pawn() { }
-
     public Pawn(Client cl) : this()
     {
         if(cl.IsBot)
@@ -24,7 +23,7 @@ public partial class Pawn : AnimatedEntity
         Clothing.DressEntity(this);
     }
 
-	public CameraMode CameraMode
+    public CameraMode CameraMode
     {
         get => Components.Get<CameraMode>();
         set => Components.Add(value);
@@ -57,13 +56,24 @@ public partial class Pawn : AnimatedEntity
     {
         base.Simulate(cl);
         Animator.Simulate(cl, this, null);
-
         UpdateEyesTransforms();
     }
 
     public override void FrameSimulate(Client cl)
     {
         base.FrameSimulate(cl);
+
+        if(Input.Pressed(InputButton.PrimaryAttack))
+        {
+            var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
+                .WithAnyTags("card", "deck")
+                .EntitiesOnly()
+                .Ignore(this)
+                .Run();
+            if(tr.Hit)
+                GamePieceInteract(tr.Entity);
+        }
+
         Animator.FrameSimulate(cl, this, null);
 
         UpdateEyesTransforms();
@@ -71,7 +81,20 @@ public partial class Pawn : AnimatedEntity
         CheckNameplates();
     }
 
-	public override void BuildInput(InputBuilder input)
+    private void GamePieceInteract(Entity piece)
+    {
+        if(IsServer) return;
+
+        if(piece is not Deck && piece is not CardEntity) return;
+
+        if(piece is Deck)
+            ConsoleSystem.Run($"ce_drawcard {Client.IsBot}");
+
+        if(piece is CardEntity)
+            ConsoleSystem.Run($"ce_playcard {piece.NetworkIdent} 0 {Client.IsBot}");
+    }
+
+    public override void BuildInput(InputBuilder input)
     {
         base.BuildInput(input);
 
