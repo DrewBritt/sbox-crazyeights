@@ -26,6 +26,9 @@ public partial class CardEntity : ModelEntity
 
         SetModel("models/card/card.vmdl");
         Transmit = TransmitType.Always;
+        EnableTraceAndQueries = true;
+        SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
+        Tags.Add("card");
     }
 
     /// <summary>
