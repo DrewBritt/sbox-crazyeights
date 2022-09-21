@@ -18,6 +18,8 @@ public partial class PlayerHand : BaseNetworkable
     /// </summary>
     [Net] public IList<CardEntity> Cards { get; set; }
 
+    public Vector3 CardLeftPos, CardRightPos;
+
     /// <summary>
     /// Spawn a CardEntity into the world, set its value on the appropriate client, and add it to this Hand.
     /// </summary>

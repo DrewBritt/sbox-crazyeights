@@ -5,6 +5,7 @@ namespace CrazyEights;
 public class PawnAnimator : Sandbox.PawnAnimator
 {
     int sitPose = 0;
+    Pawn Player => Pawn as Pawn;
 
     public PawnAnimator() : base()
     {
@@ -17,6 +18,7 @@ public class PawnAnimator : Sandbox.PawnAnimator
             return;
 
         SetAnimParameter("sit_pose", sitPose);
+        SetAnimParameter("hasCards", Player.Hand?.Cards.Count > 0);
 
         if(Input.Down(InputButton.PrimaryAttack))
             SetAnimParameter("game_action", 2);
