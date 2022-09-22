@@ -38,7 +38,7 @@ public partial class SuitSelectionOverlay : Panel
 
     private void SelectSuit(int networkIdent, int suitIndex)
     {
-        ConsoleSystem.Run($"crazyeights_playcard {networkIdent} {suitIndex}"); 
+        ConsoleSystem.Run($"ce_playcard {networkIdent} {suitIndex} 0"); 
         ClosePanel();
     }
 }
