@@ -68,7 +68,6 @@ public partial class Pawn : AnimatedEntity
             var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
                 .WithAnyTags("card", "deck")
                 .EntitiesOnly()
-                .Ignore(this)
                 .Run();
             if(tr.Hit)
                 GamePieceInteract(tr.Entity);
@@ -79,6 +78,9 @@ public partial class Pawn : AnimatedEntity
         UpdateEyesTransforms();
         UpdateBodyGroups();
         CheckNameplates();
+
+        var attachment = GetAttachment("handStartPos").GetValueOrDefault();
+        DebugOverlay.Line(attachment.Position, Position + Vector3.Up * 43 );
     }
 
     private void GamePieceInteract(Entity piece)
@@ -91,7 +93,13 @@ public partial class Pawn : AnimatedEntity
             ConsoleSystem.Run($"ce_drawcard {Client.IsBot}");
 
         if(piece is CardEntity)
-            ConsoleSystem.Run($"ce_playcard {piece.NetworkIdent} 0 {Client.IsBot}");
+        {
+            var card = piece as CardEntity;
+            if(card.Suit == CardSuit.Wild)
+                Game.Current.Hud.OpenSuitSelection(card);
+            else
+                ConsoleSystem.Run($"ce_playcard {card.NetworkIdent} 0 {Client.IsBot}");
+        }
     }
 
     public override void BuildInput(InputBuilder input)
@@ -103,8 +111,8 @@ public partial class Pawn : AnimatedEntity
 
         var inputAngles = input.ViewAngles;
         var clampedAngles = new Angles(
-            inputAngles.pitch.Clamp(-45, 60),
-            inputAngles.yaw.Clamp(-85, 85),
+            inputAngles.pitch.Clamp(-60, 75),
+            inputAngles.yaw.Clamp(-80, 80),
             inputAngles.roll
         );
 

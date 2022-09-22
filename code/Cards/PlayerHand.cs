@@ -18,7 +18,13 @@ public partial class PlayerHand : BaseNetworkable
     /// </summary>
     [Net] public IList<CardEntity> Cards { get; set; }
 
-    public Vector3 CardLeftPos, CardRightPos;
+    public Entity HandStartPos;
+
+    public void Initialize()
+    {
+        HandStartPos = new();
+        HandStartPos.SetParent(Owner, "handStartPos");
+    }
 
     /// <summary>
     /// Spawn a CardEntity into the world, set its value on the appropriate client, and add it to this Hand.
@@ -27,7 +33,10 @@ public partial class PlayerHand : BaseNetworkable
     public void AddCard(Card card)
     {
         CardEntity cardEnt = new CardEntity();
-        cardEnt.Transform = Owner.Transform;
+        cardEnt.SetParent(Owner, "handStartPos");
+        var attachment = Owner.GetAttachment("handStartPos").GetValueOrDefault();
+        cardEnt.LocalPosition = Vector3.Forward * Cards.Count;
+        cardEnt.LocalRotation = Rotation.LookAt(attachment.Position - (Owner.Position + Vector3.Up * 43), Vector3.Up);
         cardEnt.Card = card; // Set on server
         Cards.Add(cardEnt);
         cardEnt.SetCard(To.Single(Owner.Client), card.Rank, card.Suit); // Then on client

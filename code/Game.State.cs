@@ -81,8 +81,11 @@ public partial class Game
             {
                 Pawn player = Client.All[i].Pawn as Pawn;
                 Current.Players.Add(player);
-                player.Hand = new PlayerHand();
-                player.Hand.Owner = player;
+                player.Hand = new PlayerHand()
+                {
+                    Owner = player,
+                };
+                player.Hand.Initialize();
 
                 // 7 cards for each player.
                 for(int j = 0; j < 7; j++)
