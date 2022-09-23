@@ -61,6 +61,17 @@ public partial class Game : Sandbox.Game
 
     public override void DoPlayerDevCam(Client client)
     {
-        base.DoPlayerDevCam(client);
+        Host.AssertServer();
+
+        var camera = client.Components.Get<DevCamera>(true);
+
+        if(camera == null)
+        {
+            camera = new DevCamera();
+            client.Components.Add(camera);
+            return;
+        }
+
+        camera.Enabled = !camera.Enabled;
     }
 }
