@@ -78,9 +78,6 @@ public partial class Pawn : AnimatedEntity
         UpdateEyesTransforms();
         UpdateBodyGroups();
         CheckNameplates();
-
-        var attachment = GetAttachment("handStartPos").GetValueOrDefault();
-        DebugOverlay.Line(attachment.Position, Position + Vector3.Up * 43 );
     }
 
     private void GamePieceInteract(Entity piece)
@@ -94,6 +91,8 @@ public partial class Pawn : AnimatedEntity
 
         if(piece is CardEntity)
         {
+            if(!Hand.Cards.Contains(piece)) return;
+
             var card = piece as CardEntity;
             if(card.Suit == CardSuit.Wild)
                 Game.Current.Hud.OpenSuitSelection(card);
