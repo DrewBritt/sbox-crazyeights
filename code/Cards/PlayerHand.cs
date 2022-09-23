@@ -33,13 +33,21 @@ public partial class PlayerHand : BaseNetworkable
     public void AddCard(Card card)
     {
         CardEntity cardEnt = new CardEntity();
+
+        // Set card value on server
+        cardEnt.Card = card;
+
+        // Then on client
+        Cards.Add(cardEnt);
+        cardEnt.SetCard(To.Single(Owner.Client), card.Rank, card.Suit);
+
+        // Position card ent in hand
         cardEnt.SetParent(Owner, "handStartPos");
         var attachment = Owner.GetAttachment("handStartPos").GetValueOrDefault();
-        cardEnt.LocalPosition = Vector3.Forward * Cards.Count;
-        cardEnt.LocalRotation = Rotation.LookAt(attachment.Position - (Owner.Position + Vector3.Up * 43), Vector3.Up);
-        cardEnt.Card = card; // Set on server
-        Cards.Add(cardEnt);
-        cardEnt.SetCard(To.Single(Owner.Client), card.Rank, card.Suit); // Then on client
+        cardEnt.LocalPosition = (-.5f + Vector3.Forward * Cards.Count) + (Vector3.Right * Cards.Count * .25f) + (Vector3.Up * 1.5f);
+        cardEnt.LocalRotation = Rotation.FromPitch(86).RotateAroundAxis(Vector3.Forward, -80f);
+
+        UpdateCardPositions();
     }
 
     /// <summary>
@@ -50,6 +58,8 @@ public partial class PlayerHand : BaseNetworkable
     {
         foreach(var c in cards)
             AddCard(c);
+
+        UpdateCardPositions();
     }
 
     /// <summary>
@@ -63,6 +73,8 @@ public partial class PlayerHand : BaseNetworkable
             Cards.Remove(card);
             card.Delete();
         }
+
+        UpdateCardPositions();
     }
 
     /// <summary>
@@ -73,6 +85,15 @@ public partial class PlayerHand : BaseNetworkable
         foreach(var c in Cards)
             c.Delete();
         Cards.Clear();
+    }
+
+    private void UpdateCardPositions()
+    {
+        for(int i = 0; i < Cards.Count; i++)
+        {
+            var card = Cards[i];
+            card.LocalPosition = (-.75f + Vector3.Forward * (i + 1)) + (Vector3.Right * (.25f * (i+1))) + (Vector3.Up * 3f);
+        }
     }
 
     #region Hand Analysis (for bots/AFK players)
