@@ -85,7 +85,6 @@ public partial class Game
                 {
                     Owner = player,
                 };
-                player.Hand.Initialize();
 
                 // 7 cards for each player.
                 for(int j = 0; j < 7; j++)

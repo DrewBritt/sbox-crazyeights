@@ -18,14 +18,6 @@ public partial class PlayerHand : BaseNetworkable
     /// </summary>
     [Net] public IList<CardEntity> Cards { get; set; }
 
-    public Entity HandStartPos;
-
-    public void Initialize()
-    {
-        HandStartPos = new();
-        HandStartPos.SetParent(Owner, "handStartPos");
-    }
-
     /// <summary>
     /// Spawn a CardEntity into the world, set its value on the appropriate client, and add it to this Hand.
     /// </summary>
@@ -34,11 +26,11 @@ public partial class PlayerHand : BaseNetworkable
     {
         CardEntity cardEnt = new CardEntity();
 
-        // Set card value on server
-        cardEnt.Card = card;
-
-        // Then on client
+        // Net cardEnt's existence to client, then set on server
         Cards.Add(cardEnt);
+        cardEnt.Card = card;
+        
+        // Then net card texture
         cardEnt.SetCard(To.Single(Owner.Client), card.Rank, card.Suit);
 
         // Position card ent in hand
