@@ -21,6 +21,7 @@ public class PawnAnimator : Sandbox.PawnAnimator
         SetAnimParameter("sit_pose", sitPose);
         SetAnimParameter("hasCards", Player.Hand?.Cards.Count > 0);
 
+        // Play Interact animation
         if(TimeSinceGameAction < 1)
             SetAnimParameter("game_action", 1);
         else
