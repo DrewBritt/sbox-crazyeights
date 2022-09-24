@@ -36,8 +36,8 @@ public partial class PlayerHand : BaseNetworkable
         // Position card ent in hand
         cardEnt.SetParent(Owner, "handStartPos");
         var attachment = Owner.GetAttachment("handStartPos").GetValueOrDefault();
-        cardEnt.LocalPosition = (-.5f + Vector3.Forward * Cards.Count) + (Vector3.Right * Cards.Count * .25f) + (Vector3.Up * 1.5f);
-        cardEnt.LocalRotation = Rotation.FromPitch(86).RotateAroundAxis(Vector3.Forward, -80f);
+        cardEnt.LocalRotation = Rotation.FromPitch(100).RotateAroundAxis(Vector3.Forward, -60f);
+        cardEnt.LocalPosition = (Vector3.Forward * (Cards.Count)) + (Vector3.Right * (.65f * (Cards.Count))) + (Vector3.Up * 1.25f);
 
         UpdateCardPositions();
     }
@@ -84,7 +84,7 @@ public partial class PlayerHand : BaseNetworkable
         for(int i = 0; i < Cards.Count; i++)
         {
             var card = Cards[i];
-            card.LocalPosition = (-.75f + Vector3.Forward * (i + 1)) + (Vector3.Right * (.25f * (i+1))) + (Vector3.Up * 3f);
+            card.LocalPosition = (Vector3.Forward * (i + 1)) + (Vector3.Right * (.65f * (i+1))) + (Vector3.Up * 1.25f);
         }
     }
 
