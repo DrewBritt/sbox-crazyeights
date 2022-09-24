@@ -75,7 +75,7 @@
 						[
 							{
 								_class = "AnimFile"
-								name = "HoldCards"
+								name = "HoldCardsOld"
 								activity_name = ""
 								activity_weight = 1
 								weight_list_name = "Only_Arms"
@@ -97,6 +97,48 @@
 							{
 								_class = "Folder"
 								name = "Emotes"
+							},
+							{
+								_class = "AnimFile"
+								name = "Interact"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = "Action"
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/citizen/animations/weapons/citizen@holditem_rh_throw_normal.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "HoldCards"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = "Only_Arms"
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/citizen/animations/weapons/Citizen@HoldItem_2H_Pose_Standing_01.fbx"
+								start_frame = -1
+								end_frame = 16
+								framerate = 16.0
+								take = 0
+								reverse = false
 							},
 						]
 					},
@@ -198,12 +240,24 @@
 						weights = 
 						[
 							{
+								bone = "arm_upper_L"
+								weight = 0.0
+							},
+							{
+								bone = "clavicle_L"
+								weight = 0.0
+							},
+							{
 								bone = "clavicle_R"
 								weight = 1.0
 							},
 							{
 								bone = "leg_upper_R"
 								weight = 0.0
+							},
+							{
+								bone = "neck_0"
+								weight = 1.0
 							},
 							{
 								bone = "neck_clothing"
@@ -214,8 +268,16 @@
 								weight = 0.0
 							},
 							{
+								bone = "spine_0"
+								weight = 0.0
+							},
+							{
 								bone = "spine_1"
-								weight = 1.0
+								weight = 0.0
+							},
+							{
+								bone = "spine_2"
+								weight = 0.0
 							},
 						]
 						master_morph_weight = -1.0

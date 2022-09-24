@@ -147,6 +147,15 @@ public partial class Pawn : AnimatedEntity
         pawn.Nameplate.Appeared = 0;
     }
 
+    /// <summary>
+    /// Sets TimeSinceLastAction in Animator, to let animgraph perform Interact animation.
+    /// </summary>
+    [ClientRpc]
+    public void DoInteractAnimation()
+    {
+        Animator.DidAction();
+    }
+
     protected override void OnDestroy()
     {
         base.OnDestroy();

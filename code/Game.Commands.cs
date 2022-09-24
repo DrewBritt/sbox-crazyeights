@@ -81,6 +81,9 @@ public partial class Game
         //Current.PrintPlay(To.Everyone, Current.CurrentPlayer.Client);
         Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, cardEnt.Card.Rank, cardEnt.Card.Suit);
 
+        // Play Interact animation.
+        Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
+
         // Check if player has won.
         if(player.Hand.Cards.Count == 0)
         {
@@ -151,6 +154,8 @@ public partial class Game
         player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
 
         //Current.PrintDraw(To.Everyone, Current.CurrentPlayer.Client);
+        // Play Interact animation.
+        Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
 
         // Next player's turn.
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
