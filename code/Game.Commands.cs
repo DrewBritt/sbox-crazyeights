@@ -78,7 +78,6 @@ public partial class Game
         Current.DiscardPile.AddCard(cardEnt.Card);
 
         // Update everyone's play pile
-        //Current.PrintPlay(To.Everyone, Current.CurrentPlayer.Client);
         Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, cardEnt.Card.Rank, cardEnt.Card.Suit);
 
         // Play Interact animation.
@@ -97,8 +96,6 @@ public partial class Game
         // Next player's turn.
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
         (Current.CurrentState as PlayingState).TurnStarted = 0;
-
-        //Current.PrintCards(To.Everyone);
     }
 
     /// <summary>
@@ -150,33 +147,15 @@ public partial class Game
             discard.AddCard(discardTop);
         }
 
-        // Add 1 card from top of pile to player hand, and end their turn.
+        // Add 1 card from top of pile to player hand.
         player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
 
-        //Current.PrintDraw(To.Everyone, Current.CurrentPlayer.Client);
         // Play Interact animation.
         Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
 
         // Next player's turn.
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
         (Current.CurrentState as PlayingState).TurnStarted = 0;
-
-        //Current.PrintCards(To.Everyone);
     }
-
-    [ClientRpc]
-    public void PrintDraw(Client lastPlayedCl)
-    {
-        Log.Info($"{Current.CurrentPlayer} drew a card and ended their turn");
-    }
-
-    [ClientRpc]
-    public void PrintCards()
-    {
-        var p = Local.Pawn as Pawn;
-        foreach(var c in p.Hand.Cards)
-            Log.Info($"{c.Suit} {c.Rank} ({c.NetworkIdent})");
-    }
-
     #endregion
 }

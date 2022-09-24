@@ -101,8 +101,6 @@ public partial class Game
 
             // Update last played card for clients
             Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
-
-            Current.PrintCards(To.Everyone);
         }
 
         public TimeSince TurnStarted = 0;
