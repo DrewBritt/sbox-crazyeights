@@ -7,13 +7,13 @@
 		VolumeRandom = 0
 		Pitch = 1
 		PitchRandom = 0
-		Decibels = 80
+		Decibels = 30
 		Sounds = 
 		[
 			resource:"sounds/source/countdowntick.vsnd",
 		]
 		SelectionMode = "Random"
-		MaximumDistance = 1484.3214
-		MinimumDistance = 74.21607
+		MaximumDistance = 236.23267
+		MinimumDistance = 11.811633
 	}
 }

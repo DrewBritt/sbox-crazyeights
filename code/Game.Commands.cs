@@ -73,17 +73,16 @@ public partial class Game
             return;
         }
 
-        // Remove card from player's hand, and play it onto DiscardPile.
+        // Move card from Hand to DiscardPile, and network texture
         player.Hand.RemoveCard(cardEnt);
         Current.DiscardPile.AddCard(cardEnt.Card);
-
-        // Update everyone's play pile
         Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, cardEnt.Card.Rank, cardEnt.Card.Suit);
 
-        // Play Interact animation.
+        // Play animation and card sound
         Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
+        Sound.FromEntity("cardinteract", Current.DiscardPile);
 
-        // Check if player has won.
+        // Game Over if player has no cards
         if(player.Hand.Cards.Count == 0)
         {
             Current.CurrentState = new GameOverState();

@@ -3,17 +3,17 @@
 	data = 
 	{
 		UI = true
-		Volume = 1
+		Volume = 0.3
 		VolumeRandom = 0
 		Pitch = 1
 		PitchRandom = 0
-		Decibels = 70
+		Decibels = 40
 		Sounds = 
 		[
 			resource:"sounds/source/gameover.vsnd",
 		]
 		SelectionMode = "Random"
-		MaximumDistance = 1143.9335
-		MinimumDistance = 57.196674
+		MaximumDistance = 395.08035
+		MinimumDistance = 19.754019
 	}
 }

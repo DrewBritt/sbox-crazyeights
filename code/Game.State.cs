@@ -101,6 +101,8 @@ public partial class Game
 
             // Update last played card for clients
             Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
+
+            Sound.FromScreen(To.Everyone, "gamestart");
         }
 
         public TimeSince TurnStarted = 0;
@@ -123,6 +125,8 @@ public partial class Game
         public GameOverState() : base()
         {
             stateStart = 0;
+
+            Sound.FromScreen(To.Everyone, "gameover");
         }
 
         public override void Tick()
