@@ -3,17 +3,17 @@
 	data = 
 	{
 		UI = true
-		Volume = 1
+		Volume = 0.25
 		VolumeRandom = 0
 		Pitch = 1
 		PitchRandom = 0
-		Decibels = 30
+		Decibels = 20
 		Sounds = 
 		[
 			resource:"sounds/source/countdowntick.vsnd",
 		]
 		SelectionMode = "Random"
-		MaximumDistance = 236.23267
-		MinimumDistance = 11.811633
+		MaximumDistance = 122.77009
+		MinimumDistance = 6.138505
 	}
 }

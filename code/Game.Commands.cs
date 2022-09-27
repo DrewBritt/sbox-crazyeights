@@ -93,8 +93,7 @@ public partial class Game
         Current.CheckActionCard(cardEnt.Card, selectedWildSuit);
 
         // Next player's turn.
-        Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
-        (Current.CurrentState as PlayingState).TurnStarted = 0;
+        Current.SetNewCurrentPlayer();
     }
 
     /// <summary>
@@ -149,12 +148,26 @@ public partial class Game
         // Add 1 card from top of pile to player hand.
         player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
 
-        // Play Interact animation.
+        // Play animation and card sound
         Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
+        Sound.FromEntity("cardinteract", deck);
 
         // Next player's turn.
+        Current.SetNewCurrentPlayer();
+    }
+
+    private void SetNewCurrentPlayer()
+    {
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
         (Current.CurrentState as PlayingState).TurnStarted = 0;
+        NotifyCurrentPlayer(To.Single(CurrentPlayer.Client));
     }
     #endregion
+
+    [ClientRpc]
+    public void NotifyCurrentPlayer()
+    {
+        Current.Hud.ResetTurnTimer();
+        Sound.FromScreen("playerturn");
+    }
 }
