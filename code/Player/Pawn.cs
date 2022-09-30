@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Sandbox;
+using Sandbox.Component;
 
 namespace CrazyEights;
 
@@ -56,25 +57,47 @@ public partial class Pawn : AnimatedEntity
         UpdateEyesTransforms();
     }
 
+    ModelEntity lastLookedAt;
     public override void FrameSimulate(Client cl)
     {
         base.FrameSimulate(cl);
-
-        if(Input.Pressed(InputButton.PrimaryAttack))
-        {
-            var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
-                .WithAnyTags("card", "deck")
-                .EntitiesOnly()
-                .Run();
-            if(tr.Hit)
-                CardInteract(tr.Entity);
-        }
 
         Animator.FrameSimulate(cl, this, null);
 
         UpdateEyesTransforms();
         UpdateBodyGroups();
         CheckNameplates();
+
+        // Trace for interactable object
+        var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
+                .WithAnyTags("card", "deck")
+                .EntitiesOnly()
+                .Run();
+
+        if(tr.Hit && Hand != null && Hand.Cards.Contains(tr.Entity))
+        {
+            // Apply glow if found
+            var glow = tr.Entity.Components.GetOrCreate<Glow>();
+            glow.Enabled = true;
+            glow.RangeMin = 0;
+            glow.RangeMax = 1000;
+            glow.Color = new Color(255f, 255f, 255f, 1f);
+
+            // Disable glow if looking at new interactable
+            if(tr.Entity != lastLookedAt && lastLookedAt.Components.TryGet<Glow>(out var previousGlow))
+                previousGlow.Enabled = false;
+            lastLookedAt = tr.Entity as ModelEntity;
+
+            // Interaction
+            if(Input.Pressed(InputButton.PrimaryAttack))
+                CardInteract(tr.Entity);
+
+            return;
+        }
+
+        // Disable glow if not looking at anything
+        if(lastLookedAt.Components.TryGet<Glow>(out var lastGlow))
+            lastGlow.Enabled = false;
     }
 
     public override void BuildInput(InputBuilder input)

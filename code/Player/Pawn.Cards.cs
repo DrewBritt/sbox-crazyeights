@@ -29,8 +29,6 @@ public partial class Pawn
 
         if(card is CardEntity)
         {
-            if(!Hand.Cards.Contains(card)) return;
-
             var cardEnt = card as CardEntity;
             if(cardEnt.Suit == CardSuit.Wild)
                 Game.Current.Hud.OpenSuitSelection(cardEnt);
