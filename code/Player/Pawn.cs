@@ -67,39 +67,7 @@ public partial class Pawn : AnimatedEntity
         UpdateEyesTransforms();
         UpdateBodyGroups();
         CheckNameplates();
-
-        // Trace for interactable object
-        var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
-                .WithAnyTags("card", "deck")
-                .EntitiesOnly()
-                .Run();
-
-        if(tr.Hit && Hand != null && (Hand.Cards.Contains(tr.Entity) || tr.Entity is Deck))
-        {
-            Game.Current.Hud.EnableCrosshair();
-
-            // Apply glow if found
-            var glow = tr.Entity.Components.GetOrCreate<Glow>();
-            glow.Enabled = true;
-            glow.RangeMin = 0;
-            glow.RangeMax = 1000;
-            glow.Color = new Color(255f, 255f, 255f, 1f);
-
-            // Disable glow if looking at new interactable
-            if(lastLookedAt.IsValid() && tr.Entity != lastLookedAt && lastLookedAt.Components.TryGet<Glow>(out var previousGlow))
-                previousGlow.Enabled = false;
-            lastLookedAt = tr.Entity as ModelEntity;
-
-            // Interaction
-            if(Input.Pressed(InputButton.PrimaryAttack))
-                CardInteract(tr.Entity);
-
-            return;
-        }
-
-        // Disable glow if not looking at anything
-        if(lastLookedAt.IsValid() && lastLookedAt.Components.TryGet<Glow>(out var lastGlow))
-            lastGlow.Enabled = false;
+        CheckInteractables();
     }
 
     public override void BuildInput(InputBuilder input)
@@ -136,6 +104,7 @@ public partial class Pawn : AnimatedEntity
 
     private void CheckNameplates()
     {
+        // Trace for players
         var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 300f)
             .UseHitboxes()
             .WithTag("player")
@@ -144,8 +113,44 @@ public partial class Pawn : AnimatedEntity
 
         if(!tr.Hit) return;
 
+        Game.Current.Hud.EnableCrosshair();
         var pawn = tr.Entity as Pawn;
         pawn.Nameplate.Appeared = 0;
+    }
+    
+    private void CheckInteractables()
+    {
+        // Trace for interactable object
+        var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
+                .WithAnyTags("card", "deck")
+                .EntitiesOnly()
+                .Run();
+
+        // If hit entity is either a Card in the player's hand, or the Deck
+        if(tr.Hit && Hand != null && (Hand.Cards.Contains(tr.Entity) || tr.Entity is Deck))
+        {
+            Game.Current.Hud.EnableCrosshair();
+
+            // Apply glow if found
+            var glow = tr.Entity.Components.GetOrCreate<Glow>();
+            glow.Enabled = true;
+            glow.Color = new Color(255f, 255f, 255f, 1f);
+
+            // Disable glow if looking at new interactable
+            if(lastLookedAt.IsValid() && tr.Entity != lastLookedAt && lastLookedAt.Components.TryGet<Glow>(out var previousGlow))
+                previousGlow.Enabled = false;
+            lastLookedAt = tr.Entity as ModelEntity;
+
+            // Interaction
+            if(Input.Pressed(InputButton.PrimaryAttack))
+                CardInteract(tr.Entity);
+
+            return;
+        }
+
+        // Disable glow if not looking at anything
+        if(lastLookedAt.IsValid() && lastLookedAt.Components.TryGet<Glow>(out var lastGlow))
+            lastGlow.Enabled = false;
     }
 
     protected override void OnDestroy()
