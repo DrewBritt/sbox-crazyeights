@@ -17,14 +17,14 @@ public partial class Game
 
     #region Game Management
 
-    [ConCmd.Server("ce_resetgame", Help = "Reset the game to its initial state")]
+    [ConCmd.Admin("ce_resetgame", Help = "Reset the game to its initial state")]
     public static void ResetGame()
     {
         if(Current.CurrentState is PlayingState)
             Current.CurrentState = new WaitingForPlayersState();
     }
 
-    [ConCmd.Server("ce_forceturn", Help = "Force the current player's turn")]
+    [ConCmd.Admin("ce_forceturn", Help = "Force the current player's turn")]
     public static void ForceTurn()
     {
         if(Current.CurrentState is PlayingState)
