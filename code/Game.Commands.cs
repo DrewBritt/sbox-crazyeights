@@ -91,6 +91,9 @@ public partial class Game
             return;
         }
 
+        // Action/Wildcard abilities.
+        Current.CheckActionCard(cardEnt.Card, selectedWildSuit);
+
         // Move card from Hand to DiscardPile, and network texture
         player.Hand.RemoveCard(cardEnt);
         Current.DiscardPile.AddCard(cardEnt.Card);
@@ -106,9 +109,6 @@ public partial class Game
             Current.CurrentState = new GameOverState();
             return;
         }
-
-        // Action/Wildcard abilities.
-        Current.CheckActionCard(cardEnt.Card, selectedWildSuit);
 
         // Next player's turn.
         Current.SetNewCurrentPlayer();
