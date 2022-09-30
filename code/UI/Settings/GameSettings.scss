@@ -1,0 +1,65 @@
+﻿gamesettings {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+
+    .inputFields {
+        height: 80%;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+
+        .field {
+            height: 25%;
+            width: 100%;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column;
+
+            text {
+                font-size: 16px;
+                margin-top: 20px;
+                text-stroke: 1px #000;
+            }
+
+            textentry {
+                position: absolute;
+                bottom: 0;
+                width: 50%;
+                padding: 10px;
+                font-size: 14px;
+                flex-shrink: 0;
+                flex-grow: 0;
+                color: white;
+                backdrop-filter: blur( 20px ) brightness( 1 );
+                background-color: rgba( 75, 75, 75, .5 );
+                border: 2px solid rgba( black, 0.4 );
+                border-radius: 8px;
+            }
+        }
+    }
+
+    .buttons {
+        height: 20%;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+
+        button {
+            width: 30%;
+            height: 50%;
+            border: 2px solid rgba( black, 0 );
+            border-radius: 10px;
+            background-color: rgba(10, 34, 57, 1);
+            font-size: 20px;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease-out;
+
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+    }
+}

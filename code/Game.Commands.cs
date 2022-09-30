@@ -15,6 +15,24 @@ public partial class Game
         Log.Error(errormessage);
     }
 
+    #region Game Management
+
+    [ConCmd.Server("ce_resetgame", Help = "Reset the game to its initial state")]
+    public static void ResetGame()
+    {
+        if(Current.CurrentState is PlayingState)
+            Current.CurrentState = new WaitingForPlayersState();
+    }
+
+    [ConCmd.Server("ce_forceturn", Help = "Force the current player's turn")]
+    public static void ForceTurn()
+    {
+        if(Current.CurrentState is PlayingState)
+            Current.CurrentPlayer.ForcePlayCard();
+    }
+
+    #endregion
+
     #region Card Playing
 
     /// <summary>

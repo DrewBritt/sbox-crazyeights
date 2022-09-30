@@ -43,9 +43,9 @@ public partial class Game
                 p.Hand = null;
             }
 
-            Current.PlayingDeck.Delete();
-            Current.DiscardPile.Delete();
-            Current.Players.Clear();
+            Current.PlayingDeck?.Delete();
+            Current.DiscardPile?.Delete();
+            Current.Players?.Clear();
         }
 
         TimeUntil startGame = -1;
@@ -150,7 +150,7 @@ public partial class Game
         CurrentState.Tick();
     }
 
-    [ConVar.Replicated("ce_maxturntime", Help = "How long players have to play a card before their turn is forced.")]
+    [ConVar.Replicated("ce_maxturntime", Help = "How long players have to play a card before their turn is forced.", Min = 1, Max = 60)]
     public static int MaxTurnTime { get; set; }
 
     #endregion
