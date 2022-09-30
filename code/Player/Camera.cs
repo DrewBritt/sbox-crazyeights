@@ -2,7 +2,7 @@
 
 namespace CrazyEights;
 
-public partial class CardsCamera : CameraMode
+public partial class Camera : CameraMode
 {
     private float FOV = 90f;
     private float fac = 1.0f;
@@ -13,7 +13,9 @@ public partial class CardsCamera : CameraMode
         if(pawn == null) return;
 
         Position = pawn.EyePosition;
-        Rotation = pawn.EyeRotation;
+        Rotation = Rotation.Random; // Intialize as random because pawn.EyeRotation is (0,0,0) on start, and Lerping 0 with 0 is NaN = weird black screen + 50fps?
+        ZNear = .1f;
+        ZFar = 5000;
     }
 
     public override void Update()
@@ -21,26 +23,16 @@ public partial class CardsCamera : CameraMode
         var pawn = Local.Pawn;
         if(pawn == null) return;
 
-        ZNear = 1;
-        ZFar = 5000;
+        Viewer = pawn;
 
-        float targetFOV;
-        Vector3 targetPosition;
-        Rotation targetRotation;
-
-        targetPosition = pawn.EyePosition;
-        targetRotation = pawn.EyeRotation;
-        targetFOV = FOV;
+        float targetFOV = FOV;
+        Vector3 targetPosition = pawn.EyePosition;
+        Rotation targetRotation = pawn.EyeRotation;
 
         fac = fac.LerpTo(0.0f, .5f * Time.Delta);
 
-        Viewer = pawn;
-
-        Position = Position.LerpTo(targetPosition, 10f * Time.Delta);
-        Rotation = Rotation.Lerp(Rotation, targetRotation, 10f * Time.Delta);
-
-        Position = Position.LerpTo(pawn.EyePosition, 1.0f - fac);
-        Rotation = Rotation.Lerp(Rotation, pawn.EyeRotation, 0.5f - fac);
+        Position = Position.LerpTo(pawn.EyePosition, 1f - fac);
+        Rotation = Rotation.Lerp(Rotation, pawn.EyeRotation, 1f - fac);
 
         FieldOfView = FieldOfView.LerpTo(targetFOV, 10f * Time.Delta);
     }

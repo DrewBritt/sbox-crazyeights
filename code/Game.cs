@@ -36,7 +36,7 @@ public partial class Game : Sandbox.Game
         // Otherwise let's pawn for this client to play with.
         var pawn = new Pawn(client)
         {
-            CameraMode = new CardsCamera(),
+            CameraMode = new Camera(),
             Animator = new PawnAnimator()
         };
         client.Pawn = pawn;
