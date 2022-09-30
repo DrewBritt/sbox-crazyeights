@@ -67,7 +67,9 @@ public partial class Pawn : AnimatedEntity
         UpdateEyesTransforms();
         UpdateBodyGroups();
         CheckNameplates();
-        CheckInteractables();
+
+        if(Game.Current.CurrentPlayer == this)
+            CheckInteractables();
     }
 
     public override void BuildInput(InputBuilder input)

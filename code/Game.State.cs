@@ -46,6 +46,7 @@ public partial class Game
             Current.PlayingDeck?.Delete();
             Current.DiscardPile?.Delete();
             Current.Players?.Clear();
+            Current.CurrentPlayerIndex = 0;
         }
 
         TimeUntil startGame = -1;
