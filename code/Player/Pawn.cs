@@ -84,7 +84,7 @@ public partial class Pawn : AnimatedEntity
             glow.Color = new Color(255f, 255f, 255f, 1f);
 
             // Disable glow if looking at new interactable
-            if(tr.Entity != lastLookedAt && lastLookedAt.Components.TryGet<Glow>(out var previousGlow))
+            if(lastLookedAt.IsValid() && tr.Entity != lastLookedAt && lastLookedAt.Components.TryGet<Glow>(out var previousGlow))
                 previousGlow.Enabled = false;
             lastLookedAt = tr.Entity as ModelEntity;
 
@@ -96,7 +96,7 @@ public partial class Pawn : AnimatedEntity
         }
 
         // Disable glow if not looking at anything
-        if(lastLookedAt.Components.TryGet<Glow>(out var lastGlow))
+        if(lastLookedAt.IsValid() && lastLookedAt.Components.TryGet<Glow>(out var lastGlow))
             lastGlow.Enabled = false;
     }
 
