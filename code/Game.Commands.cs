@@ -196,7 +196,7 @@ public partial class Game
         if(Current.FindActiveCamera() is Camera)
         {
             var camera = Current.FindActiveCamera() as Camera;
-            camera.SetChromaticAberration(.6f);
+            camera.SetChromaticAberration(1f);
         }
     }
 }

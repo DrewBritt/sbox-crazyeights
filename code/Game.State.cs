@@ -104,6 +104,7 @@ public partial class Game
             Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
 
             Sound.FromScreen(To.Everyone, "gamestart");
+            Current.NotifyCurrentPlayer(To.Single(Current.CurrentPlayer.Client));
         }
 
         public TimeSince TurnStarted = 0;
