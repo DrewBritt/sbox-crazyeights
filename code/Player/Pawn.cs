@@ -134,7 +134,7 @@ public partial class Pawn : AnimatedEntity
             // Apply glow if found
             var glow = tr.Entity.Components.GetOrCreate<Glow>();
             glow.Enabled = true;
-            glow.Color = new Color(255f, 255f, 255f, 1f);
+            glow.Color = new Color(1f, 1f, 1f, 1f);
 
             // Disable glow if looking at new interactable
             if(lastLookedAt.IsValid() && tr.Entity != lastLookedAt && lastLookedAt.Components.TryGet<Glow>(out var previousGlow))
