@@ -12,7 +12,7 @@ public partial class NavPanel : Panel
         var attribute = NavTargetAttribute.Get(url);
         if(attribute is null)
         {
-            Log.Error($"Sketch: NavTarget not found: {url}");
+            Log.Error($"Crazy Eights: NavTarget not found: {url}");
             return;
         }
 
