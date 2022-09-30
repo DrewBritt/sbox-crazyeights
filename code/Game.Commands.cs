@@ -182,10 +182,21 @@ public partial class Game
     }
     #endregion
 
+    /// <summary>
+    /// Plays various effects on screen to notify player that it is their turn.
+    /// </summary>
     [ClientRpc]
     public void NotifyCurrentPlayer()
     {
+        // Turn timer tells player when their turn is nearly up
         Current.Hud.ResetTurnTimer();
         Sound.FromScreen("playerturn");
+
+        // Chromatic Aberration sting
+        if(Current.FindActiveCamera() is Camera)
+        {
+            var camera = Current.FindActiveCamera() as Camera;
+            camera.SetChromaticAberration(.6f);
+        }
     }
 }

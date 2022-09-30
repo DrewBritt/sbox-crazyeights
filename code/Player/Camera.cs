@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Sandbox.Effects;
 
 namespace CrazyEights;
 
@@ -6,6 +7,7 @@ public partial class Camera : CameraMode
 {
     private float FOV = 90f;
     private float fac = 1.0f;
+    private static ScreenEffects screenEffects = null;
 
     public override void Activated()
     {
@@ -16,6 +18,15 @@ public partial class Camera : CameraMode
         Rotation = Rotation.Random; // Intialize as random because pawn.EyeRotation is (0,0,0) on start, and Lerping 0 with 0 is NaN = weird black screen + 50fps?
         ZNear = .1f;
         ZFar = 5000;
+
+        // Provides Chromatic Aberration for alert on player's turn
+        screenEffects = Map.Camera.FindOrCreateHook<ScreenEffects>();
+    }
+
+    public override void Deactivated()
+    {
+        // Cleanup effects when swapping cameras (devcam)
+        Map.Camera.RemoveAllHooks<ScreenEffects>();
     }
 
     public override void Update()
@@ -35,6 +46,13 @@ public partial class Camera : CameraMode
         Rotation = Rotation.Lerp(Rotation, pawn.EyeRotation, 1f - fac);
 
         FieldOfView = FieldOfView.LerpTo(targetFOV, 10f * Time.Delta);
+
+        // Gradually lerp back to 0
+        if(screenEffects != null && screenEffects.ChromaticAberration.Scale > 0f)
+        {
+            var scale = screenEffects.ChromaticAberration.Scale;
+            screenEffects.ChromaticAberration.Scale = scale.LerpTo(0f, 3f * Time.Delta);
+        }
     }
 
     public override void BuildInput(InputBuilder inputBuilder)
@@ -46,5 +64,14 @@ public partial class Camera : CameraMode
 
         FOV -= inputBuilder.MouseWheel * 10f;
         FOV = FOV.Clamp(10, 90);
+    }
+
+    /// <summary>
+    /// Sets ChromaticAberration.Scale.
+    /// </summary>
+    /// <param name="scale"></param>
+    public void SetChromaticAberration(float scale)
+    {
+        screenEffects.ChromaticAberration.Scale = scale;
     }
 }
