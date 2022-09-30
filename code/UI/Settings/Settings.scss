@@ -1,0 +1,63 @@
+﻿settings {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur( 20px ) brightness( 0.5 );
+    transition: opacity .2s ease-out;
+
+    &.open {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .header {
+        width: 30%;
+        justify-content: center;
+
+        .navbutton {
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            height: 100%;
+            background-color: rgba( 25, 25, 25, 1 );
+
+            &.hidden {
+                display: none;
+            }
+
+            label {
+                color: white;
+                font-size: 20px;
+                padding: 12px;
+                text-stroke: 2px #000;
+            }
+
+            &:hover {
+                background-color: rgba(75, 75, 75, 1);
+
+                label {
+                    font-size: 25px;
+                }
+            }
+
+            &.active {
+                background-color: rgba(100, 100, 100, 1);
+            }
+        }
+    }
+
+    .body {
+        width: 30%;
+        height: 50%;
+        background-color: rgba( 25, 25, 25, 1 );
+        border-radius: 0px 0px 10px 10px;
+        color: white;
+        flex-direction: column;
+    }
+}
