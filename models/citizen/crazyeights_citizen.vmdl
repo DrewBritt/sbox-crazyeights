@@ -74,27 +74,6 @@
 						children = 
 						[
 							{
-								_class = "AnimFile"
-								name = "HoldCardsOld"
-								activity_name = ""
-								activity_weight = 1
-								weight_list_name = "Only_Arms"
-								fade_in_time = 0.2
-								fade_out_time = 0.2
-								looping = false
-								delta = false
-								worldSpace = false
-								hidden = false
-								anim_markup_ordered = false
-								disable_compression = false
-								source_filename = "models/citizen/citizen@HoldCards.fbx"
-								start_frame = -1
-								end_frame = -1
-								framerate = -1.0
-								take = 0
-								reverse = false
-							},
-							{
 								_class = "Folder"
 								name = "Emotes"
 							},
@@ -121,7 +100,7 @@
 							},
 							{
 								_class = "AnimFile"
-								name = "HoldCards"
+								name = "HoldCardsShort"
 								activity_name = ""
 								activity_weight = 1
 								weight_list_name = "Only_Arms"
@@ -133,10 +112,31 @@
 								hidden = false
 								anim_markup_ordered = false
 								disable_compression = false
-								source_filename = "models/citizen/animations/weapons/Citizen@HoldItem_2H_Pose_Standing_01.fbx"
+								source_filename = "models/citizen/citizen@holdcardsshort.fbx"
 								start_frame = -1
-								end_frame = 16
-								framerate = 16.0
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "HoldCardsLong"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = "Only_Arms"
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/citizen/citizen@holdcardslong.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
 								take = 0
 								reverse = false
 							},
