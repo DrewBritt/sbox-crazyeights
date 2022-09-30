@@ -76,6 +76,8 @@ public partial class Pawn : AnimatedEntity
 
         if(tr.Hit && Hand != null && (Hand.Cards.Contains(tr.Entity) || tr.Entity is Deck))
         {
+            Game.Current.Hud.EnableCrosshair();
+
             // Apply glow if found
             var glow = tr.Entity.Components.GetOrCreate<Glow>();
             glow.Enabled = true;

@@ -21,6 +21,7 @@ public class PawnAnimator : Sandbox.PawnAnimator
         SetAnimParameter("sit_pose", sitPose);
         SetAnimParameter("hasCards", Player.Hand?.Cards.Count > 0);
 
+        // Blend between card hold poses
         int cards = 0;
         if(Player.Hand != null)
             cards = Player.Hand.Cards.Count;
