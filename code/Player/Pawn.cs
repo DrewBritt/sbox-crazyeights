@@ -74,7 +74,7 @@ public partial class Pawn : AnimatedEntity
                 .EntitiesOnly()
                 .Run();
 
-        if(tr.Hit && Hand != null && Hand.Cards.Contains(tr.Entity))
+        if(tr.Hit && Hand != null && (Hand.Cards.Contains(tr.Entity) || tr.Entity is Deck))
         {
             // Apply glow if found
             var glow = tr.Entity.Components.GetOrCreate<Glow>();
