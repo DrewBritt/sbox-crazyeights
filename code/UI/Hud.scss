@@ -6,6 +6,10 @@
     bottom: 0;
     flex-direction: column;
 
+    &.devcamera {
+        opacity: 0;
+    }
+
     .preview {
         position: absolute;
         width: 100%;
