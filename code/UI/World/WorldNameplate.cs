@@ -11,7 +11,7 @@ public partial class WorldNameplate : WorldPanel
 
     public Image Avatar { get; set; }
     public Label Name { get; set; }
-    public TimeSince Appeared = 0;
+    private TimeSince Appeared = 0;
 
     public WorldNameplate(Pawn pawn)
     {
@@ -23,6 +23,11 @@ public partial class WorldNameplate : WorldPanel
         Position = pawn.EyePosition + Vector3.Up * 16;
         BindClass("active", () => Appeared <= 0.05 || pawn == Game.Current.CurrentPlayer);
         BindClass("currentPlayer", () => pawn == Game.Current.CurrentPlayer);
+    }
+
+    public void Activate()
+    {
+        Appeared = 0;
     }
 
     [Event.Frame]

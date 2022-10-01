@@ -78,9 +78,10 @@ public partial class Game
             Current.PlayingDeck.Shuffle();
 
             // Distribute cards to players.
-            for(int i = 0; i < Client.All.Count; i++)
+            List<Client> players = Client.All.Where(p => p.Pawn is Pawn).ToList();
+            for(int i = 0; i < players.Count; i++)
             {
-                Pawn player = Client.All[i].Pawn as Pawn;
+                Pawn player = players[i].Pawn as Pawn;
                 Current.Players.Add(player);
                 player.Hand = new PlayerHand()
                 {

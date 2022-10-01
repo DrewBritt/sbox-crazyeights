@@ -8,7 +8,7 @@ public partial class Pawn : AnimatedEntity
 {
     [Net, Predicted] public PawnAnimator Animator { get; set; }
     public ClothingContainer Clothing = new();
-    private WorldNameplate Nameplate;
+    public WorldNameplate Nameplate;
 
     public Pawn() { }
     public Pawn(Client cl) : this()
@@ -116,7 +116,7 @@ public partial class Pawn : AnimatedEntity
 
         Game.Current.Hud.EnableCrosshair();
         var pawn = tr.Entity as Pawn;
-        pawn.Nameplate.Appeared = 0;
+        pawn.Nameplate.Activate();
     }
 
     // Interactable looked at last frame. Possibly null.

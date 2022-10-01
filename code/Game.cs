@@ -20,43 +20,44 @@ public partial class Game : Sandbox.Game
         Log.Info(Global.ServerSteamId);
     }
 
-    /// <summary>
-    /// A client has joined the server. Make them a pawn to play with.
-    /// </summary>
     public override void ClientJoined(Client client)
     {
         base.ClientJoined(client);
 
-        // Spawn player as spectator if game is already in session
-        if(Current.CurrentState is PlayingState)
-        {
-            // Spawn spectator pawn
-            //return;
-        }
-
-        // Otherwise let's pawn for this client to play with.
-        var pawn = new Pawn(client)
-        {
-            CameraMode = new Camera(),
-            Animator = new PawnAnimator()
-        };
-        client.Pawn = pawn;
-
-        // Get un-occupied chair and spawn pawn at said chair.
+        // Find random PlayerChair map entity
         var chairs = Entity.All.OfType<PlayerChair>();
         var randomChair = chairs.OrderBy(x => Guid.NewGuid()).Where(x => !x.HasPlayer).FirstOrDefault();
+
+        // If we find a valid and empty random chair, create a Player pawn and seat said pawn.
+        // Otherwise, create a spectator pawn.
+        Entity pawn;
         if(randomChair.IsValid())
         {
-            randomChair.SeatPlayer(pawn);
+            pawn = new Pawn(client)
+            {
+                CameraMode = new Camera(),
+                Animator = new PawnAnimator()
+            };
+            randomChair.SeatPlayer(pawn as Pawn);
         }
+        else
+        {
+            pawn = new SpectatorPawn()
+            {
+                CameraMode = new DevCamera()
+            };
+        }
+        client.Pawn = pawn;
     }
 
     public override void ClientDisconnect(Client cl, NetworkDisconnectionReason reason)
     {
-        // Free player's chair up for use before disconnecting
-        var pawn = (cl.Pawn as Pawn);
-        pawn.PlayerChair.RemovePlayer();
-
+        // Free player's chair if they were a pawn
+        if(cl.Pawn is Pawn)
+        {
+            var pawn = cl.Pawn as Pawn;
+            pawn.PlayerChair.RemovePlayer();
+        }
         base.ClientDisconnect(cl, reason);
     }
 
