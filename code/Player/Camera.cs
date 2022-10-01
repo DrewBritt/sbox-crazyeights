@@ -20,7 +20,8 @@ public partial class Camera : CameraMode
         ZFar = 5000;
 
         // Provides Vignette for alert effects
-        screenEffects = Map.Camera.FindOrCreateHook<ScreenEffects>();
+        //screenEffects = Map.Camera.FindOrCreateHook<ScreenEffects>();
+
     }
 
     public override void Deactivated()
@@ -29,10 +30,15 @@ public partial class Camera : CameraMode
         Map.Camera.RemoveAllHooks<ScreenEffects>();
     }
 
+    TimeUntil activateEffects = 1;
     public override void Update()
     {
         var pawn = Local.Pawn;
         if(pawn == null) return;
+
+        // TEMP FIX: Delay activation, apparently it "shits the bed in the graphics driver" if activated immediately on join :(
+        if(screenEffects == null && activateEffects <= 0)
+            screenEffects = Map.Camera.FindOrCreateHook<ScreenEffects>();
 
         Viewer = pawn;
 
