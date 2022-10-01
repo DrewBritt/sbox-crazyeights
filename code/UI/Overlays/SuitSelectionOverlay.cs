@@ -11,14 +11,14 @@ public partial class SuitSelectionOverlay : Panel
     public SuitSelectionOverlay()
     {
         // Close panel when clicking off of cards
-        AddEventListener("onclick", () => ClosePanel());
+        AddEventListener("onclick", () => Deactivate());
 
         // Otherwise, play card we're clicking on
         foreach(var panel in Children)
             panel.AddEventListener("onclick", () => SelectSuit(CardToPlay.NetworkIdent, GetChildIndex(panel)));
     }
 
-    public void OpenPanel(CardEntity c)
+    public void Activate(CardEntity c)
     {
         CardToPlay = c;
 
@@ -31,14 +31,14 @@ public partial class SuitSelectionOverlay : Panel
             panel.AddClass(c.Rank.ToString());
         }
 
-        AddClass("open");
+        AddClass("active");
     }
 
-    public void ClosePanel() => RemoveClass("open");
+    public void Deactivate() => RemoveClass("active");
 
     private void SelectSuit(int networkIdent, int suitIndex)
     {
         ConsoleSystem.Run($"ce_playcard {networkIdent} {suitIndex} 0"); 
-        ClosePanel();
+        Deactivate();
     }
 }

@@ -11,7 +11,7 @@
     backdrop-filter: blur( 20px ) brightness( 0.5 );
     transition: opacity .2s ease-out;
 
-    &.open {
+    &.active {
         opacity: 1;
         pointer-events: all;
     }

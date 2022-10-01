@@ -31,7 +31,7 @@ public partial class Pawn
         {
             var cardEnt = card as CardEntity;
             if(cardEnt.Suit == CardSuit.Wild)
-                Game.Current.Hud.OpenSuitSelection(cardEnt);
+                Game.Current.Hud.ActivateSuitSelection(cardEnt);
             else
                 ConsoleSystem.Run($"ce_playcard {cardEnt.NetworkIdent} 0 {Client.IsBot}");
         }

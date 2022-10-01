@@ -9,7 +9,7 @@
     opacity: 0;
     transition: opacity .25s ease-in-out;
 
-    &.open {
+    &.active {
         opacity: 1;
     }
 }

@@ -114,7 +114,7 @@ public partial class Pawn : AnimatedEntity
 
         if(!tr.Hit) return;
 
-        Game.Current.Hud.EnableCrosshair();
+        Game.Current.Hud.ActivateCrosshair();
         var pawn = tr.Entity as Pawn;
         pawn.Nameplate.Activate();
     }
@@ -129,7 +129,7 @@ public partial class Pawn : AnimatedEntity
         // If hit entity is either a Card in the player's hand, or the Deck
         if(ent.IsValid() && Hand != null && (Hand.Cards.Contains(ent) || ent is Deck))
         {
-            Game.Current.Hud.EnableCrosshair();
+            Game.Current.Hud.ActivateCrosshair();
             if(ent != lastLookedAt)
                 Sound.FromScreen("click1");
 

@@ -10,7 +10,7 @@
     justify-content: center;
     align-items: center;
 
-    &.open {
+    &.active {
         pointer-events: all;
         opacity: 1;
     }

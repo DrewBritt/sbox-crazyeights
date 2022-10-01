@@ -202,7 +202,7 @@ public partial class Game
     public void NotifyPlayerOfTurn()
     {
         // Turn timer tells player when their turn is nearly up
-        Current.Hud.ResetTurnTimer();
+        Current.Hud.ActivateTurnTimer();
         Sound.FromScreen("playerturn");
 
         // Green vignette sting

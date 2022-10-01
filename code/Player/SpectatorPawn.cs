@@ -32,7 +32,7 @@ public partial class SpectatorPawn : Entity
 
         if(!tr.Hit) return;
 
-        Game.Current.Hud.EnableCrosshair();
+        Game.Current.Hud.ActivateCrosshair();
         var pawn = tr.Entity as Pawn;
         pawn.Nameplate.Activate();
     }

@@ -14,7 +14,7 @@ public partial class TurnTimer : Panel
 
     public TurnTimer()
     {
-        BindClass("open", () => Game.Current.CurrentPlayer == Local.Client.Pawn && turnOver > 0 && turnOver < 10);
+        BindClass("active", () => Game.Current.CurrentPlayer == Local.Client.Pawn && turnOver > 0 && turnOver < 10);
         Bind("Time", this, "TimerText.Text");
     }
 
@@ -44,7 +44,7 @@ public partial class TurnTimer : Panel
     /// <summary>
     /// Sets turnOver to Max Turn Time, priming the panel to appear.
     /// </summary>
-    public void ResetTurnTimer()
+    public void ActivateTurnTimer()
     {
         turnOver = Game.MaxTurnTime;
     }

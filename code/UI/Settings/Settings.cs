@@ -15,6 +15,6 @@ public partial class Settings : NavPanel
     public void BuildInput(InputBuilder b)
     {
         if(b.Pressed(InputButton.Menu) && ConsoleSystem.GetValue("sv_cheats") == "1")
-            SetClass("open", !HasClass("open"));
+            SetClass("active", !HasClass("active"));
     }
 }

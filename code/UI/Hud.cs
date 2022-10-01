@@ -11,27 +11,28 @@ public partial class Hud : RootPanel
     private Crosshair Crosshair { get; set; }
 
     /// <summary>
-    /// Opens suit selection overlay for draw 4 and wild cards.
+    /// Activates suit selection overlay for draw 4 and wild cards.
     /// </summary>
     /// <param name="c"></param>
-    public void OpenSuitSelection(CardEntity c)
+    public void ActivateSuitSelection(CardEntity c)
     {
-        SuitSelectionOverlay.OpenPanel(c);
+        SuitSelectionOverlay.Activate(c);
     }
 
     /// <summary>
-    /// Opens turn notification panel.
+    /// Activates turn notification panel.
     /// </summary>
-    public void ResetTurnTimer()
+    public void ActivateTurnTimer()
     {
-        TurnTimer.ResetTurnTimer();
+        TurnTimer.ActivateTurnTimer();
     }
 
     /// <summary>
-    /// Resets Crosshair's timeout timer, causing it to appear.
+    /// Activates crosshair, fading it in.
     /// </summary>
-    public void EnableCrosshair()
+    public void ActivateCrosshair()
     {
-        Crosshair.Hovered();
+        Crosshair.Activate();
+    }
     }
 }

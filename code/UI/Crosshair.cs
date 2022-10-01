@@ -13,7 +13,7 @@ public partial class Crosshair : Panel
         BindClass("active", () => hoveredOverInteractable < .1f);
     }
 
-    public void Hovered()
+    public void Activate()
     {
         hoveredOverInteractable = 0;
     }
