@@ -104,7 +104,7 @@ public partial class Game
             Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
 
             Sound.FromScreen(To.Everyone, "gamestart");
-            Current.NotifyCurrentPlayer(To.Single(Current.CurrentPlayer.Client));
+            Current.NotifyPlayerOfTurn(To.Single(Current.CurrentPlayer.Client));
         }
 
         public TimeSince TurnStarted = 0;
@@ -186,16 +186,11 @@ public partial class Game
     private int GetNextPlayerIndex()
     {
         // If next index is -1, wrap to last index in Players.
-        if(CurrentPlayerIndex + (DirectionValue * (1 + ShouldSkip)) == -1)
-        {
-            ShouldSkip = 0;
+        if(CurrentPlayerIndex + DirectionValue == -1)
             return Players.Count - 1;
-        }
 
         // Else just wrap with modulo (or no wrapping is needed).
-        int shouldSkip = ShouldSkip; // Save local copy
-        ShouldSkip = 0; // Reset global
-        return (CurrentPlayerIndex + (DirectionValue * (1 + shouldSkip))) % Players.Count;
+        return (CurrentPlayerIndex + DirectionValue) % Players.Count;
     }
 
     /// <summary>

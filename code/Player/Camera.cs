@@ -7,7 +7,7 @@ public partial class Camera : CameraMode
 {
     private float FOV = 90f;
     private float fac = 1.0f;
-    private static ScreenEffects screenEffects = null;
+    private ScreenEffects screenEffects = null;
 
     public override void Activated()
     {
@@ -19,7 +19,7 @@ public partial class Camera : CameraMode
         ZNear = .1f;
         ZFar = 5000;
 
-        // Provides Chromatic Aberration for alert on player's turn
+        // Provides Vignette for alert effects
         screenEffects = Map.Camera.FindOrCreateHook<ScreenEffects>();
     }
 
@@ -47,11 +47,11 @@ public partial class Camera : CameraMode
 
         FieldOfView = FieldOfView.LerpTo(targetFOV, 10f * Time.Delta);
 
-        // Gradually lerp back to 0
-        if(screenEffects != null && screenEffects.ChromaticAberration.Scale > 0f)
+        // Gradually lerp Vignette back to 0.
+        if(screenEffects != null && screenEffects.Vignette.Intensity > 0f)
         {
-            var scale = screenEffects.ChromaticAberration.Scale;
-            screenEffects.ChromaticAberration.Scale = scale.LerpTo(0f, 3f * Time.Delta);
+            var intensity = screenEffects.Vignette.Intensity;
+            screenEffects.Vignette.Intensity = intensity.LerpTo(0f, 3f * Time.Delta);
         }
     }
 
@@ -67,11 +67,13 @@ public partial class Camera : CameraMode
     }
 
     /// <summary>
-    /// Sets ChromaticAberration.Scale.
+    /// Sets Vignette.Intensity.
     /// </summary>
-    /// <param name="scale"></param>
-    public void SetChromaticAberration(float scale)
-    {
-        screenEffects.ChromaticAberration.Scale = scale;
-    }
+    /// <param name="intensity"></param>
+    public void SetVignetteIntensity(float intensity) => screenEffects.Vignette.Intensity = intensity;
+    /// <summary>
+    /// Sets Vignette.Color
+    /// </summary>
+    /// <param name="color"></param>
+    public void SetVignetteColor(Color color) => screenEffects.Vignette.Color = color;
 }

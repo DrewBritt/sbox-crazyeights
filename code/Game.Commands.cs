@@ -173,11 +173,25 @@ public partial class Game
         Current.SetNewCurrentPlayer();
     }
 
+    /// <summary>
+    /// Updates Game.CurrentPlayerIndex
+    /// </summary>
     private void SetNewCurrentPlayer()
     {
+        // Increment to next player regardless
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
+        
+        // If we should skip, notify our new "current player" and get the next-next player, then reset flag
+        if(ShouldSkip == 1)
+        {
+            NotifyPlayerOfSkip(To.Single(CurrentPlayer.Client));
+            Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
+            ShouldSkip = 0;
+        }
+
+        // Notify actual new player
         (Current.CurrentState as PlayingState).TurnStarted = 0;
-        NotifyCurrentPlayer(To.Single(CurrentPlayer.Client));
+        NotifyPlayerOfTurn(To.Single(CurrentPlayer.Client));
     }
     #endregion
 
@@ -185,17 +199,32 @@ public partial class Game
     /// Plays various effects on screen to notify player that it is their turn.
     /// </summary>
     [ClientRpc]
-    public void NotifyCurrentPlayer()
+    public void NotifyPlayerOfTurn()
     {
         // Turn timer tells player when their turn is nearly up
         Current.Hud.ResetTurnTimer();
         Sound.FromScreen("playerturn");
 
-        // Chromatic Aberration sting
+        // Green vignette sting
         if(Current.FindActiveCamera() is Camera)
         {
             var camera = Current.FindActiveCamera() as Camera;
-            camera.SetChromaticAberration(1f);
+            camera.SetVignetteColor(new Color(0f, 1f, 0f, 1f));
+            camera.SetVignetteIntensity(.25f);
+        }
+    }
+
+    [ClientRpc]
+    public void NotifyPlayerOfSkip()
+    {
+        Sound.FromScreen("playerskip");
+
+        //Red vignette sting
+        if(Current.FindActiveCamera() is Camera)
+        {
+            var camera = Current.FindActiveCamera() as Camera;
+            camera.SetVignetteColor(new Color(1f, 0f, 0f, 1f));
+            camera.SetVignetteIntensity(.25f);
         }
     }
 }
