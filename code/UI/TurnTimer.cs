@@ -44,7 +44,7 @@ public partial class TurnTimer : Panel
     /// <summary>
     /// Sets turnOver to Max Turn Time, priming the panel to appear.
     /// </summary>
-    public void ActivateTurnTimer()
+    public void Activate()
     {
         turnOver = Game.MaxTurnTime;
     }

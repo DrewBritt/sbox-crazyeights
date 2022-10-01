@@ -128,8 +128,7 @@ public partial class Game
         public GameOverState() : base()
         {
             stateStart = 0;
-
-            Sound.FromScreen(To.Everyone, "gameover");
+            Current.NotifyPlayerOfGameOver(To.Everyone);
         }
 
         public override void Tick()

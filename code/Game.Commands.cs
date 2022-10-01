@@ -214,6 +214,9 @@ public partial class Game
         }
     }
 
+    /// <summary>
+    /// Plays various effects on screen to notify player that they've been skipped (skip/wildcard).
+    /// </summary>
     [ClientRpc]
     public void NotifyPlayerOfSkip()
     {
@@ -226,5 +229,15 @@ public partial class Game
             camera.SetVignetteColor(new Color(1f, 0f, 0f, 1f));
             camera.SetVignetteIntensity(.25f);
         }
+    }
+
+    /// <summary>
+    /// Displays winner of game to all players.
+    /// </summary>
+    [ClientRpc]
+    public void NotifyPlayerOfGameOver()
+    {
+        Sound.FromScreen("gameover");
+        Current.Hud.ActivateGameOverOverlay(Current.CurrentPlayer.Client);
     }
 }

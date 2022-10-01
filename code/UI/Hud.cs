@@ -6,9 +6,26 @@ namespace CrazyEights;
 [UseTemplate]
 public partial class Hud : RootPanel
 {
-    private SuitSelectionOverlay SuitSelectionOverlay { get; set; }
     private TurnTimer TurnTimer { get; set; }
     private Crosshair Crosshair { get; set; }
+    private SuitSelectionOverlay SuitSelectionOverlay { get; set; }
+    private GameOverOverlay GameOverOverlay { get; set; }    
+
+    /// <summary>
+    /// Activates turn notification panel.
+    /// </summary>
+    public void ActivateTurnTimer()
+    {
+        TurnTimer.Activate();
+    }
+
+    /// <summary>
+    /// Activates crosshair, fading it in.
+    /// </summary>
+    public void ActivateCrosshair()
+    {
+        Crosshair.Activate();
+    }
 
     /// <summary>
     /// Activates suit selection overlay for draw 4 and wild cards.
@@ -20,19 +37,10 @@ public partial class Hud : RootPanel
     }
 
     /// <summary>
-    /// Activates turn notification panel.
+    /// Activates Game Over overlay, displaying winner.
     /// </summary>
-    public void ActivateTurnTimer()
+    public void ActivateGameOverOverlay(Client winner)
     {
-        TurnTimer.ActivateTurnTimer();
-    }
-
-    /// <summary>
-    /// Activates crosshair, fading it in.
-    /// </summary>
-    public void ActivateCrosshair()
-    {
-        Crosshair.Activate();
-    }
+        GameOverOverlay.Activate(winner);
     }
 }
