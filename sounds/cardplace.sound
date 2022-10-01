@@ -3,11 +3,11 @@
 	data = 
 	{
 		UI = false
-		Volume = 1
+		Volume = 0.5
 		VolumeRandom = 0
 		Pitch = 1
 		PitchRandom = 0
-		Decibels = 30
+		Decibels = 70
 		Sounds = 
 		[
 			resource:"sounds/source/cardplace1.vsnd",
@@ -18,7 +18,7 @@
 			resource:"sounds/source/cardplace6.vsnd",
 		]
 		SelectionMode = "Random"
-		MaximumDistance = 236.23267
-		MinimumDistance = 11.811633
+		MaximumDistance = 1143.9335
+		MinimumDistance = 57.196674
 	}
 }

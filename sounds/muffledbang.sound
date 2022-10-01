@@ -2,18 +2,18 @@
 {
 	data = 
 	{
-		UI = false
-		Volume = 0.5
+		UI = true
+		Volume = 0.6
 		VolumeRandom = 0
 		Pitch = 1
 		PitchRandom = 0
-		Decibels = 70
+		Decibels = 20
 		Sounds = 
 		[
-			resource:"sounds/source/cardaddedtohand.vsnd",
+			resource:"sounds/source/muffledbang.vsnd",
 		]
 		SelectionMode = "Random"
-		MaximumDistance = 1143.9335
-		MinimumDistance = 57.196674
+		MaximumDistance = 122.77009
+		MinimumDistance = 6.138505
 	}
 }
