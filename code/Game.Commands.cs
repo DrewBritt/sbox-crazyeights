@@ -40,34 +40,34 @@ public partial class Game
     /// </summary>
     /// <param name="cardIdent">NetworkIdent of the Card to be played.</param>
     /// <param name="selectedWildSuit">Selected Wildcard color/suit. Only checked if cardIdent's card is a Wild or Draw4.</param>
-    /// <param name="isBot">Is the caller a bot? (Bots can't have a ConsoleSystem.Caller)</param>
     [ConCmd.Server("ce_playcard", Help = "Play a card from your hand")]
-    public static void PlayCard(int cardIdent, CardSuit selectedWildSuit = 0, bool isBot = false)
+    public static void PlayCard(int cardIdent, CardSuit selectedWildSuit = 0)
     {
-        // As bots can't call a command and have a ConsoleSystem.Caller,
-        // we have to manually track if a bots calling this command.
-        // Assume the bot is the current player (this gets verified)
+        // Bots calling a ConCmd pass the host as the Client,
+        // but calling the static method directly passes ConsoleSystem.Caller as null.
+        // So, we call it directly for bots, and check if Caller is null to determine if the player is real or a bot.
         Pawn player;
-        if(!isBot)
-            player = ConsoleSystem.Caller.Pawn as Pawn;
-        else
+        if(!ConsoleSystem.Caller.IsValid())
             player = Current.CurrentPlayer;
+        else
+            player = ConsoleSystem.Caller.Pawn as Pawn;
 
-        // Stop player if not in playing state.
+        // Stop caller if not in playing state.
         if(Current.CurrentState is not PlayingState)
         {
             Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You're not currently playing!");
             return;
         }
 
-        // Stop player if they're not the current player.
+        // Stop caller if they're not the current player.
         if(player != Current.CurrentPlayer)
         {
             Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You are not the current player!");
+            Log.Info($"{player}, {Current.CurrentPlayer}, {Current.Players}");
             return;
         }
 
-        // Stop player if the card they want to play isn't in their hand (or it isn't valid).
+        // Stop caller if the card they want to play isn't in their hand (or it isn't valid).
         CardEntity cardEnt = player.Hand.Cards.Where(c => c.NetworkIdent == cardIdent).FirstOrDefault();
         if(!cardEnt.IsValid())
         {
@@ -75,7 +75,7 @@ public partial class Game
             return;
         }
 
-        // Stop player if the card is not a valid play (wrong suit and rank).
+        // Stop caller if the card is not a valid play (wrong suit and rank).
         Card topCard = Current.DiscardPile.GetTopCard();
         if(cardEnt.Suit != CardSuit.Wild)
             if(cardEnt.Suit != topCard.Suit && cardEnt.Rank != topCard.Rank)
@@ -118,25 +118,18 @@ public partial class Game
     /// Player wishes to draw a card from the persistent deck. This will end their turn.
     /// </summary>
     [ConCmd.Server("ce_drawcard", Help = "Draw a card from the playing deck")]
-    public static void DrawCard(bool isBot = false)
+    public static void DrawCard()
     {
-        // As bots can't call a command and have a ConsoleSystem.Caller,
-        // we have to manually track if a bots calling this command.
-        // Assume the bot is the current player (this gets verified)
+        // Bots calling a ConCmd pass the host as the Client,
+        // but calling the static method directly passes ConsoleSystem.Caller as null.
+        // So, we call it directly for bots, and check if Caller is null to determine if the player is real or a bot.
         Pawn player;
-        if(!isBot)
-            player = ConsoleSystem.Caller.Pawn as Pawn;
-        else
+        if(!ConsoleSystem.Caller.IsValid())
             player = Current.CurrentPlayer;
+        else
+            player = ConsoleSystem.Caller.Pawn as Pawn;
 
-        // Stop player if not in playing state.
-        if(Current.CurrentState is not PlayingState)
-        {
-            Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You're not currently playing!");
-            return;
-        }
-
-        // Stop player if they're not the current player.
+        // Stop caller if they're not the current player.
         if(player != Current.CurrentPlayer)
         {
             Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You are not the current player!");
@@ -179,7 +172,9 @@ public partial class Game
     private void SetNewCurrentPlayer()
     {
         // Increment to next player regardless
-        Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
+        var cur = Current.GetNextPlayerIndex();
+        Current.CurrentPlayerIndex = cur;
+        Log.Info(ShouldSkip);
         
         // If we should skip, notify our new "current player" and get the next-next player, then reset flag
         if(ShouldSkip == 1)

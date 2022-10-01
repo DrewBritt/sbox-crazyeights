@@ -33,7 +33,7 @@ public partial class Pawn
             if(cardEnt.Suit == CardSuit.Wild)
                 Game.Current.Hud.ActivateSuitSelection(cardEnt);
             else
-                ConsoleSystem.Run($"ce_playcard {cardEnt.NetworkIdent} 0 {Client.IsBot}");
+                ConsoleSystem.Run($"ce_playcard {cardEnt.NetworkIdent} 0");
         }
     }
 
@@ -58,7 +58,12 @@ public partial class Pawn
         // Draw if no cards are currently playable
         if(!playable.Any())
         {
-            ConsoleSystem.Run($"ce_drawcard {Client.IsBot}");
+            // If bot, call directly to avoid setting ConsoleSystem.Caller (can check for null to determine if bot)
+            if(Client.IsBot)
+                Game.DrawCard();
+            else
+                ConsoleSystem.Run($"ce_drawcard");
+
             return;
         }
 
@@ -76,7 +81,12 @@ public partial class Pawn
                 int index = Rand.Int(0, cards.Count - 1);
                 var card = cards[index];
 
-                ConsoleSystem.Run($"ce_playcard {card.NetworkIdent} 0 {Client.IsBot}");
+                // If bot, call directly to avoid setting ConsoleSystem.Caller (can check for null to determine if bot)
+                if(Client.IsBot)
+                    Game.PlayCard(card.NetworkIdent);
+                else
+                    ConsoleSystem.Run($"ce_playcard {card.NetworkIdent} 0");
+
                 return;
             }
         }
@@ -94,7 +104,12 @@ public partial class Pawn
                 int index = Rand.Int(0, cards.Count - 1);
                 var card = cards[index];
 
-                ConsoleSystem.Run($"ce_playcard {card.NetworkIdent} {Hand.GetMostPrevelantSuit()} {Client.IsBot}");
+                // If bot, call directly to avoid setting ConsoleSystem.Caller (can check for null to determine if bot)
+                if(Client.IsBot)
+                    Game.PlayCard(card.NetworkIdent, Hand.GetMostPrevelantSuit());
+                else
+                    ConsoleSystem.Run($"ce_playcard {card.NetworkIdent} {Hand.GetMostPrevelantSuit()}");
+
                 return;
             }
         }
@@ -103,6 +118,10 @@ public partial class Pawn
         var numberList = numberCards.ToList();
         int randIndex = Rand.Int(0, numberList.Count - 1);
         var cardToPlay = numberList[randIndex];
-        ConsoleSystem.Run($"ce_playcard {cardToPlay.NetworkIdent} 0 {Client.IsBot}");
+
+        if(Client.IsBot)
+            Game.PlayCard(cardToPlay.NetworkIdent);
+        else
+            ConsoleSystem.Run($"ce_playcard {cardToPlay.NetworkIdent} 0");
     }
 }
