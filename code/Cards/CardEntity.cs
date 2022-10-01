@@ -12,13 +12,12 @@ public partial class CardEntity : ModelEntity
     /// Underlying Card value.
     /// </summary>
     public Card Card { get; set; }
-
-    private Texture tex;
-    private Material mat;
-
     public CardRank Rank => Card.Rank;
     public CardSuit Suit => Card.Suit;
     public bool IsPlayable() => Card.IsPlayable();
+
+    private Texture tex;
+    private Material mat;
 
     public override void Spawn()
     {
@@ -29,6 +28,9 @@ public partial class CardEntity : ModelEntity
         EnableTraceAndQueries = true;
         SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
         Tags.Add("card");
+
+        // Spawn opaque, lerped to 1 in Event.Frame
+        RenderColor = new Color(1f, 1f, 1f, 0f);
     }
 
     /// <summary>
@@ -54,6 +56,13 @@ public partial class CardEntity : ModelEntity
     [Event.Frame]
     public void OnFrame()
     {
+        // Lerp alpha to 1
+        if(RenderColor != Color.White)
+        {
+            var alpha = RenderColor.a.LerpTo(1f, 6f * Time.Delta);
+            RenderColor = Color.White.WithAlpha(alpha);
+        }
+
         if(tex?.IsLoaded ?? false)
             mat.OverrideTexture("Color", tex);
     }
