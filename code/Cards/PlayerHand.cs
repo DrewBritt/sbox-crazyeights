@@ -64,6 +64,8 @@ public partial class PlayerHand : BaseNetworkable
         cardEnt.LocalRotation = Rotation.FromPitch(100).RotateAroundAxis(Vector3.Forward, -60f);
         cardEnt.LocalPosition = (Vector3.Forward * (Cards.Count)) + (Vector3.Right * (.65f * (Cards.Count))) + (Vector3.Up * 1.25f);
 
+        Sound.FromEntity("cardaddedtohand", cardEnt);
+
         UpdateCardPositions();
     }
 

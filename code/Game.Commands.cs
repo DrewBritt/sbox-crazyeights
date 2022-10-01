@@ -101,7 +101,7 @@ public partial class Game
 
         // Play animation and card sound
         Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
-        Sound.FromEntity("cardinteract", Current.DiscardPile);
+        Sound.FromEntity("cardplace", Current.DiscardPile);
 
         // Game Over if player has no cards
         if(player.Hand.Cards.Count == 0)
@@ -166,9 +166,8 @@ public partial class Game
         // Add 1 card from top of pile to player hand.
         player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
 
-        // Play animation and card sound
+        // Play player interact animation
         Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
-        Sound.FromEntity("cardinteract", deck);
 
         // Next player's turn.
         Current.SetNewCurrentPlayer();
