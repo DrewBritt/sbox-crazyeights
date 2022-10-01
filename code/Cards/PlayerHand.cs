@@ -6,6 +6,9 @@ namespace CrazyEights;
 
 /// <summary>
 /// Encapsulates a player's current hand of cards.
+/// Cards are added by passing them to AddCard, which will stick them in a Queue.
+/// On a timer, a CardEntity is spawned and added to the PlayerHand.
+/// This lets us "animate" them spawning in quick succession rather than all at once.
 /// </summary>
 public partial class PlayerHand : BaseNetworkable
 {
@@ -17,19 +20,41 @@ public partial class PlayerHand : BaseNetworkable
     /// CardEntity's (and therefore Cards) in this hand.
     /// </summary>
     [Net] public IList<CardEntity> Cards { get; set; }
+    private Queue<Card> cardsToAdd = new Queue<Card>();
+
+    public PlayerHand()
+    {
+        Event.Register(this);
+    }
 
     /// <summary>
-    /// Spawn a CardEntity into the world, set its value on the appropriate client, and add it to this Hand.
+    /// Adds paramater card to a Queue to be spawned as a CardEntity.
     /// </summary>
-    /// <param name="card"></param>
-    public void AddCard(Card card)
+    /// <param name="card">Card to be spawned as a CardEntity</param>
+    public void AddCard(Card card) => cardsToAdd.Enqueue(card);
+
+    /// <summary>
+    /// Adds cards to a Queue to be spawned as CardEntities.
+    /// </summary>
+    /// <param name="cards"></param>
+    public void AddCards(IList<Card> cards)
+    {
+        foreach(var c in cards)
+            AddCard(c);
+    }
+
+    /// <summary>
+    /// Spawns a CardEntity representation of param card.
+    /// </summary>
+    /// <param name="card">Card to be spawned as a CardEntity</param>
+    public void SpawnCard(Card card)
     {
         CardEntity cardEnt = new CardEntity();
 
         // Net cardEnt's existence to client, then set on server
         Cards.Add(cardEnt);
         cardEnt.Card = card;
-        
+
         // Then net card texture
         cardEnt.SetCard(To.Single(Owner.Client), card.Rank, card.Suit);
 
@@ -42,16 +67,21 @@ public partial class PlayerHand : BaseNetworkable
         UpdateCardPositions();
     }
 
+    TimeSince cardSpawned = 0;
     /// <summary>
-    /// Spawn and add a list of CardEntity's and add it to this Hand.
+    /// Called every tick to check if any cards must be spawned as CardEntities.
+    /// Waits cardSpawned seconds before spawning a CardEntity.
     /// </summary>
-    /// <param name="cards"></param>
-    public void AddCards(IList<Card> cards)
+    [Event.Tick.Server]
+    public void OnServerTick()
     {
-        foreach(var c in cards)
-            AddCard(c);
+        if(!cardsToAdd.Any()) return;
 
-        UpdateCardPositions();
+        if(cardSpawned < .2) return;
+
+        Card cardToAdd = cardsToAdd.Dequeue();
+        SpawnCard(cardToAdd);
+        cardSpawned = 0;
     }
 
     /// <summary>
@@ -117,4 +147,9 @@ public partial class PlayerHand : BaseNetworkable
     }
 
     #endregion
+
+    ~PlayerHand()
+    {
+        Event.Unregister(this);
+    }
 }
