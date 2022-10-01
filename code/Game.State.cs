@@ -186,11 +186,16 @@ public partial class Game
     private int GetNextPlayerIndex()
     {
         // If next index is -1, wrap to last index in Players.
-        if(CurrentPlayerIndex + DirectionValue == -1)
+        if(CurrentPlayerIndex + (DirectionValue * (1 + ShouldSkip)) == -1)
+        {
+            ShouldSkip = 0;
             return Players.Count - 1;
+        }
 
         // Else just wrap with modulo (or no wrapping is needed).
-        return (CurrentPlayerIndex + DirectionValue) % Players.Count;
+        int shouldSkip = ShouldSkip; // Save local copy
+        ShouldSkip = 0; // Reset global
+        return (CurrentPlayerIndex + (DirectionValue * (1 + shouldSkip))) % Players.Count;
     }
 
     /// <summary>

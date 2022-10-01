@@ -16,6 +16,11 @@ public partial class Game
     private int DirectionValue => DirectionIsClockwise ? 1 : -1;
 
     /// <summary>
+    /// Added to calculation of next player index, 1 if should skip, 0 if normal.
+    /// </summary>
+    private int ShouldSkip = 0;
+
+    /// <summary>
     /// Check if card is a action/wild card, and if so, run appropriate functions.
     /// </summary>
     /// <param name="card">Card to be checked.</param>
@@ -63,8 +68,8 @@ public partial class Game
     /// </summary>
     private void SkipAction()
     {
-        // Currently just change CurrentPlayerIndex an extra time.
-        CurrentPlayerIndex = GetNextPlayerIndex();
+        // Increment current player index an extra time
+        ShouldSkip = 1;
     }
 
     /// <summary>
