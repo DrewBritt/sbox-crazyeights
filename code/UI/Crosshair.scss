@@ -10,7 +10,7 @@
     left: 50%;
     border-radius: 100px;
     opacity: 0;
-    transition: opacity .1s ease-out;
+    transition: opacity .35s ease-out;
 
     &.active {
         opacity: 1;
