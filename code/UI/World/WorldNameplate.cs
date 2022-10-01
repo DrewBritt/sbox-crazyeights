@@ -9,10 +9,12 @@ public partial class WorldNameplate : WorldPanel
     private Pawn pawn;
     private bool hasSet = false;
 
-    public Image Avatar { get; set; }
-    public Label Name { get; set; }
-    private TimeSince Appeared = 0;
+    private Label Voice { get; set; }
 
+    private Panel Container { get; set; }
+    private Image Avatar { get; set; }
+    private Label Name { get; set; }
+  
     public WorldNameplate(Pawn pawn)
     {
         this.pawn = pawn;
@@ -21,10 +23,12 @@ public partial class WorldNameplate : WorldPanel
         PanelBounds = new Rect(-width * .5f, -height * .5f, width, height);
 
         Position = pawn.EyePosition + Vector3.Up * 16;
-        BindClass("active", () => Appeared <= 0.05 || pawn == Game.Current.CurrentPlayer);
-        BindClass("currentPlayer", () => pawn == Game.Current.CurrentPlayer);
+        Voice.BindClass("active", () => pawn.Client?.TimeSinceLastVoice < .1f);
+        Container.BindClass("active", () => Appeared <= 0.05 || pawn == Game.Current.CurrentPlayer);
+        Container.BindClass("currentPlayer", () => pawn == Game.Current.CurrentPlayer);
     }
 
+    TimeSince Appeared = 0;
     public void Activate()
     {
         Appeared = 0;

@@ -1,6 +1,9 @@
 ﻿<link href="WorldNameplate.scss" rel="stylesheet" />
 
 <worldnameplate>
-    <img class="avatar" @ref="avatar"/>
-    <label class="name" @ref="name"></label>
+    <label @ref="voice" class="voice">🎙</label>
+    <div @ref="container" class="container">
+        <img class="avatar" @ref="avatar"/>
+        <label class="name" @ref="name"></label>
+    </div>
 </worldnameplate>
