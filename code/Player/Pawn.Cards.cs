@@ -49,6 +49,8 @@ public partial class Pawn
     /// <summary>
     /// Calculates and force-plays a card from this pawn's hand.
     /// Used for bots/AFK behavior.
+    /// Calls Play/Draw commands directly to avoid setting Caller, as calling as a command
+    /// on the server defaults to the Host's client.
     /// </summary>
     public void ForcePlayCard()
     {
@@ -58,12 +60,7 @@ public partial class Pawn
         // Draw if no cards are currently playable
         if(!playable.Any())
         {
-            // If bot, call directly to avoid setting ConsoleSystem.Caller (can check for null to determine if bot)
-            if(Client.IsBot)
-                Game.DrawCard();
-            else
-                ConsoleSystem.Run($"ce_drawcard");
-
+            Game.DrawCard();
             return;
         }
 
@@ -81,12 +78,7 @@ public partial class Pawn
                 int index = Rand.Int(0, cards.Count - 1);
                 var card = cards[index];
 
-                // If bot, call directly to avoid setting ConsoleSystem.Caller (can check for null to determine if bot)
-                if(Client.IsBot)
-                    Game.PlayCard(card.NetworkIdent);
-                else
-                    ConsoleSystem.Run($"ce_playcard {card.NetworkIdent} 0");
-
+                Game.PlayCard(card.NetworkIdent);
                 return;
             }
         }
@@ -104,12 +96,7 @@ public partial class Pawn
                 int index = Rand.Int(0, cards.Count - 1);
                 var card = cards[index];
 
-                // If bot, call directly to avoid setting ConsoleSystem.Caller (can check for null to determine if bot)
-                if(Client.IsBot)
-                    Game.PlayCard(card.NetworkIdent, Hand.GetMostPrevelantSuit());
-                else
-                    ConsoleSystem.Run($"ce_playcard {card.NetworkIdent} {Hand.GetMostPrevelantSuit()}");
-
+                Game.PlayCard(card.NetworkIdent, Hand.GetMostPrevelantSuit());
                 return;
             }
         }
@@ -119,9 +106,6 @@ public partial class Pawn
         int randIndex = Rand.Int(0, numberList.Count - 1);
         var cardToPlay = numberList[randIndex];
 
-        if(Client.IsBot)
-            Game.PlayCard(cardToPlay.NetworkIdent);
-        else
-            ConsoleSystem.Run($"ce_playcard {cardToPlay.NetworkIdent} 0");
+        Game.PlayCard(cardToPlay.NetworkIdent);
     }
 }

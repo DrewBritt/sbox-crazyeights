@@ -43,9 +43,9 @@ public partial class Game
     [ConCmd.Server("ce_playcard", Help = "Play a card from your hand")]
     public static void PlayCard(int cardIdent, CardSuit selectedWildSuit = 0)
     {
-        // Bots calling a ConCmd pass the host as the Client,
-        // but calling the static method directly passes ConsoleSystem.Caller as null.
-        // So, we call it directly for bots, and check if Caller is null to determine if the player is real or a bot.
+        // Calling a ConCmd from console normally passes the Caller, client, unless its ran from the server,
+        // in which cases it passes the host's client. Instead, we call the static method directly from server
+        // scenarios (bots/AFK behaviour) which avoids setting ConsoleSystem.Caller
         Pawn player;
         if(!ConsoleSystem.Caller.IsValid())
             player = Current.CurrentPlayer;
@@ -120,9 +120,9 @@ public partial class Game
     [ConCmd.Server("ce_drawcard", Help = "Draw a card from the playing deck")]
     public static void DrawCard()
     {
-        // Bots calling a ConCmd pass the host as the Client,
-        // but calling the static method directly passes ConsoleSystem.Caller as null.
-        // So, we call it directly for bots, and check if Caller is null to determine if the player is real or a bot.
+        // Calling a ConCmd from console normally passes the Caller, client, unless its ran from the server,
+        // in which cases it passes the host's client. Instead, we call the static method directly from server
+        // scenarios (bots/AFK behaviour) which avoids setting ConsoleSystem.Caller
         Pawn player;
         if(!ConsoleSystem.Caller.IsValid())
             player = Current.CurrentPlayer;
@@ -172,9 +172,7 @@ public partial class Game
     private void SetNewCurrentPlayer()
     {
         // Increment to next player regardless
-        var cur = Current.GetNextPlayerIndex();
-        Current.CurrentPlayerIndex = cur;
-        Log.Info(ShouldSkip);
+        Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
         
         // If we should skip, notify our new "current player" and get the next-next player, then reset flag
         if(ShouldSkip == 1)
