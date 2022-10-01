@@ -1,0 +1,46 @@
+﻿inputhint {
+    align-items: center;
+    padding: 8px;
+    opacity: 0;
+
+    &.visible {
+        opacity: 1;
+    }
+
+    .glyph {
+    }
+
+    .action {
+        margin-left: 8px;
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        text-stroke: 2px #000;
+    }
+
+    flex-direction: row;
+
+    &.small {
+        margin-right: 0px;
+        margin-left: 0px;
+
+        .action {
+            display: none;
+        }
+    }
+
+    &.invert {
+        .action {
+            margin-right: 8px;
+        }
+
+        flex-direction: row-reverse;
+    }
+
+
+    &.noaction {
+        .action {
+            display: none;
+        }
+    }
+}

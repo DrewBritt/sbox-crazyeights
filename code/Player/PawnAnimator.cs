@@ -9,7 +9,7 @@ public class PawnAnimator : Sandbox.PawnAnimator
 
     public PawnAnimator() : base()
     {
-        sitPose = Rand.Int(0, 3);
+        //sitPose = Rand.Int(0, 3);
     }
 
     private TimeSince TimeSinceGameAction;

@@ -124,31 +124,28 @@ public partial class Pawn : AnimatedEntity
     private void CheckInteractables()
     {
         // Trace for interactable object
-        var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
-                .WithAnyTags("card", "deck")
-                .EntitiesOnly()
-                .Run();
+        var ent = GetInteractableEntity();
 
         // If hit entity is either a Card in the player's hand, or the Deck
-        if(tr.Hit && Hand != null && (Hand.Cards.Contains(tr.Entity) || tr.Entity is Deck))
+        if(ent.IsValid() && Hand != null && (Hand.Cards.Contains(ent) || ent is Deck))
         {
             Game.Current.Hud.EnableCrosshair();
-            if(tr.Entity != lastLookedAt)
+            if(ent != lastLookedAt)
                 Sound.FromScreen("click1");
 
             // Apply glow if found
-            var glow = tr.Entity.Components.GetOrCreate<Glow>();
+            var glow = ent.Components.GetOrCreate<Glow>();
             glow.Enabled = true;
             glow.Color = new Color(1f, 1f, 1f, 1f);
 
             // Disable glow if looking at new interactable
-            if(lastLookedAt.IsValid() && tr.Entity != lastLookedAt && lastLookedAt.Components.TryGet<Glow>(out var previousGlow))
+            if(lastLookedAt.IsValid() && ent != lastLookedAt && lastLookedAt.Components.TryGet<Glow>(out var previousGlow))
                 previousGlow.Enabled = false;
-            lastLookedAt = tr.Entity as ModelEntity;
+            lastLookedAt = ent as ModelEntity;
 
             // Interaction
             if(Input.Pressed(InputButton.PrimaryAttack))
-                CardInteract(tr.Entity);
+                CardInteract(ent);
 
             return;
         }
@@ -159,6 +156,19 @@ public partial class Pawn : AnimatedEntity
             lastGlow.Enabled = false;
             lastLookedAt = null;
         }
+    }
+
+    public Entity GetInteractableEntity()
+    {
+        if(Game.Current.CurrentPlayer != this) return null;
+
+        var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
+                .WithAnyTags("card", "deck")
+                .EntitiesOnly()
+                .Run();
+
+        if(Hand == null || (!Hand.Cards.Contains(tr.Entity) && tr.Entity is not Deck)) return null;
+        return tr.Entity;
     }
 
     protected override void OnDestroy()
