@@ -19,12 +19,12 @@ public partial class WorldNameplate : WorldPanel
     {
         this.pawn = pawn;
         var width = 1000;
-        var height = 1000;
+        var height = 600;
         PanelBounds = new Rect(-width * .5f, -height * .5f, width, height);
 
         Position = pawn.EyePosition + Vector3.Up * 16;
-        Voice.BindClass("active", () => pawn.Client?.TimeSinceLastVoice < .1f);
-        Container.BindClass("active", () => Appeared <= 0.05 || pawn == Game.Current.CurrentPlayer);
+        Voice.BindClass("active", () => pawn.Client?.TimeSinceLastVoice < .2f);
+        Container.BindClass("active", () => Appeared <= .2f || pawn == Game.Current.CurrentPlayer);
         Container.BindClass("currentPlayer", () => pawn == Game.Current.CurrentPlayer);
     }
 
@@ -39,7 +39,8 @@ public partial class WorldNameplate : WorldPanel
     {
         if(!pawn.IsValid()) return;
         if(!pawn.Client.IsValid()) return;
-        
+
+        Position = pawn.Position + Vector3.Up * 65f;
         Rotation = Rotation.LookAt(-Screen.GetDirection(new Vector2(Screen.Width * 0.5f, Screen.Height * 0.5f)));
 
         // Do this shit once way later instead of in constructor or something reasonable,

@@ -10,7 +10,7 @@ public partial class Crosshair : Panel
     {
         StyleSheet.Load("/ui/Crosshair.scss");
 
-        BindClass("active", () => hoveredOverInteractable < .1f);
+        BindClass("active", () => hoveredOverInteractable < .2f);
     }
 
     public void Activate()
