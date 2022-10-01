@@ -57,7 +57,6 @@ public partial class Pawn : AnimatedEntity
         UpdateEyesTransforms();
     }
 
-    ModelEntity lastLookedAt;
     public override void FrameSimulate(Client cl)
     {
         base.FrameSimulate(cl);
@@ -119,7 +118,9 @@ public partial class Pawn : AnimatedEntity
         var pawn = tr.Entity as Pawn;
         pawn.Nameplate.Appeared = 0;
     }
-    
+
+    // Interactable looked at last frame. Possibly null.
+    ModelEntity lastLookedAt;
     private void CheckInteractables()
     {
         // Trace for interactable object
@@ -132,6 +133,8 @@ public partial class Pawn : AnimatedEntity
         if(tr.Hit && Hand != null && (Hand.Cards.Contains(tr.Entity) || tr.Entity is Deck))
         {
             Game.Current.Hud.EnableCrosshair();
+            if(tr.Entity != lastLookedAt)
+                Sound.FromScreen("click1");
 
             // Apply glow if found
             var glow = tr.Entity.Components.GetOrCreate<Glow>();
@@ -152,7 +155,10 @@ public partial class Pawn : AnimatedEntity
 
         // Disable glow if not looking at anything
         if(lastLookedAt.IsValid() && lastLookedAt.Components.TryGet<Glow>(out var lastGlow))
+        {
             lastGlow.Enabled = false;
+            lastLookedAt = null;
+        }
     }
 
     protected override void OnDestroy()
