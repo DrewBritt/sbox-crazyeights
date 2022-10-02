@@ -53,6 +53,25 @@ public partial class CardEntity : ModelEntity
         SetMaterialOverride(mat, "isTarget");
     }
 
+    // WHAT THE FUCK
+    // Networking the card texture immediately on spawn
+    // SOMETIMES will cause remote clients to not load the texture
+    // (even though the values are successfully networked?)
+    // so instead, we wait 1/20 of a second before sending the RPC
+    TimeSince spawned = 0;
+    bool set = false;
+    [Event.Tick.Server]
+    public void OnServerTick()
+    {
+        if(set) return;
+        if(Owner == null) return;
+        if(spawned < .05f) return;
+
+        // Then net card texture
+        this.SetCard(To.Single(Owner.Client), Rank, Suit);
+        set = true;
+    }
+
     [Event.Frame]
     public void OnFrame()
     {

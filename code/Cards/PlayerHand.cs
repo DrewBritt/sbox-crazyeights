@@ -55,8 +55,10 @@ public partial class PlayerHand : BaseNetworkable
         Cards.Add(cardEnt);
         cardEnt.Card = card;
 
-        // Then net card texture
-        cardEnt.SetCard(To.Single(Owner.Client), card.Rank, card.Suit);
+        // TODO: Revert this whenever whatever the fuck causes
+        // textures to fail creation on remote clients is fixed
+        //cardEnt.SetCard(To.Single(Owner.Client), Rank, Suit);
+        cardEnt.Owner = Owner;
 
         // Position card ent in hand
         cardEnt.SetParent(Owner, "handStartPos");
