@@ -16,8 +16,8 @@ public partial class CardEntity : ModelEntity
     public CardSuit Suit => Card.Suit;
     public bool IsPlayable() => Card.IsPlayable();
 
-    private Texture tex;
-    private Material mat;
+    private Texture texture;
+    private Material material;
 
     public override void Spawn()
     {
@@ -48,9 +48,10 @@ public partial class CardEntity : ModelEntity
             Rank = rank,
             Suit = suit
         };
-        tex = Texture.Load(FileSystem.Mounted, Card.FileName);
-        mat = Material.Load("materials/card/card.vmat").CreateCopy();
-        SetMaterialOverride(mat, "isTarget");
+
+        texture = Texture.Load(FileSystem.Mounted, Card.FileName);
+        material = Material.Load("materials/card/card_face.vmat").CreateCopy();
+        SetMaterialOverride(material, "isTarget");
     }
 
     // WHAT THE FUCK
@@ -82,7 +83,7 @@ public partial class CardEntity : ModelEntity
             RenderColor = Color.White.WithAlpha(alpha);
         }
 
-        if(tex?.IsLoaded ?? false)
-            mat.OverrideTexture("Color", tex);
+        if(texture?.IsLoaded ?? false)
+            material.OverrideTexture("Color", texture);
     }
 }

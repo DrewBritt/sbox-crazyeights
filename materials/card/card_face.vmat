@@ -7,7 +7,7 @@ Layer0
 	//---- Color ----
 	g_flModelTintAmount "1.000"
 	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
-	TextureColor "materials/card/card_back.png"
+	TextureColor "materials/card/source/card_back.png"
 
 	//---- Fade ----
 	g_flFadeExponent "1.000"
@@ -23,10 +23,10 @@ Layer0
 	g_flMetalness "0.000"
 
 	//---- Normal ----
-	TextureNormal "materials/card/card_normal.png"
+	TextureNormal "materials/card/source/card_normal.png"
 
 	//---- Roughness ----
-	TextureRoughness "materials/card/card_rough.png"
+	TextureRoughness "materials/card/source/card_rough.png"
 
 	//---- Texture Coordinates ----
 	g_nScaleTexCoordUByModelScaleAxis "0"
@@ -34,6 +34,11 @@ Layer0
 	g_vTexCoordOffset "[0.000 0.000]"
 	g_vTexCoordScale "[1.000 1.000]"
 	g_vTexCoordScrollSpeed "[0.000 0.000]"
+
+	Attributes
+	{
+		isTarget "1"
+	}
 
 	DynamicParams
 	{

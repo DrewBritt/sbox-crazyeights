@@ -15,7 +15,7 @@
 						[
 							{
 								from = "materials/card/card.vmat"
-								to = "materials/card/card.vmat"
+								to = "materials/card/card_face.vmat"
 							},
 							{
 								from = "materials/card/card_back.vmat"
