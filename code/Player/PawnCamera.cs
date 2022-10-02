@@ -20,7 +20,7 @@ public partial class PawnCamera : CameraMode
 
         // Provides Vignette for alert effects
         //screenEffects = Map.Camera.FindOrCreateHook<ScreenEffects>();
-
+        activateEffects = 1;
     }
 
     public override void Deactivated()
