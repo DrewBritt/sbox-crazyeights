@@ -129,6 +129,13 @@ public partial class Game
         else
             player = ConsoleSystem.Caller.Pawn as Pawn;
 
+        // Stop caller if not in playing state.
+        if(Current.CurrentState is not PlayingState)
+        {
+            Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You're not currently playing!");
+            return;
+        }
+
         // Stop caller if they're not the current player.
         if(player != Current.CurrentPlayer)
         {
@@ -167,6 +174,8 @@ public partial class Game
         NotifyPlayerOfTurn(To.Single(CurrentPlayer.Client));
     }
     #endregion
+
+    #region Notify Players
 
     /// <summary>
     /// Plays various effects on screen to notify player that it is their turn.
@@ -213,4 +222,5 @@ public partial class Game
         Sound.FromScreen("gameover");
         Current.Hud.ActivateGameOverOverlay(Current.CurrentPlayer.Client);
     }
+    #endregion
 }
