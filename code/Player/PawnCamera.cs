@@ -6,7 +6,6 @@ namespace CrazyEights;
 public partial class PawnCamera : CameraMode
 {
     private float FOV = 90f;
-    private float fac = 1.0f;
     private ScreenEffects screenEffects = null;
 
     public override void Activated()
@@ -42,15 +41,10 @@ public partial class PawnCamera : CameraMode
 
         Viewer = pawn;
 
+        Position = Position.LerpTo(pawn.EyePosition, 20 * Time.Delta);
+        Rotation = pawn.EyeRotation;
+
         float targetFOV = FOV;
-        Vector3 targetPosition = pawn.EyePosition;
-        Rotation targetRotation = pawn.EyeRotation;
-
-        fac = fac.LerpTo(0.0f, .5f * Time.Delta);
-
-        Position = Position.LerpTo(pawn.EyePosition, 1f - fac);
-        Rotation = Rotation.Lerp(Rotation, pawn.EyeRotation, 1f - fac);
-
         FieldOfView = FieldOfView.LerpTo(targetFOV, 10f * Time.Delta);
 
         // Gradually lerp Vignette back to 0.
