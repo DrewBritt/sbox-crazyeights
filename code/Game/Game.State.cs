@@ -102,7 +102,7 @@ public partial class Game
             while(Current.PlayingDeck.GetTopCard().Suit == CardSuit.Wild)
                 Current.PlayingDeck.Shuffle();
             var firstCard = Current.PlayingDeck.GrabTopCard();
-            Current.DiscardPile.AddCard(Current.PlayingDeck.GrabTopCard());
+            Current.DiscardPile.AddCard(firstCard);
 
             // Update last played card for clients
             Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
