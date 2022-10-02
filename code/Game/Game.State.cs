@@ -96,10 +96,13 @@ public partial class Game
                 }
             }
 
-            // Game plays starting card from top of deck.
+            // Game plays starting card from top of deck onto discard pile.
+            // Shuffles until first card is a valid starting card (not wild)
             Current.DiscardPile = new Pile();
+            while(Current.PlayingDeck.GetTopCard().Suit == CardSuit.Wild)
+                Current.PlayingDeck.Shuffle();
             var firstCard = Current.PlayingDeck.GrabTopCard();
-            Current.DiscardPile.AddCard(firstCard);
+            Current.DiscardPile.AddCard(Current.PlayingDeck.GrabTopCard());
 
             // Update last played card for clients
             Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
