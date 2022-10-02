@@ -131,9 +131,29 @@ public partial class Deck : ModelEntity
     /// <returns></returns>
     public virtual Card GrabTopCard()
     {
-        Card c = GetTopCard();
-        Cards.Remove(c);
-        return c;
+        Card card = GetTopCard();
+        Cards.Remove(card);
+
+        // Refill Deck with cards from discard pile if deck is now empty
+        if(!Cards.Any())
+        {
+            // Add discard (except for top card)
+            var discard = Game.Current.DiscardPile;
+            var discardTop = discard.GrabTopCard();
+            AddCards(discard.Cards);
+            Shuffle();
+
+            // Clear played Wild cards back to Wild (instead of their played color)
+            var wilds = Cards.Where(c => c.Rank > (CardRank)12).ToList();
+            foreach(var c in wilds)
+                c.Suit = CardSuit.Wild;
+
+            // Clear discard and add old top card back
+            discard.Cards.Clear();
+            discard.AddCard(discardTop);
+        }
+
+        return card;
     }
 
     /// <summary>
