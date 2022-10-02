@@ -179,9 +179,9 @@ public partial class Game
         Sound.FromScreen("playerturn");
 
         // Green vignette sting
-        if(Current.FindActiveCamera() is Camera)
+        if(Current.FindActiveCamera() is PawnCamera)
         {
-            var camera = Current.FindActiveCamera() as Camera;
+            var camera = Current.FindActiveCamera() as PawnCamera;
             camera.SetVignetteColor(new Color(0f, 1f, 0f, 1f));
             camera.SetVignetteIntensity(.25f);
         }
@@ -196,9 +196,9 @@ public partial class Game
         Sound.FromScreen("playerskip");
 
         //Red vignette sting
-        if(Current.FindActiveCamera() is Camera)
+        if(Current.FindActiveCamera() is PawnCamera)
         {
-            var camera = Current.FindActiveCamera() as Camera;
+            var camera = Current.FindActiveCamera() as PawnCamera;
             camera.SetVignetteColor(new Color(1f, 0f, 0f, 1f));
             camera.SetVignetteIntensity(.25f);
         }

@@ -35,7 +35,7 @@ public partial class Game : Sandbox.Game
         {
             pawn = new Pawn(client)
             {
-                CameraMode = new Camera(),
+                CameraMode = new PawnCamera(),
                 Animator = new PawnAnimator()
             };
             randomChair.SeatPlayer(pawn as Pawn);

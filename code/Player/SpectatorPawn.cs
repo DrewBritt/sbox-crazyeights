@@ -2,6 +2,9 @@
 
 namespace CrazyEights;
 
+/// <summary>
+/// Freecam pawn spawned for spectators (no free PlayerChair entities found).
+/// </summary>
 public partial class SpectatorPawn : Entity
 {
     public SpectatorPawn() { }

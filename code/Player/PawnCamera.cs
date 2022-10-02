@@ -3,7 +3,7 @@ using Sandbox.Effects;
 
 namespace CrazyEights;
 
-public partial class Camera : CameraMode
+public partial class PawnCamera : CameraMode
 {
     private float FOV = 90f;
     private float fac = 1.0f;
