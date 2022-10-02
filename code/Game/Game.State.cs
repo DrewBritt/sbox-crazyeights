@@ -89,11 +89,10 @@ public partial class Game
                 };
 
                 // 7 cards for each player.
+                List<Card> cards = new List<Card>();
                 for(int j = 0; j < 7; j++)
-                {
-                    var card = Current.PlayingDeck.GrabTopCard();
-                    player.Hand.AddCard(card);
-                }
+                    cards.Add(Current.PlayingDeck.GrabTopCard());
+                player.Hand.AddCards(cards);
             }
 
             // Game plays starting card from top of deck onto discard pile.

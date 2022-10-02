@@ -39,6 +39,7 @@ public partial class PlayerHand : BaseNetworkable
     /// <param name="cards"></param>
     public void AddCards(IList<Card> cards)
     {
+        cards.OrderBy(c => c.Suit).ThenBy(c => c.Rank);
         foreach(var c in cards)
             AddCard(c);
     }
@@ -68,6 +69,7 @@ public partial class PlayerHand : BaseNetworkable
 
         Sound.FromEntity("cardaddedtohand", cardEnt);
 
+        Cards = Cards.OrderBy(c => c.Suit).ThenBy(c => c.Rank).ToList();
         UpdateCardPositions();
     }
 
