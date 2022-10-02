@@ -77,7 +77,7 @@ public partial class PlayerHand : BaseNetworkable
     /// Waits cardSpawned seconds before spawning a CardEntity.
     /// </summary>
     [Event.Tick.Server]
-    public void OnServerTick()
+    public void OnTickServer()
     {
         if(!cardsToAdd.Any()) return;
 

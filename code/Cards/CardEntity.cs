@@ -62,7 +62,7 @@ public partial class CardEntity : ModelEntity
     TimeSince spawned = 0;
     bool set = false;
     [Event.Tick.Server]
-    public void OnServerTick()
+    public void OnTickServer()
     {
         if(set) return;
         if(Owner == null) return;

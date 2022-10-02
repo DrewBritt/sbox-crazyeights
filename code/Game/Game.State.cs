@@ -136,7 +136,7 @@ public partial class Game
 
         public override void Tick()
         {
-            if(stateStart > 10)
+            if(stateStart > 8)
                 SetState(new WaitingForPlayersState());
         }
     }
