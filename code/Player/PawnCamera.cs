@@ -14,7 +14,7 @@ public partial class PawnCamera : CameraMode
         if(pawn == null) return;
 
         Position = pawn.EyePosition;
-        Rotation = Rotation.Random; // Intialize as random because pawn.EyeRotation is (0,0,0) on start, and Lerping 0 with 0 is NaN = weird black screen + 50fps?
+        Rotation = Rotation.From(1, 0, 0); // Intialize as anything other than (0,0,0) as Lerping 0 with 0 is NaN = black screen + 50fps
         ZNear = .1f;
         ZFar = 5000;
 
