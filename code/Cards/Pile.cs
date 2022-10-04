@@ -29,7 +29,7 @@ public partial class Pile : Deck
         // Position/Rotate TopCardEntity relative to pile and particle system
         TopCardEntity = new CardEntity();
         TopCardEntity.Transform = spawn.Transform;
-        TopCardEntity.Rotation = TopCardEntity.Rotation.RotateAroundAxis(Vector3.Right, 180).RotateAroundAxis(Vector3.Up, 90);
+        TopCardEntity.Rotation = TopCardEntity.Rotation.RotateAroundAxis(Vector3.Up, 90);
     }
 
     protected override void UpdateParticles()

@@ -19,8 +19,7 @@ public partial class PawnCamera : CameraMode
         ZFar = 5000;
 
         // Provides Vignette for alert effects
-        //screenEffects = Map.Camera.FindOrCreateHook<ScreenEffects>();
-        activateEffects = 1;
+        screenEffects = Map.Camera.FindOrCreateHook<ScreenEffects>();
     }
 
     public override void Deactivated()
@@ -34,10 +33,6 @@ public partial class PawnCamera : CameraMode
     {
         var pawn = Local.Pawn;
         if(pawn == null) return;
-
-        // TEMP FIX: Delay activation, apparently it "shits the bed in the graphics driver" if activated immediately on join :(
-        if(screenEffects == null && activateEffects <= 0)
-            screenEffects = Map.Camera.FindOrCreateHook<ScreenEffects>();
 
         Viewer = pawn;
 

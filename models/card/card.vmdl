@@ -19,7 +19,7 @@
 							},
 							{
 								from = "materials/card/card_back.vmat"
-								to = "ui/card_back.vmat"
+								to = "materials/card/card_back.vmat"
 							},
 						]
 						use_global_default = false
