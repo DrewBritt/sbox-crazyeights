@@ -28,7 +28,6 @@ public partial class PawnCamera : CameraMode
         Map.Camera.RemoveAllHooks<ScreenEffects>();
     }
 
-    TimeUntil activateEffects = 1;
     public override void Update()
     {
         var pawn = Local.Pawn;
