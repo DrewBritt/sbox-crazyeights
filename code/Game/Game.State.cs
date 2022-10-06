@@ -104,7 +104,7 @@ public partial class Game
             Current.DiscardPile.AddCard(firstCard);
 
             // Update last played card for clients
-            Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Rank, firstCard.Suit);
+            Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, firstCard.Suit, firstCard.Rank);
 
             Sound.FromScreen(To.Everyone, "gamestart");
             Current.NotifyPlayerOfTurn(To.Single(Current.CurrentPlayer.Client));

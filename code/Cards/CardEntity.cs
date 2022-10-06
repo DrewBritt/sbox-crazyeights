@@ -38,15 +38,15 @@ public partial class CardEntity : ModelEntity
     /// TODO: Look at passing Card, error was throwing earlier regarding not being able to pass Card as a type.
     /// I call bullshit?
     /// </summary>
-    /// <param name="rank"></param>
     /// <param name="suit"></param>
+    /// <param name="rank"></param>
     [ClientRpc]
-    public void SetCard(CardRank rank, CardSuit suit)
+    public void SetCard(CardSuit suit, CardRank rank)
     {
         Card = new Card()
         {
-            Rank = rank,
-            Suit = suit
+            Suit = suit,
+            Rank = rank
         };
 
         texture = Texture.Load(FileSystem.Mounted, Card.FileName);
@@ -69,7 +69,7 @@ public partial class CardEntity : ModelEntity
         if(spawned < .05f) return;
 
         // Then net card texture
-        this.SetCard(To.Single(Owner.Client), Rank, Suit);
+        this.SetCard(To.Single(Owner.Client), Suit, Rank);
         set = true;
     }
 
