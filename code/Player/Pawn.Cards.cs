@@ -37,17 +37,19 @@ public partial class Pawn
             var cardEnt = card as CardEntity;
             if(cardEnt.Suit == CardSuit.Wild)
             {
-                //Game.Current.Hud.ActivateSuitSelection(cardEnt);
+                // Wants to play a Wild card, open SuitSelection
                 SuitSelection.Display(cardEnt.NetworkIdent, cardEnt.Rank);
             }
             else if(cardEnt.Tags.Has("suitselection"))
             {
-                // SuitSelection holds the NetworkIdent of the original card the player wishes to play,
-                // but the trace result (one of the suit selection cards) has the suit they wish to play
+                // Has chosen suit for Wild card from SuitSelection card
                 ConsoleSystem.Run($"ce_playcard {SuitSelection.CardNetworkIdent} {cardEnt.Suit}");
             }
             else
+            {
+                // Playing a normal card
                 ConsoleSystem.Run($"ce_playcard {cardEnt.NetworkIdent} 0");
+            }
         }
     }
 

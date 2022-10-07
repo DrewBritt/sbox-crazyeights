@@ -8,7 +8,6 @@ public partial class Hud : RootPanel
 {
     private TurnTimer TurnTimer { get; set; }
     private Crosshair Crosshair { get; set; }
-    private SuitSelectionOverlay SuitSelectionOverlay { get; set; }
     private GameOverOverlay GameOverOverlay { get; set; }    
 
     /// <summary>
@@ -25,15 +24,6 @@ public partial class Hud : RootPanel
     public void ActivateCrosshair()
     {
         Crosshair.Activate();
-    }
-
-    /// <summary>
-    /// Activates suit selection overlay for draw 4 and wild cards.
-    /// </summary>
-    /// <param name="c"></param>
-    public void ActivateSuitSelection(CardEntity c)
-    {
-        SuitSelectionOverlay.Activate(c);
     }
 
     /// <summary>
