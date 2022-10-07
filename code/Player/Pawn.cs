@@ -51,7 +51,12 @@ public partial class Pawn : AnimatedEntity
 
         // Create SuitSelection if local pawn
         if(Local.Pawn == this)
+        {
             SuitSelection = new SuitSelectionEntity();
+            SuitSelection.Position = Position + (Vector3.Up * 40f) + (Rotation.Forward * 20f);
+            SuitSelection.Rotation = Rotation;
+            SuitSelection.LocalRotation = LocalRotation.RotateAroundAxis(Vector3.Up, 180f);
+        }
     }
 
     public override void Simulate(Client cl)
@@ -148,7 +153,7 @@ public partial class Pawn : AnimatedEntity
         var ent = GetInteractableEntity();
 
         // If hit entity is either a Card in the player's hand, or the Deck:
-        if(ent.IsValid() && Hand != null && (Hand.Cards.Contains(ent) || ent is Deck))
+        if(ent.IsValid())
         {
             Game.Current.Hud.ActivateCrosshair();
             if(ent != lastLookedAt) // Play sound once per unique lastLookedAt
@@ -184,12 +189,20 @@ public partial class Pawn : AnimatedEntity
     {
         if(Game.Current.CurrentPlayer != this) return null;
 
+        if(Hand == null) return null;
+
         var tr = Trace.Ray(EyePosition, EyePosition + EyeRotation.Forward * 100f)
-                .WithAnyTags("card", "deck")
+                .WithAnyTags("card", "deck", "suitselection")
                 .EntitiesOnly()
+                .IncludeClientside()
                 .Run();
 
-        if(Hand == null || (!Hand.Cards.Contains(tr.Entity) && tr.Entity is not Deck)) return null;
+        if(!tr.Entity.IsValid()) return null;
+
+        if(tr.Entity is not Deck)
+            if(!Hand.Cards.Contains(tr.Entity) && !tr.Entity.Tags.Has("suitselection"))
+                return null;
+
         return tr.Entity;
     }
 

@@ -38,11 +38,54 @@ public partial class SuitSelectionEntity : Entity
         for(int i = 0; i < 4; i++)
         {
             cards[i] = new CardEntity();
+            cards[i].Parent = this;
+            cards[i].LocalPosition = GetInitPos(i);
+            cards[i].LocalRotation = GetInitRot(i);
             cards[i].SetCard((CardSuit)i, rank);
             cards[i].Tags.Add("suitselection");
         }
 
         // Todo: particles and sounds and shit
+    }
+
+    /// <summary>
+    /// Gets appropriate initial LocalPosition for SuitSelection card.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    private Vector3 GetInitPos(int index)
+    {
+        // First 2 cards are on left of origin, last 2 are on right
+        int sign = 1;
+        if(index < 2)
+            sign *= -1;
+
+        if(index == 0 || index == 3)
+            return new Vector3(5, 20 * sign, 0);
+        else
+            return new Vector3(0, 10 * sign, 0);
+    }
+
+    /// <summary>
+    /// Gets appropriate initial LocalRotation for SuitSelection card.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    private Rotation GetInitRot(int index)
+    {
+        // First 2 cards are on left of origin, last 2 are on right
+        int sign = 1;
+        if(index < 2)
+            sign *= -1;
+
+        Rotation rot = Rotation.FromPitch(90f);
+        float rotAmount;
+        if(index == 0 || index == 3)
+            rotAmount = 30f;
+        else
+            rotAmount = 15f;
+
+        return rot.RotateAroundAxis(Vector3.Forward, rotAmount * sign);
     }
 
     /// <summary>
@@ -61,7 +104,7 @@ public partial class SuitSelectionEntity : Entity
     {
         for(int i = 0; i < cards.Length; i++)
             if(cards[i].IsValid())
-                cards[i].Delete();
+                cards[i].DeleteAsync(.1f);
     }
 
     ~SuitSelectionEntity()
