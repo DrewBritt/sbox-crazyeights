@@ -13,6 +13,10 @@ public partial class Pawn
     /// The chair the player's transform will be locked to.
     /// </summary>
     public PlayerChair PlayerChair { get; set; }
+    /// <summary>
+    /// Displays CardEntities in front of the player that allow suit selection when playing a Wild/Draw4.
+    /// </summary>
+    private SuitSelectionEntity SuitSelection { get; set; }
 
     /// <summary>
     /// Player has attempted to interact with a card/the discard pile.
@@ -24,6 +28,7 @@ public partial class Pawn
 
         if(card is not Deck && card is not CardEntity) return;
 
+        // Player wishes to draw a card
         if(card is Deck)
             ConsoleSystem.Run($"ce_drawcard {Client.IsBot}");
 
@@ -31,7 +36,16 @@ public partial class Pawn
         {
             var cardEnt = card as CardEntity;
             if(cardEnt.Suit == CardSuit.Wild)
-                Game.Current.Hud.ActivateSuitSelection(cardEnt);
+            {
+                //Game.Current.Hud.ActivateSuitSelection(cardEnt);
+                SuitSelection.Display(cardEnt.NetworkIdent, cardEnt.Rank);
+            }
+            else if(cardEnt.Tags.Has("suitselection"))
+            {
+                // SuitSelection holds the NetworkIdent of the original card the player wishes to play,
+                // but the trace result (one of the suit selection cards) has the suit they wish to play
+                ConsoleSystem.Run($"ce_playcard {SuitSelection.CardNetworkIdent} {cardEnt.Suit}");
+            }
             else
                 ConsoleSystem.Run($"ce_playcard {cardEnt.NetworkIdent} 0");
         }
@@ -44,6 +58,17 @@ public partial class Pawn
     public void DoInteractAnimation()
     {
         Animator.DidAction();
+    }
+
+
+    /// <summary>
+    /// Tries to hide the SuitSelectionEntity of the called client.
+    /// </summary>
+    [ClientRpc]
+    public void HideSuitSelection()
+    {
+        if(SuitSelection.IsValid())
+            SuitSelection.Hide();
     }
 
     /// <summary>

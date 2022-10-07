@@ -103,6 +103,9 @@ public partial class Game
         Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
         Sound.FromEntity("cardplace", Current.DiscardPile);
 
+        // Hide clientside SuitSelectionEntity if it's visible
+        Current.CurrentPlayer.HideSuitSelection(To.Single(Current.CurrentPlayer.Client));
+
         // Game Over if player has no cards
         if(player.Hand.Cards.Count == 0)
         {
@@ -148,6 +151,9 @@ public partial class Game
 
         // Play player interact animation
         Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
+
+        // Hide clientside SuitSelectionEntity if it's visible
+        Current.CurrentPlayer.HideSuitSelection(To.Single(Current.CurrentPlayer.Client));
 
         // Next player's turn.
         Current.SetNewCurrentPlayer();

@@ -48,6 +48,10 @@ public partial class Pawn : AnimatedEntity
         // Spawn nameplate if not local player's pawn
         if(Local.Pawn != this)
             Nameplate = new(this);
+
+        // Create SuitSelection if local pawn
+        if(Local.Pawn == this)
+            SuitSelection = new SuitSelectionEntity();
     }
 
     public override void Simulate(Client cl)
