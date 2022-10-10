@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using System.Linq;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -15,6 +16,7 @@ public partial class SuitSelectionEntity : Entity
     /// Contains the CardEntities used for suit selection.
     /// </summary>
     private CardEntity[] cards;
+    private bool Open => cards.FirstOrDefault().IsValid();
 
     public SuitSelectionEntity()
     {
@@ -43,9 +45,11 @@ public partial class SuitSelectionEntity : Entity
             cards[i].LocalRotation = GetInitRot(i);
             cards[i].SetCard((CardSuit)i, rank);
             cards[i].Tags.Add("suitselection");
+
+            Particles.Create("particles/smokepoof.vpcf", cards[i]);
         }
 
-        // Todo: particles and sounds and shit
+        Sound.FromEntity("smokepoof", this);
     }
 
     /// <summary>
@@ -93,8 +97,15 @@ public partial class SuitSelectionEntity : Entity
     /// </summary>
     public void Hide()
     {
+        // Not visible, don't play effects or try to clear
+        if(!Open) return;
+
+        for(int i = 0; i < 4; i++)
+            Particles.Create("particles/smokepoof.vpcf", cards[i].Position);
+
+        Sound.FromEntity("smokepoof", this);
+
         Clear();
-        // Todo: particles and sounds and shit
     }
 
     /// <summary>
