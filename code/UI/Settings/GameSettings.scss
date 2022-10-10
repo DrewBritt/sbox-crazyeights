@@ -19,7 +19,7 @@
             text {
                 font-size: 16px;
                 margin-top: 20px;
-                text-stroke: 1px #000;
+                font-weight: semibold;
             }
 
             textentry {
@@ -35,6 +35,7 @@
                 background-color: rgba( 75, 75, 75, .5 );
                 border: 2px solid rgba( black, 0.4 );
                 border-radius: 8px;
+                font-weight: bold;
             }
         }
     }
@@ -45,6 +46,7 @@
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
+        font-weight: bold;
 
         button {
             width: 30%;

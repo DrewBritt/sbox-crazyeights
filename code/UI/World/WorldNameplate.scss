@@ -1,4 +1,6 @@
-﻿worldnameplate {
+﻿@import "../Theme.scss";
+
+worldnameplate {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -44,7 +46,9 @@
         .name {
             font-size: 60px;
             color: white;
-            text-stroke: 10px black;
+            text-stroke: 20px black;
+            font-family: $font-primary;
+            font-weight: bold;
         }
     }
 }

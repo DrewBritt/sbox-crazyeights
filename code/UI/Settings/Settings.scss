@@ -1,4 +1,6 @@
-﻿settings {
+﻿@import "../Theme.scss";
+
+settings {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -10,6 +12,7 @@
     background-color: rgba(10, 10, 10, 0.5);
     backdrop-filter: blur( 20px ) brightness( 0.5 );
     transition: opacity .2s ease-out;
+    font-family: $font-primary;
 
     &.active {
         opacity: 1;
@@ -36,6 +39,7 @@
                 font-size: 20px;
                 padding: 12px;
                 text-stroke: 2px #000;
+                font-weight: bold;
             }
 
             &:hover {

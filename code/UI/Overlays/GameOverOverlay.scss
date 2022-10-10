@@ -1,4 +1,6 @@
-﻿gameoveroverlay {
+﻿@import "../Theme.scss";
+
+gameoveroverlay {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -26,5 +28,7 @@
         color: white;
         text-stroke: 2px #000;
         font-size: 30px;
+        font-family: $font-primary;
+        font-weight: semibold;
     }
 }
