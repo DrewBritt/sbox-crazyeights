@@ -12,7 +12,7 @@ public class NavButton : Button
 
     public NavButton()
     {
-        BindClass("active", () => Nav.ContentURL == HRef);
+        BindClass("active", () => Nav?.ContentURL == HRef);
     }
 
     public override void OnParentChanged()
