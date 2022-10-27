@@ -32,6 +32,7 @@ public partial class PlayerChair : ModelEntity
         this.player = player;
         EnableDrawing = true;
         player.Transform = this.Transform;
+        player.Position += (this.Transform.Rotation.Forward * 2f) + (Vector3.Up * 4f);
         player.PlayerChair = this;
         HasPlayer = true;
     }
