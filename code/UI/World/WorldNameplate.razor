@@ -1,0 +1,50 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@inherits WorldPanel;
+@attribute [StyleSheet("/UI/World/WorldNameplate.scss")]
+@namespace CrazyEights.UI
+
+<root>
+    <label @ref=Voice class="voice">🎙</label>
+    <div @ref=Container class="container">
+        <image class="avatar" style="background-image: url(avatarbig:@Pawn.Client.PlayerId)"></image>
+        <label class="name">@Pawn.Client.Name.Truncate(23, "...")</label>
+    </div>
+</root>
+
+@code
+{
+    private Pawn Pawn;
+    private Label Voice { get; set; }
+    private Panel Container { get; set; }
+
+    public WorldNameplate(Pawn pawn)
+    {
+        Pawn = pawn;
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+        var width = 1000;
+        var height = 600;
+        PanelBounds = new Rect(-width * .5f, -height * .5f, width, height);
+
+        Voice.BindClass("active", () => Pawn.Client?.TimeSinceLastVoice < .2f);
+        Container.BindClass("active", () => Appeared <= .2f || Pawn == CrazyEights.Game.Current.CurrentPlayer);
+        Container.BindClass("currentPlayer", () => Pawn == CrazyEights.Game.Current.CurrentPlayer);
+    }
+
+    TimeSince Appeared = 0;
+    public void Activate() => Appeared = 0;
+
+    [Event.Frame]
+    private void OnFrame()
+    {
+        if(!Pawn.IsValid()) return;
+        if(!Pawn.Client.IsValid()) return;
+
+        Position = Pawn.Position + Vector3.Up * 65f;
+        Rotation = Rotation.LookAt(-Screen.GetDirection(new Vector2(Screen.Width * 0.5f, Screen.Height * 0.5f)));
+    }
+}
