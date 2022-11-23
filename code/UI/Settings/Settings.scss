@@ -1,4 +1,4 @@
-﻿@import "../Theme.scss";
+﻿@import "../Styles/Theme.scss";
 
 settings {
     position: absolute;
@@ -14,20 +14,21 @@ settings {
     transition: opacity .2s ease-out;
     font-family: $font-primary;
 
-    &.active {
+    &.open {
         opacity: 1;
         pointer-events: all;
     }
 
     .header {
         width: 30%;
-        justify-content: center;
+        justify-content: space-between;
 
         .navbutton {
             align-items: center;
             justify-content: center;
             width: 50%;
             height: 100%;
+            transition: all 0.1s ease;
             background-color: rgba( 25, 25, 25, 1 );
 
             &.hidden {
@@ -46,7 +47,7 @@ settings {
                 background-color: rgba(75, 75, 75, 1);
 
                 label {
-                    font-size: 25px;
+                    transform: scale(1.1);
                 }
             }
 

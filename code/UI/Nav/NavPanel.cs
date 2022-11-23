@@ -1,6 +1,6 @@
 ﻿using Sandbox.UI;
 
-namespace CrazyEights;
+namespace CrazyEights.UI;
 
 public partial class NavPanel : Panel
 {

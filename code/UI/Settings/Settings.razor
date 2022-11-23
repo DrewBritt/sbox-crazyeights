@@ -1,0 +1,37 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@inherits NavPanel;
+@attribute [StyleSheet("/UI/Settings/Settings.scss")]
+@namespace CrazyEights.UI
+
+<root>
+    <div class="header">
+        <navbutton href="Settings/GameSettings" class="navbutton" style="border-radius: 10px 0px 0px 0px;">
+            <label>Game Settings</label>
+        </navbutton>
+        <navbutton href="Settings/PlayerList" class="navbutton" style="border-radius: 0px 10px 0px 0px;">
+            <label>Player List</label>
+        </navbutton>
+    </div>
+
+    <div class="body">
+        <div @ref="NavContent" class="content"></div>
+    </div>
+</root>
+
+@code
+{
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+
+        Navigate("Settings/GameSettings");
+    }
+
+    [Event.BuildInput]
+    public void BuildInput(InputBuilder b)
+    {
+        if(b.Pressed(InputButton.Menu) && (Local.Client.IsListenServerHost || Local.Client.HasPermission("admin")))
+            SetClass("open", !HasClass("open"));
+    }
+}

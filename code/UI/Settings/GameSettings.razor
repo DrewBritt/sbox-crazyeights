@@ -1,0 +1,30 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel;
+@attribute [StyleSheet("/UI/Settings/GameSettings.scss"), NavTarget("Settings/GameSettings")]
+@namespace CrazyEights.UI
+
+<root>
+    <div class="inputFields">
+        <div class="field">
+            <text>Max Turn Time (seconds)</text>
+            <SliderEntry min="1" max="60" Value:bind=@MaxTurnTime></SliderEntry>
+        </div>
+    </div>
+    <div class="buttons">
+        <button onclick=@ResetGame>Reset Game</button>
+        <button onclick=@ForceTurn>Force Turn</button>
+    </div>
+</root>
+
+@code
+{
+    private int MaxTurnTime
+    {
+        get { return CrazyEights.Game.MaxTurnTime; }
+        set { ConsoleSystem.Run($"ce_maxturntime {value}"); }
+    }
+
+    public void ResetGame() => ConsoleSystem.Run($"ce_resetgame");
+    public void ForceTurn() => ConsoleSystem.Run($"ce_forceturn");
+}

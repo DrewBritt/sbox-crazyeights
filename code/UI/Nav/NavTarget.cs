@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace CrazyEights;
+namespace CrazyEights.UI;
 
 public class NavTargetAttribute : Attribute, Sandbox.ITypeAttribute
 {

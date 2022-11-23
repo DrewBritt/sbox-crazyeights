@@ -2,7 +2,7 @@
 using Sandbox;
 using Sandbox.UI;
 
-namespace CrazyEights;
+namespace CrazyEights.UI;
 
 [Library("navbutton")]
 public class NavButton : Button
