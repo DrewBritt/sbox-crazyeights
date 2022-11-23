@@ -1,14 +1,25 @@
-﻿using Sandbox;
-using Sandbox.UI;
+﻿@using Sandbox;
+@using Sandbox.UI;
+@inherits RootPanel;
+@attribute [StyleSheet("/UI/Hud.scss")]
+@namespace CrazyEights.UI
 
-namespace CrazyEights;
+<root>
+    <text class="preview">🃏Crazy Eights - Preview🃏</text>
 
-[UseTemplate]
-public partial class Hud : RootPanel
+    <turntimer @ref=TurnTimer></turntimer>
+    <crosshair @ref=Crosshair></crosshair>
+
+    <chatbox></chatbox>
+    <hints></hints>
+
+    <settings></settings>
+</root>
+
+@code
 {
     private TurnTimer TurnTimer { get; set; }
     private Crosshair Crosshair { get; set; }
-    private GameOverOverlay GameOverOverlay { get; set; }    
 
     /// <summary>
     /// Activates turn notification panel.
@@ -31,6 +42,7 @@ public partial class Hud : RootPanel
     /// </summary>
     public void ActivateGameOverOverlay(Client winner)
     {
-        GameOverOverlay.Activate(winner);
+        var overlay = AddChild<GameOverOverlay>();
+        overlay.Activate(winner);
     }
 }
