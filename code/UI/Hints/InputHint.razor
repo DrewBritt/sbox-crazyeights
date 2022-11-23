@@ -1,22 +1,28 @@
-﻿using Sandbox;
-using Sandbox.UI;
-using System;
+﻿@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel;
+@attribute [StyleSheet("/UI/Hints/InputHint.scss")]
+@namespace CrazyEights.UI
 
-namespace CrazyEights;
+<root>
+    <image class="glyph" @ref=Glyph></image>
+    <label class="action">@Text</label>
+</root>
 
-[UseTemplate]
-public partial class InputHint : Panel
+@code
 {
-    // @ref
-    public Image Glyph { get; set; }
-    public InputButton Button { get; set; }
     public string Text { get; set; }
-    public Label ActionLabel { get; set; }
+
+    private Image Glyph { get; set; }
+    private InputButton Button { get; set; }
 
     protected bool IsSet = false;
 
-    public InputHint()
+    protected override void OnAfterTreeRender(bool firstTime)
     {
+        if (!firstTime) return;
+
         BindClass("noaction", () => string.IsNullOrEmpty(Text));
     }
 
@@ -25,23 +31,13 @@ public partial class InputHint : Panel
         base.SetProperty(name, value);
 
         if(name == "btn")
-        {
             SetButton(Enum.Parse<InputButton>(value, true));
-        }
     }
 
     public void SetButton(InputButton button)
     {
         Button = button;
         IsSet = true;
-    }
-
-    public override void SetContent(string value)
-    {
-        base.SetContent(value);
-
-        ActionLabel.SetText(value);
-        Text = value;
     }
 
     public override void Tick()

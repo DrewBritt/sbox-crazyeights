@@ -1,0 +1,23 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel;
+@attribute [StyleSheet("/UI/Hints/Hints.scss")]
+@namespace CrazyEights.UI
+
+<root>
+    <inputhint @ref=InteractHint btn="PrimaryAttack" Text="Interact"></inputhint>
+    <inputhint btn="SecondaryAttack" Text="Emote" class="visible"></inputhint>
+    <inputhint btn="Menu" Text="Settings" class="visible"></inputhint>
+</root>
+
+@code
+{
+    private Panel InteractHint { get; set; }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+
+        InteractHint.BindClass("visible", () => (Local.Pawn as Pawn).GetInteractableEntity() != null);
+    }
+}
