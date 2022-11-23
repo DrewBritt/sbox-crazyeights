@@ -31,7 +31,7 @@
         BindClass("active", () => CrazyEights.Game.Current.CurrentPlayer == Local.Client.Pawn && turnOver > 0 && turnOver < 10);
     }
 
-    protected override int BuildHash() => HashCode.Combine(TimeString();)
+    protected override int BuildHash() => HashCode.Combine(TimeString());
 
     TimeSince soundPlayed;
     public override void Tick()
