@@ -47,6 +47,19 @@
         "Maximum": 60
       }
     },
-    "ParentPackage": ""
+    "ParentPackage": "",
+    "PackageSettings": [
+      {
+        "DisplayType": "Integer",
+        "Choices": [],
+        "ConVarName": "ce_maxturntime",
+        "DisplayName": "Max Turn Time",
+        "DefaultValue": "15.057693",
+        "Description": "How long players have to play a card",
+        "Group": "Gameplay",
+        "Minimum": 3,
+        "Maximum": 60
+      }
+    ]
   }
 }
