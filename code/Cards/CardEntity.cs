@@ -73,6 +73,7 @@ public partial class CardEntity : ModelEntity
         set = true;
     }
 
+    bool IsSet = false;
     [Event.Client.Frame]
     public void OnFrame()
     {
@@ -83,7 +84,10 @@ public partial class CardEntity : ModelEntity
             RenderColor = Color.White.WithAlpha(alpha);
         }
 
-        if(texture?.IsLoaded ?? false)
+        if(texture != null && texture.IsLoaded && !IsSet)
+        {
+            IsSet = true;
             material.Set("Color", texture);
+        }
     }
 }
