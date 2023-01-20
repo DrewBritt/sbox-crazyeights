@@ -203,7 +203,7 @@ public partial class Deck : ModelEntity
     {
         // Fisher-Yates bitch!
         Random random = new();
-        for(int i = Cards.Count-1; i > 1; i--)
+        for(int i = Cards.Count - 1; i > 1; i--)
         {
             int rand = random.Next(i + 1);
             var temp = Cards[rand];

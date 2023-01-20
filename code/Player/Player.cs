@@ -1,7 +1,5 @@
-﻿using System.Linq;
+﻿using CrazyEights.UI;
 using Sandbox;
-using Sandbox.Component;
-using CrazyEights.UI;
 
 namespace CrazyEights;
 
@@ -44,14 +42,14 @@ public partial class Player : AnimatedEntity
     {
         base.ClientSpawn();
 
-        // Spawn nameplate if not local player's pawn
-        if(Game.LocalPawn != this)
-            Nameplate = new(this);
-
-        // Initialize client side systems for local pawn
+        // Initialize client side systems for player (camera for local, nameplate for every other)
         if(Game.LocalPawn == this)
         {
             PlayerCamera = new PlayerCamera();
+        }
+        else
+        {
+            Nameplate = new(this);
         }
     }
 

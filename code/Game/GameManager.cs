@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Sandbox;
 using CrazyEights.UI;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -43,7 +43,7 @@ public partial class GameManager : Sandbox.GameManager
                 CameraMode = new DevCamera()
             };*/
         }
-        
+
     }
 
     public override void ClientDisconnect(IClient cl, NetworkDisconnectionReason reason)

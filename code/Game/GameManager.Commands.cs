@@ -1,5 +1,5 @@
-﻿using Sandbox;
-using System.Linq;
+﻿using System.Linq;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -166,7 +166,7 @@ public partial class GameManager
     {
         // Increment to next player regardless
         Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
-        
+
         // If we should skip, notify our new "current player" and get the next-next player, then reset flag
         if(ShouldSkip == 1)
         {

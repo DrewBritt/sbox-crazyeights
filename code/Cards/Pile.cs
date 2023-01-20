@@ -37,7 +37,7 @@ public partial class Pile : Deck
         CardStackParticles.SetPosition(0, Position);
 
         // Count - 1 as the top card is handled by TopCardEntity
-        CardStackParticles.SetPositionComponent(1, 0, Count-1);
+        CardStackParticles.SetPositionComponent(1, 0, Count - 1);
     }
 
     public override void OnTickServer()

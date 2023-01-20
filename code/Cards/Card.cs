@@ -1,6 +1,4 @@
-﻿using Sandbox;
-
-namespace CrazyEights;
+﻿namespace CrazyEights;
 
 /// <summary>
 /// Server/Game logic representation of a card. Generated in Decks and distributed by State logic.

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Sandbox;
+﻿using Sandbox;
 using static CrazyEights.GameManager;
 
 namespace CrazyEights;

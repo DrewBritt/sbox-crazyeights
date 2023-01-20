@@ -116,7 +116,7 @@ public partial class HandComponent : EntityComponent<Player>, ISingletonComponen
         for(int i = 0; i < Cards.Count; i++)
         {
             var card = Cards[i];
-            card.LocalPosition = (Vector3.Forward * (i + 1)) + (Vector3.Right * (.65f * (i+1))) + (Vector3.Up * 1.25f);
+            card.LocalPosition = (Vector3.Forward * (i + 1)) + (Vector3.Right * (.65f * (i + 1))) + (Vector3.Up * 1.25f);
         }
     }
 

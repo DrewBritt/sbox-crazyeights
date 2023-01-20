@@ -30,7 +30,7 @@ public partial class GameManager
     {
         public override string StateName() => "Waiting for Players";
 
-        public WaitingForPlayersState() : base() 
+        public WaitingForPlayersState() : base()
         {
             // CLEANUP GAME ENTITIES
             // Won't run on game startup (Current will return null for some reason).
@@ -156,7 +156,7 @@ public partial class GameManager
     #endregion
 
     #region Player Management
-    
+
     /// <summary>
     /// All players in this round. Separate from Client.All as players are not dealt in if they join after round start.
     /// </summary>
