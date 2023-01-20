@@ -26,12 +26,15 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     public virtual void FrameSimulate(IClient cl)
     {
         SimulateEyes();
+        CheckNameplates();
+        CheckInteractables();
     }
 
     protected void SimulateEyes()
     {
-        Entity.EyeRotation = Entity.LookInput.ToRotation();
-        Entity.EyeLocalPosition = Vector3.Up * 64f;
+        Transform? eyes = Entity.GetAttachment("eyes", false);
+        //Entity.EyeRotation = Entity.LookInput.ToRotation();
+        //Entity.EyeLocalPosition = eyes.Value.Position;
     }
 
     public void HideSuitSelection()

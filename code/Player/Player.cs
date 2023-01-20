@@ -8,7 +8,7 @@ public partial class Player : AnimatedEntity
     [BindComponent] public PlayerController Controller { get; }
     [BindComponent] public PlayerAnimator Animator { get; }
     public PlayerCamera PlayerCamera { get; protected set; }
-    public WorldNameplate Nameplate;
+    public WorldNameplate Nameplate { get; protected set; }
 
     public Player() { }
     public Player(IClient cl) : this()
@@ -27,8 +27,8 @@ public partial class Player : AnimatedEntity
 
         SetModel("models/citizen/crazyeights_citizen.vmdl");
 
-        Components.Create<PlayerAnimator>();
         Components.Create<PlayerController>();
+        Components.Create<PlayerAnimator>();
 
         EnableDrawing = true;
         EnableAllCollisions = true;
@@ -42,7 +42,9 @@ public partial class Player : AnimatedEntity
     {
         base.ClientSpawn();
 
-        // Initialize client side systems for player (camera for local, nameplate for every other)
+        LookInput = Rotation.Angles();
+
+        // Initialize client side systems for player (camera for local, nameplate for every other)        
         if(Game.LocalPawn == this)
         {
             PlayerCamera = new PlayerCamera();
@@ -57,6 +59,7 @@ public partial class Player : AnimatedEntity
     {
         base.Simulate(cl);
 
+        Controller?.Simulate(cl);
         Animator?.Simulate();
     }
 
@@ -64,8 +67,8 @@ public partial class Player : AnimatedEntity
     {
         base.FrameSimulate(cl);
 
-        PlayerCamera?.Update(this);
         Controller?.FrameSimulate(cl);
+        PlayerCamera?.Update(this);
 
         UpdateBodyGroups();
     }
