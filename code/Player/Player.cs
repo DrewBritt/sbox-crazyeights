@@ -75,10 +75,11 @@ public partial class Player : AnimatedEntity
 
     private void UpdateBodyGroups()
     {
-        if(Game.IsClient && IsLocalPawn)
-            SetBodyGroup("Head", 1);
-        else
+        DevCamera cam = Game.LocalClient.Components.Get<DevCamera>();
+        if(!IsLocalPawn || (cam != null && cam.Enabled))
             SetBodyGroup("Head", 0);
+        else
+            SetBodyGroup("Head", 1);
     }
 
     protected override void OnDestroy()
