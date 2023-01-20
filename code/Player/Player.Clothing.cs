@@ -5,6 +5,11 @@ using Sandbox;
 
 namespace CrazyEights;
 
+public partial class Player
+{
+    public ClothingContainer Clothing = new();
+}
+
 /// <summary>
 /// Holds a collection of clothing items. Won't let you add items that aren't compatible.
 /// </summary>
@@ -35,7 +40,7 @@ public class ClothingContainer
     /// point than just calling Deserialize directly because if we have
     /// inventory based skins at some point, we can validate ownership here
     /// </summary>
-    public void LoadFromClient(Client cl)
+    public void LoadFromClient(IClient cl)
     {
         var data = cl.GetClientData("avatar");
         Deserialize(data);
@@ -243,12 +248,12 @@ public class ClothingContainer
     public void LoadRandomClothes()
     {
         var allClothes = ResourceLibrary.GetAll<Clothing>().GroupBy(c => c.Category).ToList();
-        var randomClothes = allClothes.Select(c => Rand.FromArray(c.ToArray()));
+        var randomClothes = allClothes.Select(c => Game.Random.FromArray(c.ToArray()));
 
         foreach(var item in randomClothes)
         {
             // Random chance to skip this item
-            if(Rand.Int(0, 9) == 0)
+            if(Game.Random.Int(0, 9) == 0)
                 continue;
 
             // Check for incompatible clothing

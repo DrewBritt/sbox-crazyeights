@@ -18,6 +18,6 @@
     {
         if (!firstTime) return;
 
-        InteractHint.BindClass("visible", () => (Local.Pawn as Pawn).GetInteractableEntity() != null);
+        InteractHint.BindClass("visible", () => (Game.LocalPawn as CrazyEights.Player).Controller.GetInteractableEntity() != null);
     }
 }

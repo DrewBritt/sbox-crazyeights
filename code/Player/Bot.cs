@@ -26,11 +26,6 @@ public partial class Bot : Sandbox.Bot
             Bot.All[0].Client.Kick();
     }
 
-    public override void BuildInput(InputBuilder input)
-    {
-        base.BuildInput(input);
-    }
-
     TimeUntil playCardDelay;
     public override void Tick()
     {
@@ -48,7 +43,7 @@ public partial class Bot : Sandbox.Bot
         if(playCardDelay > 0) return;
 
         // Then play card
-        var pawn = Client.Pawn as Pawn;
+        var pawn = Client.Pawn as Player;
         pawn.ForcePlayCard();
 
         // Ensure bot doesn't play again after turn

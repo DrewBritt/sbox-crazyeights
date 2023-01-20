@@ -7,20 +7,20 @@
 <root>
     <label @ref=Voice class="voice">🎙</label>
     <div @ref=Container class="container">
-        <image class="avatar" style="background-image: url(avatarbig:@Pawn.Client.PlayerId)"></image>
-        <label class="name">@Pawn.Client.Name.Truncate(23, "...")</label>
+        <image class="avatar" style="background-image: url(avatarbig:@Player.Client.SteamId)"></image>
+        <label class="name">@Player.Client.Name.Truncate(23, "...")</label>
     </div>
 </root>
 
 @code
 {
-    private Pawn Pawn;
+    private CrazyEights.Player Player;
     private Label Voice { get; set; }
     private Panel Container { get; set; }
 
-    public WorldNameplate(Pawn pawn)
+    public WorldNameplate(CrazyEights.Player player)
     {
-        Pawn = pawn;
+        Player = player;
     }
 
     protected override void OnAfterTreeRender(bool firstTime)
@@ -30,21 +30,21 @@
         var height = 600;
         PanelBounds = new Rect(-width * .5f, -height * .5f, width, height);
 
-        Voice.BindClass("active", () => Pawn.Client?.TimeSinceLastVoice < .2f);
-        Container.BindClass("active", () => Appeared <= .2f || Pawn == CrazyEights.Game.Current.CurrentPlayer);
-        Container.BindClass("currentPlayer", () => Pawn == CrazyEights.Game.Current.CurrentPlayer);
+        Voice.BindClass("active", () => Player.Client?.Voice.LastHeard < .2f);
+        Container.BindClass("active", () => Appeared <= .2f || Player == CrazyEights.GameManager.Current.CurrentPlayer);
+        Container.BindClass("currentPlayer", () => Player == CrazyEights.GameManager.Current.CurrentPlayer);
     }
 
     TimeSince Appeared = 0;
     public void Activate() => Appeared = 0;
 
-    [Event.Frame]
+    [Event.Client.Frame]
     private void OnFrame()
     {
-        if(!Pawn.IsValid()) return;
-        if(!Pawn.Client.IsValid()) return;
+        if(!Player.IsValid()) return;
+        if(!Player.Client.IsValid()) return;
 
-        Position = Pawn.Position + Vector3.Up * 65f;
+        Position = Player.Position + Vector3.Up * 65f;
         Rotation = Rotation.LookAt(-Screen.GetDirection(new Vector2(Screen.Width * 0.5f, Screen.Height * 0.5f)));
     }
 }

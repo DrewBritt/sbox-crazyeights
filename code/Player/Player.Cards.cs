@@ -3,55 +3,12 @@ using Sandbox;
 
 namespace CrazyEights;
 
-public partial class Pawn
+public partial class Player
 {
-    /// <summary>
-    /// Stores cards the player is currently playing with.
-    /// </summary>
-    [Net] public PlayerHand Hand { get; set; }
     /// <summary>
     /// The chair the player's transform will be locked to.
     /// </summary>
     public PlayerChair PlayerChair { get; set; }
-    /// <summary>
-    /// Displays CardEntities in front of the player that allow suit selection when playing a Wild/Draw4.
-    /// </summary>
-    private SuitSelectionEntity SuitSelection { get; set; }
-
-    /// <summary>
-    /// Player has attempted to interact with a card/the discard pile.
-    /// </summary>
-    /// <param name="card"></param>
-    private void CardInteract(Entity card)
-    {
-        if(IsServer) return;
-
-        if(card is not Deck && card is not CardEntity) return;
-
-        // Player wishes to draw a card
-        if(card is Deck)
-            ConsoleSystem.Run($"ce_drawcard {Client.IsBot}");
-
-        if(card is CardEntity)
-        {
-            var cardEnt = card as CardEntity;
-            if(cardEnt.Suit == CardSuit.Wild)
-            {
-                // Wants to play a Wild card, open SuitSelection
-                SuitSelection.Display(cardEnt.NetworkIdent, cardEnt.Rank);
-            }
-            else if(cardEnt.Tags.Has("suitselection"))
-            {
-                // Has chosen suit for Wild card from SuitSelection card
-                ConsoleSystem.Run($"ce_playcard {SuitSelection.CardNetworkIdent} {cardEnt.Suit}");
-            }
-            else
-            {
-                // Playing a normal card
-                ConsoleSystem.Run($"ce_playcard {cardEnt.NetworkIdent} 0");
-            }
-        }
-    }
 
     /// <summary>
     /// Sets TimeSinceLastAction in Animator, to let animgraph perform Interact animation.
@@ -62,15 +19,13 @@ public partial class Pawn
         Animator.DidAction();
     }
 
-
     /// <summary>
     /// Tries to hide the SuitSelectionEntity of the called client.
     /// </summary>
     [ClientRpc]
     public void HideSuitSelection()
     {
-        if(SuitSelection.IsValid())
-            SuitSelection.Hide();
+        Controller.HideSuitSelection();
     }
 
     /// <summary>
@@ -87,7 +42,7 @@ public partial class Pawn
         // Draw if no cards are currently playable
         if(!playable.Any())
         {
-            Game.DrawCard();
+            GameManager.DrawCard();
             return;
         }
 
@@ -97,15 +52,15 @@ public partial class Pawn
         if(actionCards.Any())
         {
             // Play an action card 33% of the time, or if there are no number cards in the hand
-            int rand = Rand.Int(1, 3);
+            int rand = Game.Random.Int(1, 3);
             if(rand == 1 || !numberCards.Any())
             {
                 // Get random action card
                 var cards = actionCards.ToList();
-                int index = Rand.Int(0, cards.Count - 1);
+                int index = Game.Random.Int(0, cards.Count - 1);
                 var card = cards[index];
 
-                Game.PlayCard(card.NetworkIdent);
+                GameManager.PlayCard(card.NetworkIdent);
                 return;
             }
         }
@@ -115,24 +70,24 @@ public partial class Pawn
         if(wildCards.Any())
         {
             // Play a wild 20% of the time, or if there are only wild cards in the hand (no numbers/action as determined above)
-            int rand = Rand.Int(1, 5);
+            int rand = Game.Random.Int(1, 5);
             if(rand == 1 || wildCards.SequenceEqual(playable))
             {
                 // Get random wild card
                 var cards = wildCards.ToList();
-                int index = Rand.Int(0, cards.Count - 1);
+                int index = Game.Random.Int(0, cards.Count - 1);
                 var card = cards[index];
 
-                Game.PlayCard(card.NetworkIdent, Hand.GetMostPrevelantSuit());
+                GameManager.PlayCard(card.NetworkIdent, Hand.GetMostPrevelantSuit());
                 return;
             }
         }
 
         // Otherwise, just play a regular number card
         var numberList = numberCards.ToList();
-        int randIndex = Rand.Int(0, numberList.Count - 1);
+        int randIndex = Game.Random.Int(0, numberList.Count - 1);
         var cardToPlay = numberList[randIndex];
 
-        Game.PlayCard(cardToPlay.NetworkIdent);
+        GameManager.PlayCard(cardToPlay.NetworkIdent);
     }
 }

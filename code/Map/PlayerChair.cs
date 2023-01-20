@@ -12,7 +12,7 @@ namespace CrazyEights;
 public partial class PlayerChair : ModelEntity
 {
     public bool HasPlayer { get; private set; } = false;
-    private Pawn player;
+    private Player player;
 
     public override void Spawn()
     {
@@ -27,7 +27,7 @@ public partial class PlayerChair : ModelEntity
     /// Seats player in the chair and makes it visible
     /// </summary>
     /// <param name="player"></param>
-    public void SeatPlayer(Pawn player)
+    public void SeatPlayer(Player player)
     {
         this.player = player;
         EnableDrawing = true;
