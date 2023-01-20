@@ -8,7 +8,7 @@ namespace CrazyEights;
 public partial class Player : AnimatedEntity
 {
     [BindComponent] public PlayerController Controller { get; }
-    [BindComponent] public PawnAnimator Animator { get; }
+    [BindComponent] public PlayerAnimator Animator { get; }
     public PlayerCamera PlayerCamera { get; protected set; }
     public WorldNameplate Nameplate;
 
@@ -29,7 +29,7 @@ public partial class Player : AnimatedEntity
 
         SetModel("models/citizen/crazyeights_citizen.vmdl");
 
-        Components.Create<PawnAnimator>();
+        Components.Create<PlayerAnimator>();
         Components.Create<PlayerController>();
 
         EnableDrawing = true;
