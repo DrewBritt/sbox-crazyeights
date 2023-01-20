@@ -58,6 +58,6 @@ public partial class PlayerCamera
     ~PlayerCamera()
     {
         // Cleanup effects when swapping cameras (devcam)
-        Camera.Main.RemoveAllHooks<ScreenEffects>();
+        //Camera.Main.RemoveAllHooks<ScreenEffects>(); TODO: Investigate cause of crashing?
     }
 }
