@@ -5,7 +5,7 @@ namespace CrazyEights;
 
 public partial class PlayerCamera
 {
-    private float FOV = 90f;
+    private float FOV = 120f;
     private ScreenEffects screenEffects = null;
 
     public PlayerCamera()
@@ -35,7 +35,7 @@ public partial class PlayerCamera
             return;
 
         FOV -= Input.MouseWheel * 10f;
-        FOV = FOV.Clamp(10, 90);
+        FOV = FOV.Clamp(30, 120);
     }
 
     public void Update(Player player)
