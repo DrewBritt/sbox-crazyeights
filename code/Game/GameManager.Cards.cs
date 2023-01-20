@@ -3,8 +3,18 @@ using Sandbox;
 
 namespace CrazyEights;
 
-public partial class Game
+public partial class GameManager
 {
+    /// <summary>
+    /// Persistent deck used for drawing cards.
+    /// </summary>
+    public Deck PlayingDeck { get; set; }
+
+    /// <summary>
+    /// Pile in which player's cards are played onto.
+    /// </summary>
+    [Net] public Pile DiscardPile { get; set; }
+
     /// <summary>
     /// Current play direction. Default is clockwise/true.
     /// </summary>
@@ -42,7 +52,7 @@ public partial class Game
     /// </summary>
     private void Draw2Action()
     {
-        Pawn nextPlayer = Players[GetNextPlayerIndex()];
+        Player nextPlayer = Players[GetNextPlayerIndex()];
 
         // Grab 2 cards from persistent deck to give to next player.
         List<Card> cards = new List<Card>();
@@ -90,7 +100,7 @@ public partial class Game
     /// <param name="card">Played card, suit is set to set play color.</param>
     private void Draw4Action(Card card, CardSuit selectedWildSuit)
     {
-        Pawn nextPlayer = Players[GetNextPlayerIndex()];
+        Player nextPlayer = Players[GetNextPlayerIndex()];
 
         // Grab 4 cards from persistent deck to give to next player.
         List<Card> cards = new List<Card>();

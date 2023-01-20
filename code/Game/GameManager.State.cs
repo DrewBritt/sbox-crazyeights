@@ -4,7 +4,7 @@ using Sandbox;
 
 namespace CrazyEights;
 
-public partial class Game
+public partial class GameManager
 {
     #region States
     public class BaseState
@@ -13,7 +13,7 @@ public partial class Game
 
         public virtual void Tick()
         {
-            if(Client.All.Count == 1)
+            if(Game.Clients.Count == 1)
                 SetState(new WaitingForPlayersState());
         }
 
@@ -39,8 +39,7 @@ public partial class Game
 
             foreach(var p in Current.Players)
             {
-                p.Hand.ClearCards();
-                p.Hand = null;
+                p.Hand.Remove();
             }
 
             Current.PlayingDeck?.Delete();
@@ -52,9 +51,9 @@ public partial class Game
         TimeUntil startGame = -1;
         public override void Tick()
         {
-            if(Client.All.Count > 1)
+            if(Game.Clients.Count > 1)
             {
-                // Set startGame if it hasnt been set recently
+                // Set startGame if it hasn't been set recently
                 if(startGame <= -1) startGame = 10;
 
                 // After delay, goto next state
@@ -78,15 +77,12 @@ public partial class Game
             Current.PlayingDeck.Shuffle();
 
             // Distribute cards to players.
-            List<Client> players = Client.All.Where(p => p.Pawn is Pawn).ToList();
+            List<IClient> players = Game.Clients.Where(p => p.Pawn is Player).ToList();
             for(int i = 0; i < players.Count; i++)
             {
-                Pawn player = players[i].Pawn as Pawn;
+                Player player = players[i].Pawn as Player;
                 Current.Players.Add(player);
-                player.Hand = new PlayerHand()
-                {
-                    Owner = player,
-                };
+                player.Components.Add(new HandComponent());
 
                 // 7 cards for each player.
                 List<Card> cards = new List<Card>();
@@ -114,7 +110,7 @@ public partial class Game
         public override void Tick()
         {
             base.Tick();
-            if(TurnStarted > Game.MaxTurnTime)
+            if(TurnStarted > GameManager.MaxTurnTime)
                 Current.CurrentPlayer.ForcePlayCard();
         }
     }
@@ -149,7 +145,7 @@ public partial class Game
     [Event.Tick]
     public void OnTick()
     {
-        if(Host.IsClient) return;
+        if(Game.IsClient) return;
 
         CurrentState.Tick();
     }
@@ -159,26 +155,12 @@ public partial class Game
 
     #endregion
 
-    #region Card Management
-
-    /// <summary>
-    /// Persistent deck used for drawing cards.
-    /// </summary>
-    public Deck PlayingDeck { get; set; }
-
-    /// <summary>
-    /// Pile in which player's cards are played onto.
-    /// </summary>
-    [Net] public Pile DiscardPile { get; set; }
-
-    #endregion
-
     #region Player Management
     
     /// <summary>
     /// All players in this round. Separate from Client.All as players are not dealt in if they join after round start.
     /// </summary>
-    [Net] public IList<Pawn> Players { get; set; }
+    [Net] public IList<Player> Players { get; set; }
     [Net] private int CurrentPlayerIndex { get; set; } = 0;
 
     /// <summary>
@@ -198,7 +180,7 @@ public partial class Game
     /// <summary>
     /// Player that should play the next card.
     /// </summary>
-    public Pawn? CurrentPlayer => Players.ElementAtOrDefault(CurrentPlayerIndex);
+    public Player? CurrentPlayer => Players.ElementAtOrDefault(CurrentPlayerIndex);
 
     #endregion
 }

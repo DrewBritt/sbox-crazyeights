@@ -5,23 +5,20 @@ using CrazyEights.UI;
 
 namespace CrazyEights;
 
-public partial class Game : Sandbox.Game
+public partial class GameManager : Sandbox.GameManager
 {
-    public static new Game Current => Sandbox.Game.Current as Game;
+    public static new GameManager Current => Sandbox.GameManager.Current as GameManager;
     public Hud Hud { get; set; }
 
-    public Game() : base()
+    public GameManager() : base()
     {
-        if(IsServer) return;
+        if(Game.IsServer) return;
 
-        // Initialize HUD
         Hud = new Hud();
-        Local.Hud = Hud;
-
-        Log.Info(Global.ServerSteamId);
+        Log.Info(Game.ServerSteamId);
     }
 
-    public override void ClientJoined(Client client)
+    public override void ClientJoined(IClient client)
     {
         base.ClientJoined(client);
 
@@ -34,37 +31,36 @@ public partial class Game : Sandbox.Game
         Entity pawn;
         if(randomChair.IsValid())
         {
-            pawn = new Pawn(client)
-            {
-                CameraMode = new PawnCamera(),
-                Animator = new PawnAnimator()
-            };
-            randomChair.SeatPlayer(pawn as Pawn);
+            pawn = new Player(client);
+            randomChair.SeatPlayer(pawn as Player);
+
+            client.Pawn = pawn;
         }
         else
         {
-            pawn = new SpectatorPawn()
+            /*pawn = new SpectatorPawn()
             {
                 CameraMode = new DevCamera()
-            };
+            };*/
         }
-        client.Pawn = pawn;
+        
     }
 
-    public override void ClientDisconnect(Client cl, NetworkDisconnectionReason reason)
+    public override void ClientDisconnect(IClient cl, NetworkDisconnectionReason reason)
     {
         // Free player's chair if they were a pawn
-        if(cl.Pawn is Pawn)
+        if(cl.Pawn is Player)
         {
-            var pawn = cl.Pawn as Pawn;
+            var pawn = cl.Pawn as Player;
             pawn.PlayerChair.RemovePlayer();
         }
+
         base.ClientDisconnect(cl, reason);
     }
 
-    public override void DoPlayerDevCam(Client client)
+    public override void DoPlayerDevCam(IClient client)
     {
-        Host.AssertServer();
+        Game.AssertServer();
 
         var camera = client.Components.Get<DevCamera>(true);
 

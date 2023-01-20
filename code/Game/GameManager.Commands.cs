@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CrazyEights;
 
-public partial class Game
+public partial class GameManager
 {
     /// <summary>
     /// Generic handler for invalid command arguments.
@@ -46,11 +46,11 @@ public partial class Game
         // Calling a ConCmd from console normally passes the Caller, client, unless its ran from the server,
         // in which cases it passes the host's client. Instead, we call the static method directly from server
         // scenarios (bots/AFK behaviour) which avoids setting ConsoleSystem.Caller
-        Pawn player;
+        Player player;
         if(!ConsoleSystem.Caller.IsValid())
             player = Current.CurrentPlayer;
         else
-            player = ConsoleSystem.Caller.Pawn as Pawn;
+            player = ConsoleSystem.Caller.Pawn as Player;
 
         // Stop caller if not in playing state.
         if(Current.CurrentState is not PlayingState)
@@ -126,11 +126,11 @@ public partial class Game
         // Calling a ConCmd from console normally passes the Caller, client, unless its ran from the server,
         // in which cases it passes the host's client. Instead, we call the static method directly from server
         // scenarios (bots/AFK behaviour) which avoids setting ConsoleSystem.Caller
-        Pawn player;
+        Player player;
         if(!ConsoleSystem.Caller.IsValid())
             player = Current.CurrentPlayer;
         else
-            player = ConsoleSystem.Caller.Pawn as Pawn;
+            player = ConsoleSystem.Caller.Pawn as Player;
 
         // Stop caller if not in playing state.
         if(Current.CurrentState is not PlayingState)
@@ -194,11 +194,11 @@ public partial class Game
         Sound.FromScreen("playerturn");
 
         // Green vignette sting
-        if(Current.FindActiveCamera() is PawnCamera)
+        Player localPawn = Game.LocalPawn as Player;
+        if(localPawn.PlayerCamera is not null)
         {
-            var camera = Current.FindActiveCamera() as PawnCamera;
-            camera.SetVignetteColor(new Color(0f, 1f, 0f, 1f));
-            camera.SetVignetteIntensity(.25f);
+            localPawn.PlayerCamera.SetVignetteColor(new Color(0f, 1f, 0f, 1f));
+            localPawn.PlayerCamera.SetVignetteIntensity(.25f);
         }
     }
 
@@ -211,11 +211,11 @@ public partial class Game
         Sound.FromScreen("playerskip");
 
         //Red vignette sting
-        if(Current.FindActiveCamera() is PawnCamera)
+        Player localPawn = Game.LocalPawn as Player;
+        if(localPawn.PlayerCamera is not null)
         {
-            var camera = Current.FindActiveCamera() as PawnCamera;
-            camera.SetVignetteColor(new Color(1f, 0f, 0f, 1f));
-            camera.SetVignetteIntensity(.25f);
+            localPawn.PlayerCamera.SetVignetteColor(new Color(1f, 0f, 0f, 1f));
+            localPawn.PlayerCamera.SetVignetteIntensity(.25f);
         }
     }
 
