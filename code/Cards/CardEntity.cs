@@ -51,6 +51,7 @@ public partial class CardEntity : ModelEntity
 
         texture = Texture.Load(FileSystem.Mounted, Card.FileName);
         material = Material.Load("materials/card/card_face.vmat").CreateCopy();
+        IsMaterialSet = false;
         SetMaterialOverride(material, "isTarget");
     }
 
@@ -60,20 +61,20 @@ public partial class CardEntity : ModelEntity
     // (even though the values are successfully networked?)
     // so instead, we wait 1/20 of a second before sending the RPC
     TimeSince spawned = 0;
-    bool set = false;
+    bool IsCardNetworked = false;
     [Event.Tick.Server]
     public void OnTickServer()
     {
-        if(set) return;
+        if(IsCardNetworked) return;
         if(Owner == null) return;
         if(spawned < .05f) return;
 
         // Then net card texture
         this.SetCard(To.Single(Owner.Client), Suit, Rank);
-        set = true;
+        IsCardNetworked = true;
     }
 
-    bool IsSet = false;
+    public bool IsMaterialSet = false;
     [Event.Client.Frame]
     public void OnFrame()
     {
@@ -84,9 +85,9 @@ public partial class CardEntity : ModelEntity
             RenderColor = Color.White.WithAlpha(alpha);
         }
 
-        if(texture != null && texture.IsLoaded && !IsSet)
+        if(texture != null && texture.IsLoaded && !IsMaterialSet)
         {
-            IsSet = true;
+            IsMaterialSet = true;
             material.Set("Color", texture);
         }
     }

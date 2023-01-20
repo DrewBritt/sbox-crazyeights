@@ -12,6 +12,8 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
     protected override void OnActivate()
     {
+        if(!Entity.IsLocalPawn) return;
+
         SuitSelection = new SuitSelectionEntity();
         SuitSelection.Position = Entity.Position + (Vector3.Up * 40f) + (Entity.Rotation.Forward * 20f);
         SuitSelection.Rotation = Entity.Rotation;
