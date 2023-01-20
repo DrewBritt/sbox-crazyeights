@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Sandbox;
-using SandboxEditor;
+using Editor;
 
 namespace CrazyEights;
 

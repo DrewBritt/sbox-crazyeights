@@ -69,7 +69,7 @@ public partial class Pile : Deck
     {
         base.OnDestroy();
 
-        if(IsServer)
+        if(Game.IsServer)
             TopCardEntity.Delete();
     }
 }

@@ -6,18 +6,18 @@
 
 <root>
     <div style="align-items: center;">
-        <image style="background-image: url(avatar:@Client.PlayerId)"></image>
+        <image style="background-image: url(avatar:@Client.SteamId)"></image>
         <label>@Client.Name.Truncate(23, "...")</label>
     </div>
 
-    @if(Client != Local.Client)
+    @if(Client != Game.LocalClient)
     { <button class="kickbutton" @onclick=@KickPlayer>Kick</button> }
         
 </root>
 
 @code
 {
-    public Client Client { get; set; }
+    public IClient Client { get; set; }
 
     private void KickPlayer() => Client.Kick();
 }

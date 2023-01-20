@@ -138,7 +138,7 @@ public partial class Deck : ModelEntity
         if(!Cards.Any())
         {
             // Add discard (except for top card)
-            var discard = Game.Current.DiscardPile;
+            var discard = GameManager.Current.DiscardPile;
             var discardTop = discard.GrabTopCard();
             AddCards(discard.Cards);
             Shuffle();
@@ -216,7 +216,7 @@ public partial class Deck : ModelEntity
     {
         base.OnDestroy();
 
-        if(IsClient && CardStackParticles != null)
+        if(Game.IsClient && CardStackParticles != null)
             CardStackParticles.Destroy(true);
     }
 }

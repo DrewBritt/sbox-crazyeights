@@ -28,7 +28,7 @@
     {
         if (!firstTime) return;
 
-        BindClass("active", () => CrazyEights.Game.Current.CurrentPlayer == Local.Client.Pawn && turnOver > 0 && turnOver < 10);
+        BindClass("active", () => CrazyEights.GameManager.Current.CurrentPlayer == Game.LocalPawn && turnOver > 0 && turnOver < 10);
     }
 
     protected override int BuildHash() => HashCode.Combine(TimeString());
@@ -37,7 +37,7 @@
     public override void Tick()
     {
         // Not current player,
-        if(CrazyEights.Game.Current.CurrentPlayer != Local.Pawn) return;
+        if(CrazyEights.GameManager.Current.CurrentPlayer != Game.LocalPawn) return;
 
         // Play tick sound every second when panel is active,
         if(turnOver < 10 && turnOver > 0 && soundPlayed > 1)
@@ -50,5 +50,5 @@
     /// <summary>
     /// Sets turnOver to Max Turn Time, priming the panel to appear.
     /// </summary>
-    public void Activate() => turnOver = CrazyEights.Game.MaxTurnTime;
+    public void Activate() => turnOver = CrazyEights.GameManager.MaxTurnTime;
 }

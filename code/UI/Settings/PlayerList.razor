@@ -7,7 +7,7 @@
 
 <root>
     <div class="players">
-        @foreach(Client c in Client.All)
+        @foreach(IClient c in Game.Clients)
         {
             <PlayerListEntry Client=@c></PlayerListEntry>
         }
@@ -21,7 +21,7 @@
 {
     protected override int BuildHash()
     {
-        return HashCode.Combine(Client.All);
+        return HashCode.Combine(Game.Clients);
     }
 
     private void AddBot() => CrazyEights.Bot.AddBot();

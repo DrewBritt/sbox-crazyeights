@@ -29,7 +29,7 @@ public partial class Card
         if(Suit == CardSuit.Wild)
             return true;
 
-        var lastPlayed = Game.Current.DiscardPile.GetTopCard();
+        var lastPlayed = GameManager.Current.DiscardPile.GetTopCard();
         if(Suit == lastPlayed.Suit || Rank == lastPlayed.Rank)
             return true;
 

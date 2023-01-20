@@ -23,7 +23,7 @@
 
     public void ActivateTurnTimer() => TurnTimer.Activate();
     public void ActivateCrosshair() => Crosshair.Activate();
-    public void ActivateGameOverOverlay(Client winner)
+    public void ActivateGameOverOverlay(IClient winner)
     {
         var overlay = AddChild<GameOverOverlay>();
         overlay.Activate(winner);

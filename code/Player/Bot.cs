@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Sandbox;
-using static CrazyEights.Game;
+using static CrazyEights.GameManager;
 
 namespace CrazyEights;
 
@@ -9,10 +9,10 @@ public partial class Bot : Sandbox.Bot
     [ConCmd.Admin("ce_addbot", Help = "Spawns a Crazy Eights bot (will play with you!)")]
     internal static void AddBot()
     {
-        Host.AssertServer();
-        if(Client.All.Count == ConsoleSystem.GetValue("maxplayers").ToInt())
+        Game.AssertServer();
+        if(Game.Clients.Count == ConsoleSystem.GetValue("maxplayers").ToInt())
         {
-            Game.Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: Game is full! (Too many players)");
+            GameManager.Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: Game is full! (Too many players)");
             return;
         }
         _ = new Bot();
@@ -21,7 +21,7 @@ public partial class Bot : Sandbox.Bot
     [ConCmd.Admin("ce_kickallbots", Help = "Kicks all bots currently connected")]
     internal static void KickAllBots()
     {
-        Host.AssertServer();
+        Game.AssertServer();
         while(Bot.All.Count > 0)
             Bot.All[0].Client.Kick();
     }
@@ -36,13 +36,13 @@ public partial class Bot : Sandbox.Bot
     {
         base.Tick();
 
-        if(Game.Current.CurrentState is not PlayingState) return;
+        if(GameManager.Current.CurrentState is not PlayingState) return;
 
-        if(!Game.Current.CurrentPlayer.IsValid() || Game.Current.CurrentPlayer != Client.Pawn) return;
+        if(!GameManager.Current.CurrentPlayer.IsValid() || GameManager.Current.CurrentPlayer != Client.Pawn) return;
 
         // Once above guard-clause passes, set playCardDelay only if it hasn't been set recently (within this turn)
         if(playCardDelay < -1)
-            playCardDelay = Rand.Int(2, 4);
+            playCardDelay = Game.Random.Int(2, 4);
 
         // Wait for delay
         if(playCardDelay > 0) return;

@@ -5,13 +5,13 @@
 @namespace CrazyEights.UI
 
 <root>
-    <image style="background-image: url(avatar:@Winner.PlayerId)"></image>
+    <image style="background-image: url(avatar:@Winner.SteamId)"></image>
     <label>@Winner.Name has won the game!</label>
 </root>
 
 @code 
 {
-    private Client Winner { get; set; }
+    private IClient Winner { get; set; }
 
     protected override void OnAfterTreeRender(bool firstTime)
     {
@@ -21,7 +21,7 @@
     }
 
     TimeSince activated = 6f;
-    public void Activate(Client winner)
+    public void Activate(IClient winner)
     {
         Winner = winner;
         activated = 0f;
