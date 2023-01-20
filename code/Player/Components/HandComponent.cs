@@ -10,22 +10,13 @@ namespace CrazyEights;
 /// On a timer, a CardEntity is spawned and added to the PlayerHand.
 /// This lets us "animate" them spawning in quick succession rather than all at once.
 /// </summary>
-public partial class PlayerHand : BaseNetworkable
+public partial class HandComponent : EntityComponent<Player>, ISingletonComponent
 {
-    /// <summary>
-    /// Pawn in which this Hand belongs to.
-    /// </summary>
-    [Net] public Pawn Owner { get; set; }
+
     /// <summary>
     /// CardEntity's (and therefore Cards) in this hand.
     /// </summary>
     [Net] public IList<CardEntity> Cards { get; set; }
-    private Queue<Card> cardsToAdd = new Queue<Card>();
-
-    public PlayerHand()
-    {
-        Event.Register(this);
-    }
 
     /// <summary>
     /// Adds paramater card to a Queue to be spawned as a CardEntity.
@@ -59,11 +50,11 @@ public partial class PlayerHand : BaseNetworkable
         // TODO: Revert this whenever whatever the fuck causes
         // textures to fail creation on remote clients is fixed
         //cardEnt.SetCard(To.Single(Owner.Client), Rank, Suit);
-        cardEnt.Owner = Owner;
+        cardEnt.Owner = Entity;
 
         // Position card ent in hand
-        cardEnt.SetParent(Owner, "handStartPos");
-        var attachment = Owner.GetAttachment("handStartPos").GetValueOrDefault();
+        cardEnt.SetParent(Entity, "handStartPos");
+        var attachment = Entity.GetAttachment("handStartPos").GetValueOrDefault();
         cardEnt.LocalRotation = Rotation.FromPitch(90).RotateAroundAxis(Vector3.Forward, -60f) * Rotation.FromRoll(180);
         cardEnt.LocalPosition = (Vector3.Forward * (Cards.Count)) + (Vector3.Right * (.65f * (Cards.Count))) + (Vector3.Up * 1.25f);
 
@@ -72,6 +63,11 @@ public partial class PlayerHand : BaseNetworkable
         Cards = Cards.OrderBy(c => c.Suit).ThenBy(c => c.Rank).ToList();
         UpdateCardPositions();
     }
+
+    /// <summary>
+    /// Cards to be added to player's hand, on a timer checked in OnTickServer (so they animate in nicely).
+    /// </summary>
+    private Queue<Card> cardsToAdd = new Queue<Card>();
 
     TimeSince cardSpawned = 0;
     /// <summary>
@@ -108,7 +104,7 @@ public partial class PlayerHand : BaseNetworkable
     /// <summary>
     /// Despawn and remove all CardEntity's from this Hand.
     /// </summary>
-    public void ClearCards()
+    private void ClearCards()
     {
         foreach(var c in Cards)
             c.Delete();
@@ -122,6 +118,11 @@ public partial class PlayerHand : BaseNetworkable
             var card = Cards[i];
             card.LocalPosition = (Vector3.Forward * (i + 1)) + (Vector3.Right * (.65f * (i+1))) + (Vector3.Up * 1.25f);
         }
+    }
+
+    protected override void OnDeactivate()
+    {
+        base.OnActivate();
     }
 
     #region Hand Analysis (for bots/AFK players)
@@ -153,9 +154,4 @@ public partial class PlayerHand : BaseNetworkable
     }
 
     #endregion
-
-    ~PlayerHand()
-    {
-        Event.Unregister(this);
-    }
 }
