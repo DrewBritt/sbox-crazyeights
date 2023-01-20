@@ -12,15 +12,12 @@
   ],
   "HasCode": true,
   "CodePath": "/code/",
-  "RootNamespace": null,
   "Metadata": {
     "MaxPlayers": 12,
     "MinPlayers": 2,
     "GameNetworkType": "Multiplayer",
-    "MapSelect": "Official",
-    "MapList": [
-      "facepunch.flatgrass"
-    ],
+    "MapSelect": "Unrestricted",
+    "MapList": [],
     "RankType": "None",
     "PerMapRanking": false,
     "LeaderboardType": "None",
