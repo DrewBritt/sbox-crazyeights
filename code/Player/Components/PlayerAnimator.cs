@@ -2,7 +2,7 @@
 
 namespace CrazyEights;
 
-public class PlayerAnimator : EntityComponent<Player>
+public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
 {
     private TimeSince TimeSinceGameAction;
     public virtual void Simulate()
@@ -28,7 +28,7 @@ public class PlayerAnimator : EntityComponent<Player>
             player.SetAnimParameter("game_action", 0);
 
         Vector3 lookPos = player.AimRay.Position + player.AimRay.Forward * 512;
-        player.SetAnimLookAt("aim_head", player.AimRay.Position, lookPos);
+        player.SetAnimLookAt("aim_head", player.EyePosition, lookPos);
         player.SetAnimParameter("aim_head_weight", 1.0f);
     }
 

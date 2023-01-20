@@ -73,7 +73,7 @@ public partial class CardEntity : ModelEntity
         set = true;
     }
 
-    [Event.Frame]
+    [Event.Client.Frame]
     public void OnFrame()
     {
         // Lerp alpha to 1
@@ -84,6 +84,6 @@ public partial class CardEntity : ModelEntity
         }
 
         if(texture?.IsLoaded ?? false)
-            material.OverrideTexture("Color", texture);
+            material.Set("Color", texture);
     }
 }

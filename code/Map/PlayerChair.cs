@@ -11,8 +11,8 @@ namespace CrazyEights;
 [HammerEntity]
 public partial class PlayerChair : ModelEntity
 {
-    public bool HasPlayer { get; private set; } = false;
     private Player player;
+    public bool HasPlayer => player != null;
 
     public override void Spawn()
     {
@@ -29,12 +29,12 @@ public partial class PlayerChair : ModelEntity
     /// <param name="player"></param>
     public void SeatPlayer(Player player)
     {
-        this.player = player;
         EnableDrawing = true;
+
+        this.player = player;
         player.Transform = this.Transform;
         player.Position += (this.Transform.Rotation.Forward * 2f) + (Vector3.Up * 4f);
         player.PlayerChair = this;
-        HasPlayer = true;
     }
 
     /// <summary>
@@ -46,6 +46,5 @@ public partial class PlayerChair : ModelEntity
 
         EnableDrawing = false;
         player.PlayerChair = null;
-        HasPlayer = false;
     }
 }
