@@ -18,7 +18,7 @@ public partial class Player : AnimatedEntity
         else
             Clothing.LoadFromClient(cl);
 
-        Clothing.DressEntity(this);
+        //Clothing.DressEntity(this);
     }
 
     public override void Spawn()

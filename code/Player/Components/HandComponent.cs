@@ -122,7 +122,10 @@ public partial class HandComponent : EntityComponent<Player>, ISingletonComponen
 
     protected override void OnDeactivate()
     {
-        base.OnActivate();
+        // Cleanup CardEntity's when we remove the player's hand.
+        if(Game.IsClient) return;
+
+        ClearCards();
     }
 
     #region Hand Analysis (for bots/AFK players)

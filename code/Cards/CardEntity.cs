@@ -1,4 +1,6 @@
-﻿using Sandbox;
+﻿using System;
+using System.Collections.Generic;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -18,6 +20,11 @@ public partial class CardEntity : ModelEntity
 
     private Texture texture;
     private Material material;
+    
+    /// <summary>
+    /// Material cache so we're not creating 80 unique materials when we have a finite number of textures.
+    /// </summary>
+    private static Dictionary<Tuple<CardSuit, CardRank>, Material> CardMaterialCache = new();
 
     public override void Spawn()
     {
@@ -50,7 +57,19 @@ public partial class CardEntity : ModelEntity
         };
 
         texture = Texture.Load(FileSystem.Mounted, Card.FileName);
-        material = Material.Load("materials/card/card_face.vmat").CreateCopy();
+
+        // Try to pull from cache, otherwise create a new copy and add it.
+        bool success = CardMaterialCache.TryGetValue(new Tuple<CardSuit, CardRank>(suit, rank), out material);
+        if(!success)
+        {
+            material = Material.Load("materials/card/card_face.vmat").CreateCopy();
+            CardMaterialCache.Add(new Tuple<CardSuit,CardRank>(suit, rank), material);
+            Log.Info("No success pulling from cache!");
+        } else
+        {
+            Log.Info("SUCCESS!");
+        }
+        
         IsMaterialSet = false;
         SetMaterialOverride(material, "isTarget");
     }
