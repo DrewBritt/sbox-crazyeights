@@ -43,6 +43,7 @@ public partial class PlayerChair : ModelEntity
     {
         if(!HasPlayer) return;
 
+        Player = null;
         EnableDrawing = false;
     }
 }
