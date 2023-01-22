@@ -6,16 +6,6 @@ namespace CrazyEights;
 public partial class GameManager
 {
     /// <summary>
-    /// Persistent deck used for drawing cards.
-    /// </summary>
-    public Deck PlayingDeck { get; set; }
-
-    /// <summary>
-    /// Pile in which player's cards are played onto.
-    /// </summary>
-    [Net] public Pile DiscardPile { get; set; }
-
-    /// <summary>
     /// Current play direction. Default is clockwise/true.
     /// </summary>
     private bool DirectionIsClockwise = true;

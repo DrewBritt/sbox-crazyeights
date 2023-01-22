@@ -135,7 +135,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
         if(!tr.Entity.IsValid()) return null;
 
-        if(tr.Entity is not Deck)
+        if(tr.Entity is not DeckEntity)
             if(!Entity.Hand.Cards.Contains(tr.Entity as CardEntity) && !tr.Entity.Tags.Has("suitselection"))
                 return null;
 
@@ -150,10 +150,10 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     {
         if(Game.IsServer) return;
 
-        if(card is not Deck && card is not CardEntity) return;
+        if(card is not DeckEntity && card is not CardEntity) return;
 
         // Player wishes to draw a card
-        if(card is Deck)
+        if(card is DeckEntity)
             ConsoleSystem.Run($"ce_drawcard {Entity.Client.IsBot}");
 
         if(card is CardEntity)

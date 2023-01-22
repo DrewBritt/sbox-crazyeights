@@ -97,11 +97,11 @@ public partial class GameManager
         // Move card from Hand to DiscardPile, and network texture
         player.Hand.RemoveCard(cardEnt);
         Current.DiscardPile.AddCard(cardEnt.Card);
-        Current.DiscardPile.TopCardEntity.SetCard(To.Everyone, cardEnt.Card.Suit, cardEnt.Card.Rank);
+        Current.DiscardPileEntity.TopCardEntity.SetCard(To.Everyone, cardEnt.Card.Suit, cardEnt.Card.Rank);
 
         // Play animation and card sound
         Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
-        Sound.FromEntity("cardplace", Current.DiscardPile);
+        Sound.FromEntity("cardplace", Current.DiscardPileEntity);
 
         // Hide clientside SuitSelectionEntity if it's visible
         Current.CurrentPlayer.HideSuitSelection(To.Single(Current.CurrentPlayer.Client));
