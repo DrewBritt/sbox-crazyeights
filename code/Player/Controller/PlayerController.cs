@@ -125,7 +125,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     {
         if(GameManager.Current.CurrentPlayer != Entity) return null;
 
-        if(Entity.Hand == null) return null;
+        if(Entity.HandDisplay == null) return null;
 
         var tr = Trace.Ray(Entity.AimRay.Position, Entity.AimRay.Position + Entity.AimRay.Forward * 100f)
                 .WithAnyTags("card", "deck", "suitselection")
@@ -136,7 +136,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
         if(!tr.Entity.IsValid()) return null;
 
         if(tr.Entity is not DeckEntity)
-            if(!Entity.Hand.Cards.Contains(tr.Entity as CardEntity) && !tr.Entity.Tags.Has("suitselection"))
+            if(!Entity.HandDisplay.Cards.Contains(tr.Entity as CardEntity) && !tr.Entity.Tags.Has("suitselection"))
                 return null;
 
         return tr.Entity;

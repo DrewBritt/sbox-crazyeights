@@ -48,7 +48,7 @@ public partial class GameManager
         List<Card> cards = new List<Card>();
         for(int i = 0; i < 2; i++)
             cards.Add(PlayingDeck.GrabTopCard());
-        nextPlayer.Hand.AddCards(cards);
+        nextPlayer.Hand().AddCards(cards);
 
         // Skip next player as well
         SkipAction();
@@ -96,7 +96,7 @@ public partial class GameManager
         List<Card> cards = new List<Card>();
         for(int i = 0; i < 4; i++)
             cards.Add(PlayingDeck.GrabTopCard());
-        nextPlayer.Hand.AddCards(cards);
+        nextPlayer.Hand().AddCards(cards);
 
         // Set play color.
         ChangeColorAction(card, selectedWildSuit);

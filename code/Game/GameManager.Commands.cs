@@ -68,7 +68,7 @@ public partial class GameManager
         }
 
         // Stop caller if the card they want to play isn't in their hand (or it isn't valid).
-        CardEntity cardEnt = player.Hand.Cards.Where(c => c.NetworkIdent == cardIdent).FirstOrDefault();
+        CardEntity cardEnt = player.HandDisplay.Cards.Where(c => c.NetworkIdent == cardIdent).FirstOrDefault();
         if(!cardEnt.IsValid())
         {
             Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: That card isn't in your hand (or doesn't exist...)");
@@ -95,7 +95,8 @@ public partial class GameManager
         Current.CheckActionCard(cardEnt.Card, selectedWildSuit);
 
         // Move card from Hand to DiscardPile, and network texture
-        player.Hand.RemoveCard(cardEnt);
+        player.HandDisplay.RemoveCard(cardEnt);
+        player.Hand().RemoveCard(cardEnt.Card);
         Current.DiscardPile.AddCard(cardEnt.Card);
         Current.DiscardPileEntity.TopCardEntity.SetCard(To.Everyone, cardEnt.Card.Suit, cardEnt.Card.Rank);
 
@@ -107,7 +108,7 @@ public partial class GameManager
         Current.CurrentPlayer.HideSuitSelection(To.Single(Current.CurrentPlayer.Client));
 
         // Game Over if player has no cards
-        if(player.Hand.Cards.Count == 0)
+        if(player.Hand().Count == 0)
         {
             Current.CurrentState = new GameOverState();
             return;
@@ -147,7 +148,9 @@ public partial class GameManager
         }
 
         // Add 1 card from top of pile to player hand.
-        player.Hand.AddCard(Current.PlayingDeck.GrabTopCard());
+        Card card = Current.PlayingDeck.GrabTopCard();
+        player.Hand().AddCard(card);
+        player.HandDisplay.AddCard(card);
 
         // Play player interact animation
         Current.CurrentPlayer.DoInteractAnimation(To.Everyone);

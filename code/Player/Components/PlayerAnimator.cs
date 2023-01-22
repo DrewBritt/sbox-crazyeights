@@ -13,12 +13,12 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
             return;
 
         player.SetAnimParameter("sit_pose", 0);
-        player.SetAnimParameter("hasCards", player.Hand?.Cards.Count > 0);
+        player.SetAnimParameter("hasCards", player.HandDisplay?.Cards.Count > 0);
 
         // Blend between card hold poses
         int cards = 0;
-        if(player.Hand != null)
-            cards = player.Hand.Cards.Count;
+        if(player.HandDisplay != null)
+            cards = player.HandDisplay.Cards.Count;
         player.SetAnimParameter("hold_blend_weight", cards / 14f);
 
         // Play Interact animation

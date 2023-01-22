@@ -6,9 +6,22 @@ namespace CrazyEights;
 public partial class Player
 {
     /// <summary>
-    /// Stores cards the player is currently playing with.
+    /// Displays cards the player currently has in their hand.
     /// </summary>
-    [BindComponent] public HandComponent Hand { get; }
+    [BindComponent] public HandDisplayComponent HandDisplay { get; }
+
+    /// <summary>
+    /// Tries to grab game state representation of player's hand.
+    /// </summary>
+    /// <returns></returns>
+    public Hand Hand()
+    {
+        bool success = (GameManager.Current.CurrentState as PlayingState).Hands.TryGetValue(this, out Hand hand);
+        if(success)
+            return hand;
+
+        return null;
+    }
 
     /// <summary>
     /// Sets TimeSinceLastAction in Animator, to let animgraph perform Interact animation.
@@ -33,11 +46,12 @@ public partial class Player
     /// Used for bots/AFK behavior.
     /// Calls Play/Draw commands directly to avoid setting Caller, as calling as a command
     /// on the server defaults to the Host's client.
+    /// Uses CardEntities rather than Player.Hand() in order to transmit NetworkIdent for specific card we want to play.
     /// </summary>
     public void ForcePlayCard()
     {
         // Now lets calculate what card to play
-        var playable = Hand.PlayableCards();
+        var playable = HandDisplay.PlayableCards();
 
         // Draw if no cards are currently playable
         if(!playable.Any())
@@ -78,7 +92,7 @@ public partial class Player
                 int index = Game.Random.Int(0, cards.Count - 1);
                 var card = cards[index];
 
-                GameManager.PlayCard(card.NetworkIdent, Hand.GetMostPrevelantSuit());
+                GameManager.PlayCard(card.NetworkIdent, HandDisplay.GetMostPrevelantSuit());
                 return;
             }
         }

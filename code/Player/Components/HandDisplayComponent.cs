@@ -5,16 +5,15 @@ using Sandbox;
 namespace CrazyEights;
 
 /// <summary>
-/// Encapsulates a player's current hand of cards.
+/// Encapsulates a player's current hand of cards in textured CardEntities.
 /// Cards are added by passing them to AddCard, which will stick them in a Queue.
 /// On a timer, a CardEntity is spawned and added to the PlayerHand.
 /// This lets us "animate" them spawning in quick succession rather than all at once.
 /// </summary>
-public partial class HandComponent : EntityComponent<Player>, ISingletonComponent
+public partial class HandDisplayComponent : EntityComponent<Player>, ISingletonComponent
 {
-
     /// <summary>
-    /// CardEntity's (and therefore Cards) in this hand.
+    /// Cards currently in the player's hand.
     /// </summary>
     [Net] public IList<CardEntity> Cards { get; set; }
 
