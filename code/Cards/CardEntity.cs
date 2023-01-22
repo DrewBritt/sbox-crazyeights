@@ -64,10 +64,6 @@ public partial class CardEntity : ModelEntity
         {
             material = Material.Load("materials/card/card_face.vmat").CreateCopy();
             CardMaterialCache.Add(new Tuple<CardSuit,CardRank>(suit, rank), material);
-            Log.Info("No success pulling from cache!");
-        } else
-        {
-            Log.Info("SUCCESS!");
         }
         
         IsMaterialSet = false;
