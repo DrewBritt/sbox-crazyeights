@@ -9,10 +9,6 @@ public partial class Player
     /// Stores cards the player is currently playing with.
     /// </summary>
     [BindComponent] public HandComponent Hand { get; }
-    /// <summary>
-    /// The chair the player's transform will be locked to.
-    /// </summary>
-    public PlayerChair PlayerChair { get; set; }
 
     /// <summary>
     /// Sets TimeSinceLastAction in Animator, to let animgraph perform Interact animation.

@@ -48,11 +48,11 @@ public partial class GameManager : Sandbox.GameManager
 
     public override void ClientDisconnect(IClient cl, NetworkDisconnectionReason reason)
     {
-        // Free player's chair if they were a pawn
-        if(cl.Pawn is Player)
+        // If client was a Player, free their chair.
+        if(cl.Pawn is Player player)
         {
-            var pawn = cl.Pawn as Player;
-            pawn.PlayerChair.RemovePlayer();
+            var chair = Entity.All.OfType<PlayerChair>().Where(x => x.HasPlayer && x.Player == player).FirstOrDefault();
+            chair.RemovePlayer();
         }
 
         base.ClientDisconnect(cl, reason);
