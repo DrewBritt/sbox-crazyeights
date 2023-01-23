@@ -54,8 +54,10 @@ public partial class DeckEntity : ModelEntity
     [Event.Tick.Server]
     public virtual void OnTickServer()
     {
-        // Update Count every tick.
-        Count = GameManager.Current.PlayingDeck.Count;
+        var deck = GameManager.Current.PlayingDeck;
+        if(deck == null) return;
+
+        Count = deck.Count;
     }
 
     /// <summary>

@@ -5,8 +5,47 @@ namespace CrazyEights;
 
 public class Hand : Deck
 {
-    // Don't generate a complete deck on Hand instantiation.
-    public Hand() { }
+    /// <summary>
+    /// Associated display component for rendering CardEntities.
+    /// </summary>
+    private HandDisplayComponent HandDisplay { get; set; }
+
+    public Hand(Player player)
+    {
+        Initialize(player);
+    }
+
+    private void Initialize(Player player)
+    {
+        HandDisplay = new HandDisplayComponent();
+        player.Components.Add(HandDisplay);
+    }
+
+    protected override void Initialize() { }
+
+    public override void AddCard(Card card)
+    {
+        base.AddCard(card);
+
+        if(HandDisplay != null)
+            HandDisplay.AddCard(card);
+    }
+
+    public override void RemoveCard(Card card)
+    {
+        base.RemoveCard(card);
+
+        if(HandDisplay != null)
+            HandDisplay.RemoveCard(card);
+    }
+
+    public override void ClearCards()
+    {
+        base.ClearCards();
+
+        if(HandDisplay != null)
+            HandDisplay.ClearCards();
+    }
 
     #region Hand Analysis (for bots/AFK players)
 

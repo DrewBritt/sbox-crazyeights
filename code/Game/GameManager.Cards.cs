@@ -6,6 +6,16 @@ namespace CrazyEights;
 public partial class GameManager
 {
     /// <summary>
+    /// Model/Particle representation of discard pile. This displays the last played card.
+    /// </summary>
+    [Net] public PileEntity DiscardPileEntity { get; set; }
+
+    /// <summary>
+    /// Model/Particle representation of playing deck. This is what the player interacts with to draw cards.
+    /// </summary>
+    [Net] public DeckEntity PlayingDeckEntity { get; set; }
+
+    /// <summary>
     /// Current play direction. Default is clockwise/true.
     /// </summary>
     private bool DirectionIsClockwise = true;

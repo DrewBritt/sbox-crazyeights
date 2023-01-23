@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -9,14 +10,23 @@ namespace CrazyEights;
 /// </summary>
 public class Deck
 {
-    protected IList<Card> Cards = new List<Card>();
+    public IList<Card> Cards { get; protected set; } = new List<Card>();
+    public int Count => Cards.Count;
+
+    private DeckEntity PlayingDeck => GameManager.Current.PlayingDeckEntity;
 
     public Deck()
     {
+        Initialize();
+    }
+    
+    protected virtual void Initialize()
+    {
+        if(PlayingDeck == null)
+            GameManager.Current.PlayingDeckEntity = new DeckEntity();
+
         GenerateDeck();
     }
-
-    public int Count => Cards.Count;
 
     /// <summary>
     /// Add a card into the deck.
@@ -33,15 +43,15 @@ public class Deck
     /// <param name="cards"></param>
     public virtual void AddCards(IList<Card> cards)
     {
-        foreach(var c in cards)
-            Cards.Add(c);
+        foreach(var card in cards)
+            AddCard(card);
     }
 
     /// <summary>
     /// Remove a card from the deck.
     /// </summary>
     /// <param name="card"></param>
-    public void RemoveCard(Card card)
+    public virtual void RemoveCard(Card card)
     {
         Cards.Remove(card);
     }
@@ -67,7 +77,7 @@ public class Deck
     public virtual Card GrabTopCard()
     {
         Card card = GetTopCard();
-        Cards.Remove(card);
+        RemoveCard(card);
 
         // Refill Deck with cards from discard pile if deck is now empty
         if(!Cards.Any())
