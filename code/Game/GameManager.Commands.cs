@@ -63,7 +63,6 @@ public partial class GameManager
         if(player != Current.CurrentPlayer)
         {
             Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: You are not the current player!");
-            Log.Info($"{player}, {Current.CurrentPlayer}, {Current.Players}");
             return;
         }
 
@@ -78,11 +77,13 @@ public partial class GameManager
         // Stop caller if the card is not a valid play (wrong suit and rank).
         Card topCard = Current.DiscardPile.GetTopCard();
         if(cardEnt.Suit != CardSuit.Wild)
+        {
             if(cardEnt.Suit != topCard.Suit && cardEnt.Rank != topCard.Rank)
             {
                 Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: That card is not a legal play! (Wrong suit and rank)");
                 return;
             }
+        }
 
         // Selected suit cannot be wild and therefore is an illegal play.
         if(selectedWildSuit == CardSuit.Wild)
@@ -94,28 +95,27 @@ public partial class GameManager
         // Action/Wildcard abilities.
         Current.CheckActionCard(cardEnt.Card, selectedWildSuit);
 
-        // Move card from Hand to DiscardPile, and network texture
-        player.HandDisplay.RemoveCard(cardEnt);
+        // Move card from Hand to DiscardPile
         player.Hand().RemoveCard(cardEnt.Card);
         Current.DiscardPile.AddCard(cardEnt.Card);
-        Current.DiscardPileEntity.TopCardEntity.SetCard(To.Everyone, cardEnt.Card.Suit, cardEnt.Card.Rank);
 
         // Play animation and card sound
-        Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
+        player.DoInteractAnimation(To.Everyone);
         Sound.FromEntity("cardplace", Current.DiscardPileEntity);
 
         // Hide clientside SuitSelectionEntity if it's visible
-        Current.CurrentPlayer.HideSuitSelection(To.Single(Current.CurrentPlayer.Client));
+        player.HideSuitSelection(To.Single(player.Client));
 
         // Game Over if player has no cards
+        Log.Info(player.Hand());
         if(player.Hand().Count == 0)
         {
-            Current.CurrentState = new GameOverState();
+            Current.CurrentState.SetState(new GameOverState());
             return;
         }
 
         // Next player's turn.
-        Current.SetNewCurrentPlayer();
+        Current.AdvancePlayingState();
     }
 
     /// <summary>
@@ -150,37 +150,35 @@ public partial class GameManager
         // Add 1 card from top of pile to player hand.
         Card card = Current.PlayingDeck.GrabTopCard();
         player.Hand().AddCard(card);
-        player.HandDisplay.AddCard(card);
 
         // Play player interact animation
-        Current.CurrentPlayer.DoInteractAnimation(To.Everyone);
+        player.DoInteractAnimation(To.Everyone);
 
         // Hide clientside SuitSelectionEntity if it's visible
-        Current.CurrentPlayer.HideSuitSelection(To.Single(Current.CurrentPlayer.Client));
+        player.HideSuitSelection(To.Single(player.Client));
 
         // Next player's turn.
-        Current.SetNewCurrentPlayer();
+        Current.AdvancePlayingState();
     }
 
     /// <summary>
-    /// Updates Game.CurrentPlayerIndex
+    /// Advances to next PlayingState/next player's turn.
     /// </summary>
-    private void SetNewCurrentPlayer()
+    private void AdvancePlayingState()
     {
         // Increment to next player regardless
-        Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
+        int nextIndex = Current.GetNextPlayerIndex(Current.CurrentPlayerIndex);
 
         // If we should skip, notify our new "current player" and get the next-next player, then reset flag
         if(ShouldSkip == 1)
         {
-            NotifyPlayerOfSkip(To.Single(CurrentPlayer.Client));
-            Current.CurrentPlayerIndex = Current.GetNextPlayerIndex();
+            NotifyPlayerOfSkip(To.Single(Current.Hands[nextIndex].Item1.Client));
+            nextIndex = Current.GetNextPlayerIndex(nextIndex);
             ShouldSkip = 0;
         }
 
         // Notify actual new player
-        (Current.CurrentState as PlayingState).TurnStarted = 0;
-        NotifyPlayerOfTurn(To.Single(CurrentPlayer.Client));
+        Current.CurrentState.SetState(new PlayingState(Current.PlayingDeck, Current.DiscardPile, Current.Hands, nextIndex));
     }
     #endregion
 

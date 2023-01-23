@@ -16,10 +16,9 @@ public partial class Player
     /// <returns></returns>
     public Hand Hand()
     {
-        bool success = (GameManager.Current.CurrentState as PlayingState).Hands.TryGetValue(this, out Hand hand);
-        if(success)
-            return hand;
-
+        var tuple = (GameManager.Current.CurrentState as PlayingState).Hands.Where(c => c.Item1 == this).FirstOrDefault();
+        if(tuple != null)
+            return tuple.Item2;
         return null;
     }
 

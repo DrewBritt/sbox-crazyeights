@@ -52,7 +52,7 @@ public partial class GameManager
     /// </summary>
     private void Draw2Action()
     {
-        Player nextPlayer = Players[GetNextPlayerIndex()];
+        Player nextPlayer = Hands[GetNextPlayerIndex(CurrentPlayerIndex)].Item1;
 
         // Grab 2 cards from persistent deck to give to next player.
         List<Card> cards = new List<Card>();
@@ -100,7 +100,7 @@ public partial class GameManager
     /// <param name="card">Played card, suit is set to set play color.</param>
     private void Draw4Action(Card card, CardSuit selectedWildSuit)
     {
-        Player nextPlayer = Players[GetNextPlayerIndex()];
+        Player nextPlayer = Hands[GetNextPlayerIndex(CurrentPlayerIndex)].Item1;
 
         // Grab 4 cards from persistent deck to give to next player.
         List<Card> cards = new List<Card>();
