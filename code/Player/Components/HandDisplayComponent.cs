@@ -101,9 +101,20 @@ public partial class HandDisplayComponent : EntityComponent<Player>, ISingletonC
     }
 
     /// <summary>
+    /// Try to find and despawn/remove a corresponding CardEntity from input Card.
+    /// </summary>
+    /// <param name="card"></param>
+    public void RemoveCard(Card card)
+    {
+        // Find and blindly call RemoveCard, as the IsValid check will determine if it's null.
+        var cardEnt = Cards.Where(c => c.Rank == card.Rank && c.Suit == card.Suit).FirstOrDefault();
+        RemoveCard(cardEnt);
+    }
+
+    /// <summary>
     /// Despawn and remove all CardEntity's from this Hand.
     /// </summary>
-    private void ClearCards()
+    public void ClearCards()
     {
         foreach(var c in Cards)
             c.Delete();
