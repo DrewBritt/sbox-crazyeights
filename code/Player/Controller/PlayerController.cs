@@ -22,21 +22,13 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
     public virtual void Simulate(IClient cl)
     {
-        SimulateEyes();
+        
     }
 
     public virtual void FrameSimulate(IClient cl)
     {
-        SimulateEyes();
         CheckNameplates();
         CheckInteractables();
-    }
-
-    protected void SimulateEyes()
-    {
-        Transform? eyes = Entity.GetAttachment("eyes", false);
-        //Entity.EyeRotation = Entity.LookInput.ToRotation();
-        //Entity.EyeLocalPosition = eyes.Value.Position;
     }
 
     public void HideSuitSelection()
@@ -72,6 +64,8 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     /// </summary>
     protected void CheckInteractables()
     {
+        if(GameManager.Current.CurrentPlayer == null) return;
+
         // Disable glow if it was enabled on a card the player didn't play, and they are no longer the player.
         // Then we return to avoid tracing every frame we don't need it.
         if(GameManager.Current.CurrentPlayer != Entity)
