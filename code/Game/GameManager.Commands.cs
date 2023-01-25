@@ -106,14 +106,6 @@ public partial class GameManager
         // Hide clientside SuitSelectionEntity if it's visible
         player.HideSuitSelection(To.Single(player.Client));
 
-        // Game Over if player has no cards
-        Log.Info(player.Hand());
-        if(player.Hand().Count == 0)
-        {
-            Current.CurrentState.SetState(new GameOverState());
-            return;
-        }
-
         // Next player's turn.
         Current.AdvancePlayingState();
     }

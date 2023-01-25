@@ -23,12 +23,12 @@ public partial class GameManager
     /// <summary>
     /// Game data playing deck/draw pile for this state.
     /// </summary>
-    public Deck PlayingDeck => (CurrentState as PlayingState).PlayingDeck;
+    public Deck PlayingDeck => (CurrentState as PlayingState)?.PlayingDeck;
 
     /// <summary>
     /// Game data discard pile for this state.
     /// </summary>
-    public Pile DiscardPile => (CurrentState as PlayingState).DiscardPile;
+    public Pile DiscardPile => (CurrentState as PlayingState)?.DiscardPile;
 
     /// <summary>
     /// Game data connection between players and their hands.

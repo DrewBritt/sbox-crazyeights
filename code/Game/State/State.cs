@@ -10,24 +10,23 @@ public class BaseState
 {
     public virtual string StateName() => GetType().ToString();
 
-    public BaseState()
-    {
-        Initialize();
-    }
-
-    protected virtual void Initialize()
-    {
-
-    }
-
-    public virtual void Tick()
-    {
-
-    }
+    public virtual void Tick() { }
 
     public void SetState(BaseState state)
     {
         Current.CurrentState = state;
+    }
+
+    protected void Cleanup()
+    {
+        foreach(var p in Entity.All.OfType<Player>())
+        {
+            p.HandDisplay.Remove();
+        }
+
+        Current.PlayingDeckEntity?.Delete();
+        Current.DiscardPileEntity?.Delete();
+        Current.CurrentPlayer = null;
     }
 }
 
@@ -70,14 +69,27 @@ public class StagingState : BaseState
 /// </summary>
 public class PlayingState : BaseState
 {
+    public override string StateName() => "Playing";
+
+    #region Game Data
     public Deck PlayingDeck { get; private set; }
     public Pile DiscardPile { get; private set; }
     public List<Tuple<Player, Hand>> Hands { get; private set; }
     public int CurrentPlayerIndex { get; private set; } = 0;
     private Player CurrentPlayer => Hands[CurrentPlayerIndex].Item1;
+    #endregion
 
     /// <summary>
-    /// If we pass in game data on state creation, we know we're continuing a game. If it's all null, initialize a new game.
+    /// If we don't pass any game data in, we're starting a new game.
+    /// </summary>
+    public PlayingState()
+    {
+        InitializeGame();
+        BeginState();
+    }
+
+    /// <summary>
+    /// If we pass in game data on state creation, we know we're continuing a game.
     /// </summary>
     /// <param name="playingDeck"></param>
     /// <param name="discardPile"></param>
@@ -90,22 +102,11 @@ public class PlayingState : BaseState
         Hands = hands;
         CurrentPlayerIndex = playerIndex;
 
-        Initialize();
-
-        if(IsWinner())
-        {
-            SetState(new GameOverState());
-            return;
-        }
-
-        GameManager.Current.CurrentPlayer = CurrentPlayer;
-        GameManager.Current.NotifyPlayerOfTurn(To.Single(CurrentPlayer.Client));
+        BeginState();
     }
 
-    private void Initialize()
+    private void InitializeGame()
     {
-        if(PlayingDeck != null) return;
-
         // Generate deck to be used in play.
         PlayingDeck = new Deck();
         PlayingDeck.Shuffle();
@@ -132,10 +133,20 @@ public class PlayingState : BaseState
         var firstCard = PlayingDeck.GrabTopCard();
         DiscardPile.AddCard(firstCard);
 
-        // Update last played card for clients
-        //Current.DiscardPileEntity.TopCardEntity.SetCard(To.Everyone, firstCard.Suit, firstCard.Rank);
-
         Sound.FromScreen(To.Everyone, "gamestart");
+    }
+
+    private void BeginState()
+    {
+        if(IsWinner())
+        {
+            SetState(new GameOverState());
+        }
+        else
+        {
+            GameManager.Current.CurrentPlayer = CurrentPlayer;
+            GameManager.Current.NotifyPlayerOfTurn(To.Single(CurrentPlayer.Client));
+        }
     }
 
     private bool IsWinner()
@@ -152,7 +163,7 @@ public class PlayingState : BaseState
         // Don't keep playing if we're by ourselves.
         if(Game.Clients.Count == 1)
         {
-            // CLEANUP
+            Cleanup();
             SetState(new WaitingForPlayersState());
         }
 
@@ -170,7 +181,7 @@ public class GameOverState : BaseState
 {
     public override string StateName() => "Game Over";
 
-    protected override void Initialize()
+    public GameOverState()
     {
         Current.NotifyPlayerOfGameOver(To.Everyone);
     }
@@ -179,6 +190,9 @@ public class GameOverState : BaseState
     public override void Tick()
     {
         if(resetGame <= 0)
+        {
+            Cleanup();
             SetState(new WaitingForPlayersState());
+        }
     }
 }

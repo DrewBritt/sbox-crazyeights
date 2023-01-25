@@ -48,7 +48,8 @@ public partial class GameManager : Sandbox.GameManager
 
     public override void ClientDisconnect(IClient cl, NetworkDisconnectionReason reason)
     {
-        // If client was a Player, free their chair.
+        // If client was a Player, cleanup their pawn and associated game data.
+        // TODO: Once spectators are added, add a queue and swap in the earliest joined spectator instead of removing the player from the game.
         if(cl.Pawn is Player player)
         {
             var chair = Entity.All.OfType<PlayerChair>().Where(x => x.HasPlayer && x.Player == player).FirstOrDefault();
