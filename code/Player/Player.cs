@@ -7,7 +7,7 @@ public partial class Player : AnimatedEntity
 {
     [BindComponent] public PlayerController Controller { get; }
     [BindComponent] public PlayerAnimator Animator { get; }
-    public PlayerCamera PlayerCamera { get; protected set; }
+    [BindComponent] public PlayerCamera PlayerCamera { get; }
     public WorldNameplate Nameplate { get; protected set; }
 
     public Player() { }
@@ -47,7 +47,7 @@ public partial class Player : AnimatedEntity
         // Initialize client side systems for player (camera for local, nameplate for every other)        
         if(Game.LocalPawn == this)
         {
-            PlayerCamera = new PlayerCamera();
+            Components.Add(new PlayerCamera());
         }
         else
         {
@@ -68,7 +68,7 @@ public partial class Player : AnimatedEntity
         base.FrameSimulate(cl);
 
         Controller?.FrameSimulate(cl);
-        PlayerCamera?.Update(this);
+        PlayerCamera?.FrameSimulate(cl);
 
         UpdateBodyGroups();
     }
