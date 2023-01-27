@@ -5,7 +5,7 @@ namespace CrazyEights;
 public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
 {
     private TimeSince TimeSinceGameAction;
-    public virtual void Simulate()
+    public virtual void Simulate(IClient cl)
     {
         var player = Entity;
 

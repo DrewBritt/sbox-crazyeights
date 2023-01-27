@@ -60,7 +60,7 @@ public partial class Player : AnimatedEntity
         base.Simulate(cl);
 
         Controller?.Simulate(cl);
-        Animator?.Simulate();
+        Animator?.Simulate(cl);
     }
 
     public override void FrameSimulate(IClient cl)
