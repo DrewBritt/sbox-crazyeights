@@ -28,7 +28,7 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
             player.SetAnimParameter("game_action", 0);
 
         Vector3 lookPos = player.AimRay.Position + player.AimRay.Forward * 512;
-        player.SetAnimLookAt("aim_head", player.EyePosition, lookPos);
+        player.SetAnimLookAt("aim_head", player.Controller.EyePosition, lookPos);
         player.SetAnimParameter("aim_head_weight", 1.0f);
     }
 

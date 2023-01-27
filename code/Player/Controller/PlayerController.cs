@@ -6,6 +6,33 @@ namespace CrazyEights;
 public partial class PlayerController : EntityComponent<Player>, ISingletonComponent
 {
     /// <summary>
+	/// Normalized accumulation of Input.AnalogLook
+	/// </summary>
+    [ClientInput] public Angles LookInput { get; protected set; }
+
+    /// <summary>
+    /// Position a player should be looking from in world space.
+    /// </summary>
+    public Vector3 EyePosition => AimRay.Position;
+
+    /// <summary>
+    /// Rotation of the entity's "eyes", i.e. rotation for the camera when this entity is used as the view entity.
+    /// </summary>
+    public Rotation EyeRotation => Rotation.LookAt(AimRay.Forward);
+
+    /// <summary>
+    /// Override the aim ray to use the player's eye position and rotation.
+    /// </summary>
+    public Ray AimRay
+    {
+        get
+        {
+            var eyeTransform = Entity.GetAttachment("eyes") ?? default;
+            return new Ray(eyeTransform.Position, LookInput.Forward);
+        }
+    }
+
+    /// <summary>
     /// Displays CardEntities in front of the player that allow suit selection when playing a Wild/Draw4.
     /// </summary>
     private SuitSelectionEntity SuitSelection { get; set; }
@@ -14,10 +41,27 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     {
         if(!Entity.IsLocalPawn) return;
 
+        LookInput = Entity.Rotation.Angles().WithRoll(0);
+
         SuitSelection = new SuitSelectionEntity();
         SuitSelection.Position = Entity.Position + (Vector3.Up * 40f) + (Entity.Rotation.Forward * 20f);
         SuitSelection.Rotation = Entity.Rotation;
         SuitSelection.LocalRotation = Entity.LocalRotation.RotateAroundAxis(Vector3.Up, 180f);
+    }
+
+    public virtual void BuildInput()
+    {
+        if(Input.StopProcessing)
+            return;
+
+        // Calculate new ViewAngles from input diff, then clamp.
+        var lookInput = (LookInput + Input.AnalogLook);
+        var clampedAngles = new Angles(
+            lookInput.pitch.Clamp(-60, 75),
+            lookInput.yaw.Clamp(Entity.LocalRotation.Yaw() - 80f, Entity.LocalRotation.Yaw() + 80f),
+            0
+        );
+        LookInput = clampedAngles;
     }
 
     public virtual void Simulate(IClient cl)
@@ -42,8 +86,9 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     /// </summary>
     protected void CheckNameplates()
     {
+        
         // Trace for players
-        var tr = Trace.Ray(Entity.AimRay.Position, Entity.AimRay.Position + Entity.AimRay.Forward * 300f)
+        var tr = Trace.Ray(Entity.Controller.AimRay.Position, Entity.Controller.AimRay.Position + Entity.Controller.AimRay.Forward * 300f)
             .UseHitboxes()
             .WithTag("player")
             .Ignore(Entity)
@@ -51,6 +96,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
         if(!tr.Hit) return;
 
+        
         GameManager.Current.Hud.ActivateCrosshair();
         var pawn = tr.Entity as Player;
         pawn.Nameplate.Activate();

@@ -34,16 +34,10 @@ public partial class Player : AnimatedEntity
         EnableAllCollisions = true;
         EnableHitboxes = true;
         EnableHideInFirstPerson = false;
-
-        base.Spawn();
     }
 
     public override void ClientSpawn()
     {
-        base.ClientSpawn();
-
-        LookInput = Rotation.Angles();
-
         // Initialize client side systems for player (camera for local, nameplate for every other)        
         if(Game.LocalPawn == this)
         {
@@ -55,18 +49,22 @@ public partial class Player : AnimatedEntity
         }
     }
 
+    public override void BuildInput()
+    {
+        base.BuildInput();
+
+        Controller?.BuildInput();
+        PlayerCamera?.BuildInput();
+    }
+
     public override void Simulate(IClient cl)
     {
-        base.Simulate(cl);
-
         Controller?.Simulate(cl);
         Animator?.Simulate(cl);
     }
 
     public override void FrameSimulate(IClient cl)
     {
-        base.FrameSimulate(cl);
-
         Controller?.FrameSimulate(cl);
         PlayerCamera?.FrameSimulate(cl);
 
