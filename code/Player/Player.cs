@@ -41,7 +41,7 @@ public partial class Player : AnimatedEntity
         // Initialize client side systems for player (camera for local, nameplate for every other)        
         if(Game.LocalPawn == this)
         {
-            Components.Add(new PlayerCamera());
+            Components.Create<PlayerCamera>();
         }
         else
         {

@@ -167,7 +167,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
         if(Entity.HandDisplay == null) return null;
 
-        var tr = Trace.Ray(Entity.AimRay.Position, Entity.AimRay.Position + Entity.AimRay.Forward * 100f)
+        var tr = Trace.Ray(Entity.Controller.AimRay.Position, Entity.Controller.AimRay.Position + Entity.Controller.AimRay.Forward * 100f)
                 .WithAnyTags("card", "deck", "suitselection")
                 .EntitiesOnly()
                 .IncludeClientside()
