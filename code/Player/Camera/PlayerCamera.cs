@@ -5,7 +5,7 @@ namespace CrazyEights;
 
 public partial class PlayerCamera : EntityComponent<Player>, ISingletonComponent
 {
-    private float FOV = 120f;
+    private float FOV;
     private ScreenEffects screenEffects = null;
 
     /// <summary>
@@ -27,6 +27,8 @@ public partial class PlayerCamera : EntityComponent<Player>, ISingletonComponent
         Camera.ZNear = .1f;
         Camera.ZFar = 5000;
 
+        FOV = Screen.CreateVerticalFieldOfView(Game.Preferences.FieldOfView);
+
         // Provides Vignette for alert effects
         screenEffects = Camera.Main.FindOrCreateHook<ScreenEffects>();
     }
@@ -37,7 +39,7 @@ public partial class PlayerCamera : EntityComponent<Player>, ISingletonComponent
             return;
 
         FOV -= Input.MouseWheel * 10f;
-        FOV = FOV.Clamp(30, 120);
+        FOV = FOV.Clamp(45, 130);
     }
 
     public virtual void FrameSimulate(IClient cl)
