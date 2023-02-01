@@ -138,15 +138,11 @@ public class PlayingState : BaseState
 
     private void BeginState()
     {
-        if(IsWinner())
-        {
-            SetState(new GameOverState());
-        }
-        else
-        {
-            GameManager.Current.CurrentPlayer = CurrentPlayer;
-            GameManager.Current.NotifyPlayerOfTurn(To.Single(CurrentPlayer.Client));
-        }
+        // GameOver state is set in first tick if there is a winner.
+        if(IsWinner()) return;
+
+        GameManager.Current.CurrentPlayer = CurrentPlayer;
+        GameManager.Current.NotifyPlayerOfTurn(To.Single(CurrentPlayer.Client));
     }
 
     private bool IsWinner()
@@ -160,11 +156,18 @@ public class PlayingState : BaseState
     TimeSince turnStarted = 0;
     public override void Tick()
     {
+        if(IsWinner())
+        {
+            SetState(new GameOverState());
+            return;
+        }
+
         // Don't keep playing if we're by ourselves.
         if(Game.Clients.Count == 1)
         {
             Cleanup();
             SetState(new WaitingForPlayersState());
+            return;
         }
 
         if(turnStarted > GameManager.MaxTurnTime)

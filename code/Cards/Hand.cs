@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -12,39 +13,33 @@ public class Hand : Deck
 
     public Hand(Player player)
     {
-        Initialize(player);
-    }
-
-    private void Initialize(Player player)
-    {
-        HandDisplay = new HandDisplayComponent();
-        player.Components.Add(HandDisplay);
+        HandDisplay = player.Components.Create<HandDisplayComponent>();
     }
 
     protected override void Initialize() { }
 
     public override void AddCard(Card card)
     {
-        base.AddCard(card);
-
         if(HandDisplay != null)
             HandDisplay.AddCard(card);
+
+        base.AddCard(card);
     }
 
     public override void RemoveCard(Card card)
     {
-        base.RemoveCard(card);
-
         if(HandDisplay != null)
             HandDisplay.RemoveCard(card);
+
+        base.RemoveCard(card);
     }
 
     public override void ClearCards()
     {
-        base.ClearCards();
-
         if(HandDisplay != null)
             HandDisplay.ClearCards();
+
+        base.ClearCards();
     }
 
     #region Hand Analysis (for bots/AFK players)

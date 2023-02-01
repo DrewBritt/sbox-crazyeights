@@ -107,7 +107,7 @@ public partial class HandDisplayComponent : EntityComponent<Player>, ISingletonC
     public void RemoveCard(Card card)
     {
         // Find and blindly call RemoveCard, as the IsValid check will determine if it's null.
-        var cardEnt = Cards.Where(c => c.Rank == card.Rank && c.Suit == card.Suit).FirstOrDefault();
+        var cardEnt = Cards.Where(c => c.Card == card).FirstOrDefault();
         RemoveCard(cardEnt);
     }
 

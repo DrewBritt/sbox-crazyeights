@@ -86,6 +86,7 @@ public partial class CardEntity : ModelEntity
         if(spawned < .05f) return;
 
         // Then net card texture
+        // TODO: Investigate if issue of texture not networking is entity not being synced on networked client
         this.SetCard(To.Single(Owner.Client), Suit, Rank);
         IsCardNetworked = true;
     }
