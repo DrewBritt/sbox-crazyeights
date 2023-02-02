@@ -332,14 +332,14 @@
 								{
 									_class = "CSingleFrameAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ -576.0, 96.0 ]
+									m_vecPosition = [ -704.0, 80.0 ]
 									m_nNodeID = 
 									{
 										m_id = 195021969
 									}
 									m_networkMode = "ClientPredicted"
 									m_sNote = ""
-									m_sequenceName = "Dab"
+									m_sequenceName = "ThumbsUp"
 									m_nFrameIndex = 0
 									m_tagSpans = [  ]
 								}
@@ -381,6 +381,61 @@
 											}
 										},
 									]
+								}
+							},
+							{
+								key = 
+								{
+									m_id = 579490738
+								}
+								value = 
+								{
+									_class = "CLookAtAnimNode"
+									m_sName = "Unnamed"
+									m_vecPosition = [ -528.0, 128.0 ]
+									m_nNodeID = 
+									{
+										m_id = 579490738
+									}
+									m_networkMode = "ClientPredicted"
+									m_sNote = ""
+									m_inputConnection = 
+									{
+										m_nodeID = 
+										{
+											m_id = 1534631173
+										}
+										m_outputID = 
+										{
+											m_id = 4294967295
+										}
+									}
+									m_target = "VectorParameter"
+									m_param = 
+									{
+										m_id = 940842127
+									}
+									m_weightParam = 
+									{
+										m_id = 1148742321
+									}
+									m_lookatChainName = "RightArmLookAtChain"
+									m_attachmentName = "forward_reference"
+									m_flYawLimit = 75.0
+									m_flPitchLimit = 45.0
+									m_bResetBase = true
+									m_bLockWhenWaning = false
+									m_bUseHysteresis = false
+									m_flHysteresisInnerAngle = 1.0
+									m_flHysteresisOuterAngle = 20.0
+									m_damping = 
+									{
+										_class = "CAnimInputDamping"
+										m_speedFunction = "NoDamping"
+										m_fSpeedScale = 1.0
+										m_fMinSpeed = 10.0
+										m_fMaxTension = 1000.0
+									}
 								}
 							},
 							{
@@ -463,7 +518,7 @@
 										{
 											m_nodeID = 
 											{
-												m_id = 195021969
+												m_id = 1669494990
 											}
 											m_outputID = 
 											{
@@ -473,7 +528,7 @@
 										{
 											m_nodeID = 
 											{
-												m_id = 1534631173
+												m_id = 579490738
 											}
 											m_outputID = 
 											{
@@ -538,16 +593,71 @@
 								{
 									_class = "CSingleFrameAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ -576.0, 144.0 ]
+									m_vecPosition = [ -704.0, 128.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1534631173
 									}
 									m_networkMode = "ClientPredicted"
 									m_sNote = ""
-									m_sequenceName = "Melee_Punch_Attack_Left"
+									m_sequenceName = "ThumbsDown"
 									m_nFrameIndex = 0
 									m_tagSpans = [  ]
+								}
+							},
+							{
+								key = 
+								{
+									m_id = 1669494990
+								}
+								value = 
+								{
+									_class = "CLookAtAnimNode"
+									m_sName = "Unnamed"
+									m_vecPosition = [ -528.0, 80.0 ]
+									m_nNodeID = 
+									{
+										m_id = 1669494990
+									}
+									m_networkMode = "ClientPredicted"
+									m_sNote = ""
+									m_inputConnection = 
+									{
+										m_nodeID = 
+										{
+											m_id = 195021969
+										}
+										m_outputID = 
+										{
+											m_id = 4294967295
+										}
+									}
+									m_target = "VectorParameter"
+									m_param = 
+									{
+										m_id = 940842127
+									}
+									m_weightParam = 
+									{
+										m_id = 1148742321
+									}
+									m_lookatChainName = "RightArmLookAtChain"
+									m_attachmentName = "forward_reference"
+									m_flYawLimit = 75.0
+									m_flPitchLimit = 45.0
+									m_bResetBase = true
+									m_bLockWhenWaning = false
+									m_bUseHysteresis = false
+									m_flHysteresisInnerAngle = 1.0
+									m_flHysteresisOuterAngle = 20.0
+									m_damping = 
+									{
+										_class = "CAnimInputDamping"
+										m_speedFunction = "NoDamping"
+										m_fSpeedScale = 1.0
+										m_fMinSpeed = 10.0
+										m_fMaxTension = 1000.0
+									}
 								}
 							},
 							{
@@ -2228,7 +2338,7 @@
 								{
 									_class = "CAddAnimNode"
 									m_sName = "Unnamed"
-									m_vecPosition = [ 576.0, -656.0 ]
+									m_vecPosition = [ 560.0, -672.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1365759779
@@ -2239,22 +2349,22 @@
 									{
 										m_nodeID = 
 										{
-											m_id = 97311825
+											m_id = 1868748547
 										}
 										m_outputID = 
 										{
-											m_id = 182139524
+											m_id = 4294967295
 										}
 									}
 									m_additiveInput = 
 									{
 										m_nodeID = 
 										{
-											m_id = 1542463987
+											m_id = 1146782513
 										}
 										m_outputID = 
 										{
-											m_id = 182139524
+											m_id = 4294967295
 										}
 									}
 									m_timingBehavior = "UseChild1"
@@ -2274,7 +2384,7 @@
 								{
 									_class = "CSubGraphAnimNode"
 									m_sName = "Make Delta"
-									m_vecPosition = [ 368.0, -528.0 ]
+									m_vecPosition = [ 352.0, -528.0 ]
 									m_nNodeID = 
 									{
 										m_id = 1542463987

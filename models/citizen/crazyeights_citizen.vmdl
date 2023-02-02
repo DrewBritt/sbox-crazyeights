@@ -76,6 +76,51 @@
 							{
 								_class = "Folder"
 								name = "Emotes"
+								children = 
+								[
+									{
+										_class = "AnimFile"
+										name = "ThumbsUp"
+										activity_name = ""
+										activity_weight = 1
+										weight_list_name = "Only_RightArm"
+										fade_in_time = 0.2
+										fade_out_time = 0.2
+										looping = false
+										delta = false
+										worldSpace = false
+										hidden = false
+										anim_markup_ordered = false
+										disable_compression = false
+										source_filename = "models/citizen/citizen@ThumbsUp.fbx"
+										start_frame = -1
+										end_frame = -1
+										framerate = -1.0
+										take = 0
+										reverse = false
+									},
+									{
+										_class = "AnimFile"
+										name = "ThumbsDown"
+										activity_name = ""
+										activity_weight = 1
+										weight_list_name = "Only_RightArm"
+										fade_in_time = 0.2
+										fade_out_time = 0.2
+										looping = false
+										delta = false
+										worldSpace = false
+										hidden = false
+										anim_markup_ordered = false
+										disable_compression = false
+										source_filename = "models/citizen/citizen@ThumbsDown.fbx"
+										start_frame = -1
+										end_frame = -1
+										framerate = -1.0
+										take = 0
+										reverse = false
+									},
+								]
 							},
 							{
 								_class = "AnimFile"
@@ -328,6 +373,28 @@
 					{
 						_class = "Prefab"
 						target_file = "models/citizen/prefabs/citizen_gamedatalist.vmdl_prefab"
+					},
+					{
+						_class = "Folder"
+						name = "LookAtChains1"
+						children = 
+						[
+							{
+								_class = "LookAtChain"
+								name = "RightArmLookAtChain"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "clavicle_R"
+											weight = 0.75
+										},
+									]
+								}
+							},
+						]
 					},
 				]
 			},
