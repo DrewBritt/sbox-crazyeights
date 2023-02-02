@@ -17,7 +17,7 @@ public class BaseState
         Current.CurrentState = state;
     }
 
-    protected void Cleanup()
+    public void Cleanup()
     {
         foreach(var p in Entity.All.OfType<Player>())
         {

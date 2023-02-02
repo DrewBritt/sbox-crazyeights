@@ -21,7 +21,10 @@ public partial class GameManager
     public static void ResetGame()
     {
         if(Current.CurrentState is PlayingState)
-            Current.CurrentState = new WaitingForPlayersState();
+        {
+            Current.CurrentState.Cleanup();
+            Current.CurrentState.SetState(new WaitingForPlayersState());
+        }
     }
 
     [ConCmd.Admin("ce_forceturn", Help = "Force the current player's turn")]
