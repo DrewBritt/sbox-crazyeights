@@ -63,8 +63,10 @@ public partial class GameManager : Sandbox.GameManager
     {
         Game.AssertServer();
 
-        var camera = client.Components.Get<DevCamera>(true);
+        // Spectators should always be in devcam, which is initialized in their Spawn().
+        if(client.Pawn is Spectator) return;
 
+        var camera = client.Components.Get<DevCamera>(true);
         if(camera == null)
         {
             camera = new DevCamera();

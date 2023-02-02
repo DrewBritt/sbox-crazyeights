@@ -6,18 +6,20 @@
 
 <root>
     <inputhint @ref=InteractHint btn="PrimaryAttack" Text="Interact"></inputhint>
-    <inputhint btn="SecondaryAttack" Text="Emote" class="visible"></inputhint>
+    <inputhint @ref=EmoteHint btn="SecondaryAttack" Text="Emote"></inputhint>
     <inputhint btn="Menu" Text="Settings" class="visible"></inputhint>
 </root>
 
 @code
 {
     private Panel InteractHint { get; set; }
+    private Panel EmoteHint { get; set; }
 
     protected override void OnAfterTreeRender(bool firstTime)
     {
         if (!firstTime) return;
 
         InteractHint.BindClass("visible", () => (Game.LocalPawn as CrazyEights.Player).Controller.GetInteractableEntity() != null);
+        EmoteHint.BindClass("visible", () => Game.LocalPawn is CrazyEights.Player);
     }
 }

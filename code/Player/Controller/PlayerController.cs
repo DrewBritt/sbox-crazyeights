@@ -67,12 +67,6 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
         CheckEmoteWheel();
     }
 
-    private void CheckEmoteWheel()
-    {
-        if(Input.Down(InputButton.SecondaryAttack))
-            GameManager.Current.Hud.ActivateEmoteWheelOverlay();
-    }
-
     public virtual void Simulate(IClient cl)
     {
         
@@ -91,13 +85,36 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     }
 
     /// <summary>
+    /// Gets the Interactable (Card/Deck) entity in front of the player's eyesight.
+    /// </summary>
+    public Entity GetInteractableEntity()
+    {
+        if(GameManager.Current.CurrentPlayer != Entity) return null;
+
+        if(Entity.HandDisplay == null) return null;
+
+        var tr = Trace.Ray(AimRay.Position, AimRay.Position + AimRay.Forward * 100f)
+                .WithAnyTags("card", "deck", "suitselection")
+                .EntitiesOnly()
+                .IncludeClientside()
+                .Run();
+
+        if(!tr.Entity.IsValid()) return null;
+
+        if(tr.Entity is not DeckEntity)
+            if(!Entity.HandDisplay.Cards.Contains(tr.Entity as CardEntity) && !tr.Entity.Tags.Has("suitselection"))
+                return null;
+
+        return tr.Entity;
+    }
+
+    /// <summary>
     /// Traces for Players and activates the nameplate above them.
     /// </summary>
-    protected void CheckNameplates()
+    private void CheckNameplates()
     {
-        
         // Trace for players
-        var tr = Trace.Ray(Entity.Controller.AimRay.Position, Entity.Controller.AimRay.Position + Entity.Controller.AimRay.Forward * 300f)
+        var tr = Trace.Ray(AimRay.Position, AimRay.Position + AimRay.Forward * 300f)
             .UseHitboxes()
             .WithTag("player")
             .Ignore(Entity)
@@ -117,7 +134,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     /// Traces for Interactables (cards in the players's hand/the deck),
     /// and handles input + various effects.
     /// </summary>
-    protected void CheckInteractables()
+    private void CheckInteractables()
     {
         if(GameManager.Current.CurrentPlayer == null) return;
 
@@ -168,30 +185,6 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     }
 
     /// <summary>
-    /// Gets the Interactable (Card/Deck) entity in front of the player's eyesight.
-    /// </summary>
-    public Entity GetInteractableEntity()
-    {
-        if(GameManager.Current.CurrentPlayer != Entity) return null;
-
-        if(Entity.HandDisplay == null) return null;
-
-        var tr = Trace.Ray(Entity.Controller.AimRay.Position, Entity.Controller.AimRay.Position + Entity.Controller.AimRay.Forward * 100f)
-                .WithAnyTags("card", "deck", "suitselection")
-                .EntitiesOnly()
-                .IncludeClientside()
-                .Run();
-
-        if(!tr.Entity.IsValid()) return null;
-
-        if(tr.Entity is not DeckEntity)
-            if(!Entity.HandDisplay.Cards.Contains(tr.Entity as CardEntity) && !tr.Entity.Tags.Has("suitselection"))
-                return null;
-
-        return tr.Entity;
-    }
-
-    /// <summary>
     /// Player has attempted to interact with a card/the discard pile.
     /// </summary>
     /// <param name="card"></param>
@@ -224,5 +217,11 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
                 ConsoleSystem.Run($"ce_playcard {cardEnt.NetworkIdent} 0");
             }
         }
+    }
+
+    private void CheckEmoteWheel()
+    {
+        if(Input.Down(InputButton.SecondaryAttack))
+            GameManager.Current.Hud.ActivateEmoteWheelOverlay();
     }
 }
