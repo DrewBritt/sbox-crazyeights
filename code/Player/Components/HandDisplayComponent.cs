@@ -41,14 +41,9 @@ public partial class HandDisplayComponent : EntityComponent<Player>, ISingletonC
     public void SpawnCard(Card card)
     {
         CardEntity cardEnt = new CardEntity();
-
-        // Net cardEnt's existence to client, then set on server
         Cards.Add(cardEnt);
-        cardEnt.Card = card;
 
-        // TODO: Revert this whenever whatever the fuck causes
-        // textures to fail creation on remote clients is fixed
-        //cardEnt.SetCard(To.Single(Owner.Client), Rank, Suit);
+        cardEnt.Card = card;
         cardEnt.Owner = Entity;
 
         // Position card ent in hand
