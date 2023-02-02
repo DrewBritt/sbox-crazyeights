@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using System.Runtime.CompilerServices;
+using Sandbox;
 using Sandbox.Component;
 
 namespace CrazyEights;
@@ -62,6 +63,14 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
             0
         );
         LookInput = clampedAngles;
+
+        CheckEmoteWheel();
+    }
+
+    private void CheckEmoteWheel()
+    {
+        if(Input.Down(InputButton.SecondaryAttack))
+            GameManager.Current.Hud.ActivateEmoteWheelOverlay();
     }
 
     public virtual void Simulate(IClient cl)

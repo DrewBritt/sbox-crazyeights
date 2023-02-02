@@ -1,0 +1,50 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel;
+@attribute [StyleSheet("/UI/Overlays/EmoteWheel/EmoteWheelOverlay.scss")]
+@namespace CrazyEights.UI
+
+<root>
+    <label class="icon">thumb_up</label>
+    <label class="icon">thumb_down</label>
+</root>
+
+@code
+{
+    private bool isActive => HasClass("active");
+    private bool wasActive = false;
+    public void Activate() => AddClass("active");
+
+    [Event.Client.BuildInput]
+    private void BuildInput()
+    {
+        if (Input.Released(InputButton.SecondaryAttack))
+            RemoveClass("active");
+
+        if (!isActive)
+        {   
+            // Emote button was released:
+            if(wasActive)
+            {
+                PlayEmote();
+                wasActive = false;
+            }
+
+            return;
+        }
+
+        wasActive = true;
+    }
+
+    private void PlayEmote()
+    {
+        PlayerEmote emote;
+
+        if (Mouse.Position.x < Screen.Width / 2)
+            emote = PlayerEmote.ThumbsUp;
+        else
+            emote = PlayerEmote.ThumbsDown;
+
+        (Game.LocalPawn as CrazyEights.Player).Animator.PlayEmote(emote);
+    }
+}

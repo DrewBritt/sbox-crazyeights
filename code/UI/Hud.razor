@@ -11,6 +11,7 @@
 
     <turntimer @ref=TurnTimer></turntimer>
     <crosshair @ref=Crosshair></crosshair>
+    <emotewheeloverlay @ref=EmoteWheel></emotewheeloverlay>
 
     <chatbox></chatbox>
     <hints></hints>
@@ -22,9 +23,11 @@
 {
     private TurnTimer TurnTimer { get; set; }
     private Crosshair Crosshair { get; set; }
+    private EmoteWheelOverlay EmoteWheel { get; set; }
 
     public void ActivateTurnTimer() => TurnTimer.Activate();
     public void ActivateCrosshair() => Crosshair.Activate();
+    public void ActivateEmoteWheelOverlay() => EmoteWheel.Activate();
     public void ActivateGameOverOverlay(IClient winner)
     {
         var overlay = AddChild<GameOverOverlay>();

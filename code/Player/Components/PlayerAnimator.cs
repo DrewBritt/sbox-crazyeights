@@ -4,7 +4,7 @@ namespace CrazyEights;
 
 public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
 {
-    private TimeSince TimeSinceGameAction;
+    private TimeSince timeSinceGameAction;
     public virtual void Simulate(IClient cl)
     {
         var player = Entity;
@@ -21,9 +21,11 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
             cards = player.HandDisplay.Cards.Count;
         player.SetAnimParameter("hold_blend_weight", cards / 14f);
 
-        // Play Interact animation
-        if(TimeSinceGameAction < 1)
+        // Interactions (emote, play/draw card, etc.)
+        if(timeSinceGameAction < 1)
             player.SetAnimParameter("game_action", 1);
+        else if(timeSinceEmote < 5)
+            player.SetAnimParameter("game_action", (int)emote);
         else
             player.SetAnimParameter("game_action", 0);
 
@@ -36,8 +38,19 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
     /// Resets TimeSince GameAction to let Simulate know to play an animation.
     /// Called from ClientRPC called in PlayCard/DrawCard commands (as they're called from player UI as well as FrameSimulate).
     /// </summary>
-    public void DidAction()
+    public void DidAction() => timeSinceGameAction = 0;
+
+    private TimeSince timeSinceEmote;
+    private PlayerEmote emote;
+    public void PlayEmote(PlayerEmote emote)
     {
-        TimeSinceGameAction = 0;
+        timeSinceEmote = 0;
+        this.emote = emote;
     }
+}
+
+public enum PlayerEmote
+{
+    ThumbsUp = 2,
+    ThumbsDown = 3
 }
