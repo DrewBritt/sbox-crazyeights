@@ -1,0 +1,50 @@
+﻿@using System;
+@using System.Linq;
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel;
+@attribute [StyleSheet("/UI/Scoreboard/Scoreboard.scss")]
+@namespace CrazyEights.UI
+
+<root>
+    <text class="gametitle">🃏 Crazy Eights 🃏</text>
+    <div class="container">
+        <div class="section">
+            <label class="title">Players</label>
+            @foreach(IClient client in Game.Clients.Where(c => c.Pawn is CrazyEights.Player))
+            {
+                <ScoreboardEntry Client=@client></ScoreboardEntry>
+            }
+        </div>
+        <div class="section">
+            <label class="title">Spectators</label>
+            @foreach (IClient client in Game.Clients.Where(c => c.Pawn is CrazyEights.Spectator))
+            {
+                <ScoreboardEntry Client=@client></ScoreboardEntry>
+            }
+        </div>
+    </div>
+</root>
+
+@code
+{
+    private bool shouldActivate = false;
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+
+        BindClass("active", () => shouldActivate);
+    }
+
+    [Event.Client.BuildInput]
+    private void BuildInput()
+    {
+        shouldActivate = Input.Down(InputButton.Score);
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(Game.Clients);
+    }
+}

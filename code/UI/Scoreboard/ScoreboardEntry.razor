@@ -1,0 +1,30 @@
+﻿@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel;
+@attribute [StyleSheet("/UI/Scoreboard/ScoreboardEntry.scss")]
+@namespace CrazyEights.UI
+
+<root>
+    <image style="background-image: url(avatarsmall:@Client.SteamId)"></image>
+    <label class="name">@Client.Name.Truncate(23, "...")</label>
+
+    <div class="buttons">
+        @if(Client == Game.LocalClient || Game.IsServerHost)
+        {
+            <button>Swap</button>
+        }
+
+        @if(Game.IsServerHost)
+        {
+            <button @onclick=@KickPlayer>Kick</button>
+        }
+    </div>
+</root>
+
+@code
+{
+    public IClient Client { get; set; }
+
+    private void KickPlayer() => Client.Kick();
+}
