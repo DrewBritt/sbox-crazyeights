@@ -5,9 +5,9 @@ scoreboardentry {
     width: 100%;
     align-items: center;
     font-family: $font-primary;
-    padding: 4px;
-    margin-bottom: 4px;
+    margin-top: 4px;
     border-radius: 10px;
+    background-color: rgba(25, 25, 25, 0.5);
 
     &:hover {
         background-color: rgba(50, 50, 50, 0.5);
@@ -38,13 +38,13 @@ scoreboardentry {
         button {
             width: 35%;
             height: 95%;
+            align-items: center;
+            justify-content: center;
             border: 2px solid rgba( black, .2 );
             text-stroke: 2px black;
             border-radius: 10px;
             background-color: rgba(10, 34, 57, 1);
             font-size: 18px;
-            align-items: center;
-            justify-content: center;
 
             &:hover {
                 sound-in: click1;

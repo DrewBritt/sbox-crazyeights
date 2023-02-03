@@ -7,7 +7,7 @@
 
 <root>
     <image style="background-image: url(avatarsmall:@Client.SteamId)"></image>
-    <label class="name">@Client.Name.Truncate(23, "...")</label>
+    <label class="name">@Client.Name.Truncate(13, "...")</label>
 
     <div class="buttons">
         @if(Client == Game.LocalClient || Game.IsServerHost)

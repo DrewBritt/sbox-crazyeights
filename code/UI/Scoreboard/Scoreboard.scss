@@ -8,7 +8,7 @@ scoreboard {
     justify-content: center;
     align-items: center;
     background-color: rgba(10, 10, 10, 0.5);
-    backdrop-filter: blur(20px) brightness(0.5);
+    backdrop-filter: blur(10px) brightness(0.5);
     transition: opacity 0.2s ease-in-out;
     opacity: 0;
 
@@ -21,27 +21,26 @@ scoreboard {
         height: 10%;
         align-items: center;
         justify-content: center;
+        font-family: $font-primary;
+        font-weight: semibold;
         font-size: 40px;
         color: white;
         text-stroke: 3px black;
-        font-family: $font-primary;
-        font-weight: semibold;
     }
 
     .container {
-        width: 40%;
         height: 50%;
-        background-color: rgba( 25, 25, 25, .5);
-        border-radius: 10px;
-        color: white;
+        width: 40%;
         flex-direction: row;
         justify-content: center;
+        color: white;
 
         .section {
             height: 100%;
             width: 50%;
             flex-direction: column;
             align-items: center;
+            margin: 4px;
             font-family: $font-primary;
 
             .title {

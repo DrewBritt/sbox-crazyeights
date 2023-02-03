@@ -40,7 +40,9 @@ worldnameplate {
         .avatar {
             height: 25%;
             width: 15%;
-            border-radius: 50%;
+            border-radius: 50px;
+            background-position: center;
+            background-size: cover;
         }
 
         .name {
