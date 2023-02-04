@@ -12,7 +12,7 @@
     <div class="buttons">
         @if(Client == Game.LocalClient || Game.IsServerHost)
         {
-            <button>Swap</button>
+            <button onclick=@SwapPlayer>Swap</button>
         }
 
         @if(Game.IsServerHost)
@@ -27,4 +27,5 @@
     public IClient Client { get; set; }
 
     private void KickPlayer() => Client.Kick();
+    private void SwapPlayer() => ConsoleSystem.Run($"ce_swapteam {Client.NetworkIdent}");
 }

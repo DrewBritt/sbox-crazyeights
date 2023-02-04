@@ -21,7 +21,7 @@ public class BaseState
     {
         foreach(var p in Entity.All.OfType<Player>())
         {
-            p.HandDisplay.Remove();
+            p.HandDisplay?.Remove();
         }
 
         Current.PlayingDeckEntity?.Delete();
@@ -163,7 +163,7 @@ public class PlayingState : BaseState
         }
 
         // Don't keep playing if we're by ourselves.
-        if(Game.Clients.Where(c => c.Pawn is Player).Count() == 1)
+        if(Hands.Count() == 1)
         {
             Cleanup();
             SetState(new WaitingForPlayersState());

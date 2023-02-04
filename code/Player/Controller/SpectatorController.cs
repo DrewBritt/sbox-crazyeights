@@ -8,7 +8,6 @@ public partial class SpectatorController : EntityComponent<Spectator>, ISingleto
 	/// Normalized accumulation of Input.AnalogLook
 	/// </summary>
     [ClientInput] public Angles LookInput { get; protected set; }
-
     [ClientInput] public Vector3 MoveInput { get; protected set; }
     [ClientInput] public ButtonState RunButton { get; protected set; }
     [ClientInput] public ButtonState DuckButton { get; protected set; }
@@ -36,15 +35,13 @@ public partial class SpectatorController : EntityComponent<Spectator>, ISingleto
 
     private float baseMoveSpeed = 300f;
     private float moveSpeed = 1f;
-    
+
     public virtual void BuildInput()
     {
-        MoveInput = Input.AnalogMove;
-
-        RunButton = Input.Down(InputButton.Run);
-        DuckButton = Input.Down(InputButton.Duck);
-
         LookInput += Input.AnalogLook;
+        MoveInput = Input.AnalogMove;
+        RunButton = Input.Down(InputButton.Run);
+        DuckButton = Input.Down(InputButton.Duck);  
 
         Input.ClearButtons();
         Input.AnalogMove = default;
@@ -88,6 +85,6 @@ public partial class SpectatorController : EntityComponent<Spectator>, ISingleto
 
         GameManager.Current.Hud.ActivateCrosshair();
         var pawn = tr.Entity as Player;
-        pawn.Nameplate.Activate();
+        pawn.Nameplate?.Activate();
     }
 }

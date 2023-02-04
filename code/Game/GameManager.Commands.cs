@@ -34,6 +34,48 @@ public partial class GameManager
             Current.CurrentPlayer.ForcePlayCard();
     }
 
+    [ConCmd.Server("ce_swapteam", Help = "Swap client to opposite team")]
+    public static void SwapTeam(int clientNetworkIdent)
+    {
+        var clientToSwap = Game.Clients.Where(c => c.NetworkIdent == clientNetworkIdent).FirstOrDefault();
+
+        // Don't let non-admin swap anyone other than themselves.
+        if(!ConsoleSystem.Caller.IsListenServerHost && ConsoleSystem.Caller != clientToSwap)
+            return;
+
+        // Spectator -> Player
+        if(clientToSwap.Pawn is Spectator)
+        {
+            // If player makes a 2nd request while in the swap queue, let's cancel their swap.
+            if(Current.SpectatorSwapQueue.Contains(clientToSwap))
+            {
+                Current.SpectatorSwapQueue.Remove(clientToSwap);
+                return;
+            }
+
+            // If there's room, set client up with a new pawn.
+            var chair = Entity.All.OfType<PlayerChair>().Where(c => !c.HasPlayer).FirstOrDefault();
+            if(chair.IsValid())
+            {
+                
+                var playerPawn = new Player(clientToSwap);
+                chair.SeatPlayer(playerPawn);
+
+                var spectatorPawn = clientToSwap.Pawn;
+                clientToSwap.Pawn = playerPawn;
+                spectatorPawn.Delete();
+            }
+            else
+            {
+                Current.SpectatorSwapQueue.Add(clientToSwap);
+            }
+        } 
+        else if(clientToSwap.Pawn is Player) // Player -> Spectator
+        {
+            Current.TransferOrCleanupPlayer(clientToSwap);
+            clientToSwap.Pawn = new Spectator();
+        }
+    }
     #endregion
 
     #region Card Playing

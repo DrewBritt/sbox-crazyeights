@@ -50,6 +50,18 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
         SuitSelection.LocalRotation = Entity.LocalRotation.RotateAroundAxis(Vector3.Up, 180f);
     }
 
+    /// <summary>
+    /// Called on player swapping in to this controller's pawn. Temporary workaround until Entity.OnClientActive is consistent.
+    /// </summary>
+    [ClientRpc]
+    public void CreateSuitSelection()
+    {
+        SuitSelection = new SuitSelectionEntity();
+        SuitSelection.Position = Entity.Position + (Vector3.Up * 40f) + (Entity.Rotation.Forward * 20f);
+        SuitSelection.Rotation = Entity.Rotation;
+        SuitSelection.LocalRotation = Entity.LocalRotation.RotateAroundAxis(Vector3.Up, 180f);
+    }
+
     public virtual void BuildInput()
     {
         if(Input.StopProcessing)

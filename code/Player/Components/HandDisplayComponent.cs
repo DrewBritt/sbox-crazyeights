@@ -29,7 +29,6 @@ public partial class HandDisplayComponent : EntityComponent<Player>, ISingletonC
     /// <param name="cards"></param>
     public void AddCards(IList<Card> cards)
     {
-        cards.OrderBy(c => c.Suit).ThenBy(c => c.Rank);
         foreach(var c in cards)
             AddCard(c);
     }

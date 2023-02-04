@@ -29,6 +29,7 @@ public partial class Player : AnimatedEntity
 
         Components.Create<PlayerController>();
         Components.Create<PlayerAnimator>();
+        Components.Create<PlayerCamera>();
 
         EnableDrawing = true;
         EnableAllCollisions = true;
@@ -38,15 +39,7 @@ public partial class Player : AnimatedEntity
 
     public override void ClientSpawn()
     {
-        // Initialize client side systems for player (camera for local, nameplate for every other)        
-        if(Game.LocalPawn == this)
-        {
-            Components.Create<PlayerCamera>();
-        }
-        else
-        {
-            Nameplate = new(this);
-        }
+        Nameplate = new(this);
     }
 
     public override void BuildInput()

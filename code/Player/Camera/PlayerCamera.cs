@@ -21,15 +21,23 @@ public partial class PlayerCamera : EntityComponent<Player>, ISingletonComponent
 
     protected override void OnActivate()
     {
-        if(Game.IsServer) return;
+        if(Game.IsServer || Entity != Game.LocalPawn) return;
 
-        Camera.Rotation = Rotation.From(1, 0, 0); // Intialize as anything other than (0,0,0) as Lerping 0 with 0 is NaN = black screen + 50fps
         Camera.ZNear = .1f;
         Camera.ZFar = 5000;
 
         FOV = Screen.CreateVerticalFieldOfView(Game.Preferences.FieldOfView);
 
         // Provides Vignette for alert effects
+        screenEffects = Camera.Main.FindOrCreateHook<ScreenEffects>();
+    }
+
+    /// <summary>
+    /// Called on player swapping in to this camera's pawn. Temporary workaround until Entity.OnClientActive is consistent.
+    /// </summary>
+    [ClientRpc]
+    public void CreateScreenEffects()
+    {
         screenEffects = Camera.Main.FindOrCreateHook<ScreenEffects>();
     }
 
@@ -61,9 +69,11 @@ public partial class PlayerCamera : EntityComponent<Player>, ISingletonComponent
         }
     }
 
-    ~PlayerCamera()
+    protected override void OnDeactivate()
     {
+        if(Game.IsServer || Entity != Game.LocalPawn) return;
+
         // Cleanup effects when swapping cameras (devcam)
-        //Camera.Main.RemoveAllHooks<ScreenEffects>(); TODO: Investigate cause of crashing?
+        Camera.Main.RemoveAllHooks<ScreenEffects>();
     }
 }
