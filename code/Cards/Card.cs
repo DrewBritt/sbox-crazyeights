@@ -16,7 +16,7 @@ public partial class Card
     /// <summary>
     /// FileName of the texture for the given suit/rank combo.
     /// </summary>
-    public string FileName => $"ui/cards/{Suit}_{Rank}.png";
+    public string FileName => $"ui/cards/{Suit}_{Rank}.png".ToLower();
 
     /// <summary>
     /// Checks if this card is playable given the DiscardPile.GetTopCard().
