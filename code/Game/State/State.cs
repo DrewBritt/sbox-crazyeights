@@ -39,7 +39,7 @@ public class WaitingForPlayersState : BaseState
 
     public override void Tick()
     {
-        if(Game.Clients.Count > 1)
+        if(Game.Clients.Where(c => c.Pawn is Player).Count() > 1)
             SetState(new StagingState());
     }
 }
@@ -55,7 +55,7 @@ public class StagingState : BaseState
     public override void Tick()
     {
         // Don't start a game if we're by ourselves.
-        if(Game.Clients.Count == 1)
+        if(Game.Clients.Where(c => c.Pawn is Player).Count() == 1)
             SetState(new WaitingForPlayersState());
 
         // Give players time to join and load in.
@@ -163,7 +163,7 @@ public class PlayingState : BaseState
         }
 
         // Don't keep playing if we're by ourselves.
-        if(Game.Clients.Count == 1)
+        if(Game.Clients.Where(c => c.Pawn is Player).Count() == 1)
         {
             Cleanup();
             SetState(new WaitingForPlayersState());
