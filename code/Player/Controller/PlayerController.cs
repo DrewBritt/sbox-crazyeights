@@ -206,6 +206,9 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
         if(card is not DeckEntity && card is not CardEntity) return;
 
+        // Play player interact animation
+        Entity.Animator.DidAction();
+
         // Player wishes to draw a card
         if(card is DeckEntity)
             ConsoleSystem.Run($"ce_drawcard {Entity.Client.IsBot}");

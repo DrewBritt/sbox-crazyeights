@@ -23,15 +23,6 @@ public partial class Player
     }
 
     /// <summary>
-    /// Sets TimeSinceLastAction in Animator, to let animgraph perform Interact animation.
-    /// </summary>
-    [ClientRpc]
-    public void DoInteractAnimation()
-    {
-        Animator.DidAction();
-    }
-
-    /// <summary>
     /// Tries to hide the SuitSelectionEntity of the called client.
     /// </summary>
     [ClientRpc]

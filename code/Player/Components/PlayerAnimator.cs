@@ -5,6 +5,13 @@ namespace CrazyEights;
 public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
 {
     private TimeSince timeSinceGameAction;
+    private int sitPose = 0;
+
+    protected override void OnActivate()
+    {
+        sitPose = Game.Random.Next(0, 2);
+    }
+
     public virtual void Simulate(IClient cl)
     {
         var player = Entity;
@@ -12,7 +19,7 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
         if(player.LifeState != LifeState.Alive)
             return;
 
-        player.SetAnimParameter("sit_pose", 0);
+        player.SetAnimParameter("sit_pose", sitPose);
         player.SetAnimParameter("hasCards", player.HandDisplay?.Cards.Count > 0);
 
         // Blend between card hold poses

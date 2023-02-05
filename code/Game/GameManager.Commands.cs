@@ -145,7 +145,7 @@ public partial class GameManager
         Current.DiscardPile.AddCard(cardEnt.Card);
 
         // Play animation and card sound
-        player.DoInteractAnimation(To.Everyone);
+        player.Animator.DidAction();
         Sound.FromEntity("cardplace", Current.DiscardPileEntity);
 
         // Hide clientside SuitSelectionEntity if it's visible
@@ -189,7 +189,7 @@ public partial class GameManager
         player.Hand().AddCard(card);
 
         // Play player interact animation
-        player.DoInteractAnimation(To.Everyone);
+        player.Animator.DidAction();
 
         // Hide clientside SuitSelectionEntity if it's visible
         player.HideSuitSelection(To.Single(player.Client));
