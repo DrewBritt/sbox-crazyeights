@@ -146,6 +146,7 @@ public partial class GameManager
 
         // Play animation and card sound
         player.Animator.DidAction();
+        player.Animator.PlayFacialPose(PlayerFacialPose.Positive);
         Sound.FromEntity("cardplace", Current.DiscardPileEntity);
 
         // Hide clientside SuitSelectionEntity if it's visible
@@ -188,8 +189,9 @@ public partial class GameManager
         Card card = Current.PlayingDeck.GrabTopCard();
         player.Hand().AddCard(card);
 
-        // Play player interact animation
+        // Network animations
         player.Animator.DidAction();
+        player.Animator.PlayFacialPose(PlayerFacialPose.Negative);
 
         // Hide clientside SuitSelectionEntity if it's visible
         player.HideSuitSelection(To.Single(player.Client));
@@ -209,7 +211,9 @@ public partial class GameManager
         // If we should skip, notify our new "current player" and get the next-next player, then reset flag
         if(ShouldSkip == 1)
         {
-            NotifyPlayerOfSkip(To.Single(Current.Hands[nextIndex].Item1.Client));
+            var player = Current.Hands[nextIndex].Item1;
+            NotifyPlayerOfSkip(To.Single(player.Client));
+            player.Animator.PlayFacialPose(PlayerFacialPose.Negative);
             nextIndex = Current.GetNextPlayerIndex(nextIndex);
             ShouldSkip = 0;
         }
@@ -249,11 +253,12 @@ public partial class GameManager
         Sound.FromScreen("playerskip");
 
         //Red vignette sting
-        Player localPawn = Game.LocalPawn as Player;
-        if(localPawn.PlayerCamera is not null)
+        Player player = Game.LocalPawn as Player;
+        player.Animator.PlayFacialPose(PlayerFacialPose.Negative);
+        if(player.PlayerCamera is not null)
         {
-            localPawn.PlayerCamera.SetVignetteColor(new Color(1f, 0f, 0f, 1f));
-            localPawn.PlayerCamera.SetVignetteIntensity(.25f);
+            player.PlayerCamera.SetVignetteColor(new Color(1f, 0f, 0f, 1f));
+            player.PlayerCamera.SetVignetteIntensity(.25f);
         }
     }
 

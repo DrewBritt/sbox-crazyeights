@@ -211,10 +211,15 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
         // Player wishes to draw a card
         if(card is DeckEntity)
+        {
             ConsoleSystem.Run($"ce_drawcard {Entity.Client.IsBot}");
+            Entity.Animator.PlayFacialPose(PlayerFacialPose.Negative);
+        }
 
         if(card is CardEntity)
         {
+            Entity.Animator.PlayFacialPose(PlayerFacialPose.Positive);
+
             var cardEnt = card as CardEntity;
             if(cardEnt.Suit == CardSuit.Wild)
             {

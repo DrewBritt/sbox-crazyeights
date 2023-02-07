@@ -151,44 +151,6 @@
 									},
 									{
 										_class = "MorphFrame"
-										name = "Smile"
-										activity_name = "Smile"
-										activity_weight = 1
-										weight_list_name = ""
-										fade_in_time = 0.2
-										fade_out_time = 0.2
-										looping = false
-										delta = false
-										worldSpace = false
-										hidden = false
-										anim_markup_ordered = false
-										disable_compression = false
-										morph_weights = 
-										[
-											{
-												morph = "LowerLipDrepressor"
-												weight = 0.793
-											},
-											{
-												morph = "lipcornerpullerL"
-												weight = 0.4
-											},
-											{
-												morph = "lipcornerpullerR"
-												weight = 0.4
-											},
-											{
-												morph = "upperlipraiserL"
-												weight = 0.4
-											},
-											{
-												morph = "upperlipraiserR"
-												weight = 0.4
-											},
-										]
-									},
-									{
-										_class = "MorphFrame"
 										name = "Scowl"
 										activity_name = "Scowl"
 										activity_weight = 1
@@ -226,6 +188,120 @@
 											{
 												morph = "nosewrinklerR"
 												weight = 1.0
+											},
+										]
+									},
+									{
+										_class = "MorphFrame"
+										name = "Angry"
+										activity_name = "Angry"
+										activity_weight = 1
+										weight_list_name = ""
+										fade_in_time = 0.2
+										fade_out_time = 0.2
+										looping = false
+										delta = false
+										worldSpace = false
+										hidden = false
+										anim_markup_ordered = false
+										disable_compression = false
+										morph_weights = 
+										[
+											{
+												morph = "LowerLipDrepressor"
+												weight = 1.0
+											},
+											{
+												morph = "browlowererL"
+												weight = 0.6
+											},
+											{
+												morph = "browlowererR"
+												weight = 0.6
+											},
+											{
+												morph = "lipcornerdepressorL"
+												weight = 0.8
+											},
+											{
+												morph = "lipcornerdepressorR"
+												weight = 0.8
+											},
+											{
+												morph = "nosewrinklerL"
+												weight = 1.0
+											},
+											{
+												morph = "nosewrinklerR"
+												weight = 1.0
+											},
+										]
+									},
+									{
+										_class = "MorphFrame"
+										name = "Smile"
+										activity_name = "Smile"
+										activity_weight = 1
+										weight_list_name = ""
+										fade_in_time = 0.2
+										fade_out_time = 0.2
+										looping = false
+										delta = false
+										worldSpace = false
+										hidden = false
+										anim_markup_ordered = false
+										disable_compression = false
+										morph_weights = 
+										[
+											{
+												morph = "lipcornerpullerL"
+												weight = 0.75
+											},
+											{
+												morph = "lipcornerpullerR"
+												weight = 0.75
+											},
+											{
+												morph = "nostrildilator"
+												weight = 0.5
+											},
+										]
+									},
+									{
+										_class = "MorphFrame"
+										name = "Cheese"
+										activity_name = "Cheese"
+										activity_weight = 1
+										weight_list_name = ""
+										fade_in_time = 0.2
+										fade_out_time = 0.2
+										looping = false
+										delta = false
+										worldSpace = false
+										hidden = false
+										anim_markup_ordered = false
+										disable_compression = false
+										morph_weights = 
+										[
+											{
+												morph = "LowerLipDrepressor"
+												weight = 0.8
+											},
+											{
+												morph = "lipcornerpullerL"
+												weight = 0.4
+											},
+											{
+												morph = "lipcornerpullerR"
+												weight = 0.4
+											},
+											{
+												morph = "upperlipraiserL"
+												weight = 0.4
+											},
+											{
+												morph = "upperlipraiserR"
+												weight = 0.4
 											},
 										]
 									},

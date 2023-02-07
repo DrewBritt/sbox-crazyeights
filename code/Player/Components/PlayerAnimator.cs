@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using System.Runtime.CompilerServices;
+using Sandbox;
 
 namespace CrazyEights;
 
@@ -9,7 +10,8 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
 
     protected override void OnActivate()
     {
-        sitPose = Game.Random.Next(0, 2);
+        Game.SetRandomSeed(Game.Random.Next());
+        //sitPose = Game.Random.Next(2);
     }
 
     public virtual void Simulate(IClient cl)
@@ -27,6 +29,12 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
         if(player.HandDisplay != null)
             cards = player.HandDisplay.Cards.Count;
         player.SetAnimParameter("hold_blend_weight", cards / 14f);
+
+        // Facial poses
+        if(timeSinceFacialPose < 5)
+            player.SetAnimParameter("facial_pose", (int)pose);
+        else
+            player.SetAnimParameter("facial_pose", 0);
 
         // Interactions (emote, play/draw card, etc.)
         if(timeSinceGameAction < 1)
@@ -53,6 +61,22 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
     {
         timeSinceEmote = 0;
         this.emote = emote;
+        PlayFacialPose((PlayerFacialPose)emote-1);
+    }
+
+    private TimeSince timeSinceFacialPose;
+    private PlayerFacialPose pose;
+    /// <summary>
+    /// Chance to play a random positive/negative facial pose.
+    /// </summary>
+    /// <param name="pose"></param>
+    public void PlayFacialPose(PlayerFacialPose pose)
+    {
+        // 1/8 chance to play a facial pose
+        if(Game.Random.Next(8) != 0) return;
+
+        timeSinceFacialPose = 0;
+        this.pose = pose;
     }
 }
 
@@ -60,4 +84,10 @@ public enum PlayerEmote
 {
     ThumbsUp = 2,
     ThumbsDown = 3
+}
+
+public enum PlayerFacialPose
+{
+    Positive = 1,
+    Negative = 2
 }
