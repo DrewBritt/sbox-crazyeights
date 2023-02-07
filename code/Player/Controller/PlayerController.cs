@@ -9,7 +9,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     /// <summary>
 	/// Normalized accumulation of Input.AnalogLook
 	/// </summary>
-    [ClientInput] public Angles LookInput { get; protected set; }
+    [ClientInput] public Angles LookInput { get; set; }
 
     /// <summary>
     /// Position a player should be looking from in world space.
