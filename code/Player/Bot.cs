@@ -30,6 +30,8 @@ public partial class Bot : Sandbox.Bot
     Vector3 lookAt;
     public override void BuildInput()
     {
+        if(Client.Pawn is not Player) return;
+
         acquireLookTarget();
 
         var player = Client.Pawn as Player;

@@ -52,4 +52,12 @@ scoreboardentry {
             }
         }
     }
+
+    &.inQueue {
+        background-color: rgba(150, 100, 0, 0.6);
+
+        &:hover {
+            background-color: rgba(175, 125, 0, 0.6);
+        }
+    }
 }

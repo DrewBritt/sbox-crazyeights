@@ -18,7 +18,9 @@
         </div>
         <div class="section">
             <label class="title">Spectators</label>
-            @foreach (IClient client in Game.Clients.Where(c => c.Pawn is CrazyEights.Spectator))
+            @foreach (var client in Game.Clients.Where(c => c.Pawn is CrazyEights.Spectator)
+                .OrderByDescending(c => CrazyEights.GameManager.Current.SpectatorSwapQueue.Contains(c))
+                .ThenBy(c => CrazyEights.GameManager.Current.SpectatorSwapQueue.IndexOf(c)))
             {
                 <ScoreboardEntry Client=@client></ScoreboardEntry>
             }

@@ -12,12 +12,12 @@
     <div class="buttons">
         @if(Client == Game.LocalClient || Game.IsServerHost)
         {
-            <button onclick=@SwapPlayer>Swap</button>
+            <button onclick=@SwapPlayer text="Swap"></button>
         }
 
         @if(Game.IsServerHost)
         {
-            <button @onclick=@KickPlayer>Kick</button>
+            <button @onclick=@KickPlayer text="Kick"></button>
         }
     </div>
 </root>
@@ -28,4 +28,11 @@
 
     private void KickPlayer() => Client.Kick();
     private void SwapPlayer() => ConsoleSystem.Run($"ce_swapteam {Client.NetworkIdent}");
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+
+        BindClass("inQueue", () => CrazyEights.GameManager.Current.SpectatorSwapQueue.Contains(Client));
+    }
 }
