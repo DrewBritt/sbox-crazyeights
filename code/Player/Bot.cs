@@ -27,33 +27,45 @@ public partial class Bot : Sandbox.Bot
             Bot.All[0].Client.Kick();
     }
 
-    TimeUntil acquireNewLookTarget;
-    Vector3 lookTarget;
+    Vector3 lookAt;
     public override void BuildInput()
     {
-        if(acquireNewLookTarget < 0)
-            acquireLookTarget();
+        acquireLookTarget();
 
         var player = Client.Pawn as Player;
-        player.Controller.LookInput = Rotation.LookAt(lookTarget - player.Controller.EyePosition, Vector3.Up).Angles().Normal;
+        player.Controller.LookInput = Rotation.LookAt(lookAt - player.Controller.EyePosition, Vector3.Up).Angles().Normal;
     }
 
+    TimeUntil newTargetWait = 0;
+    Entity lookAtEntity;
     /// <summary>
-    /// Calculates a random LookAt target for the bot every 10 seconds.
+    /// Calculates a random LookAt target for the bot every 3-9 seconds, and updates the LookAt 
     /// </summary>
     private void acquireLookTarget()
     {
-        acquireNewLookTarget = 10;
-
-        int random = Game.Random.Next(0,3);
         Player player = Client.Pawn as Player;
 
-        if(random == 0) // Find a random player to look at (not themselves)
-            lookTarget = Entity.All.OfType<Player>().OrderBy(p => Guid.NewGuid()).Where(p => p != player).FirstOrDefault().Controller.EyePosition;
-        else if(random == 1) // Look at discard pile (if it exists)
-            lookTarget = GameManager.Current.DiscardPileEntity?.Transform.Position ?? player.Position * player.Rotation * 100f;
+        if(newTargetWait < 0)
+        {
+            newTargetWait = Game.Random.Next(3, 10);
+
+            // Determine what we want to look at.
+            LookAtAction lookAction = (LookAtAction) Game.Random.Next(5);
+            switch(lookAction)
+            {
+                case LookAtAction.None: lookAtEntity = null; break;
+                case LookAtAction.HandDisplay: lookAtEntity = player.HandDisplay?.Cards.FirstOrDefault() ?? null; break;
+                case LookAtAction.DiscardPile: lookAtEntity = GameManager.Current.DiscardPileEntity ?? null; break;
+                case LookAtAction.Deck: lookAtEntity = GameManager.Current.PlayingDeckEntity ?? null; break;
+                case LookAtAction.Player: lookAtEntity = Entity.All.OfType<Player>().OrderBy(p => Guid.NewGuid()).Where(p => p != player).FirstOrDefault(); break;
+            }
+        }
+
+        // Update position of lookAt constantly in case target (player) is moving around.
+        if(lookAtEntity is Player p)
+            lookAt = p.Controller.EyePosition;
         else
-            lookTarget = player.HandDisplay.Cards.FirstOrDefault()?.Position ?? player.Position * player.Rotation * 100f;
+            lookAt = lookAtEntity?.Position ?? player.Position * player.Rotation * 100;
     }
 
     TimeUntil playCardDelay;
@@ -82,5 +94,14 @@ public partial class Bot : Sandbox.Bot
 
         // Ensure bot doesn't play again after turn
         playCardDelay = -2;
+    }
+
+    private enum LookAtAction
+    {
+        None,
+        HandDisplay,
+        DiscardPile,
+        Deck,
+        Player
     }
 }
