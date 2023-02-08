@@ -333,7 +333,7 @@
 								name = "HoldCardsShort"
 								activity_name = ""
 								activity_weight = 1
-								weight_list_name = "Only_Arms"
+								weight_list_name = "Only_Arms_And_Hands"
 								fade_in_time = 0.2
 								fade_out_time = 0.2
 								looping = false
@@ -354,7 +354,7 @@
 								name = "HoldCardsLong"
 								activity_name = ""
 								activity_weight = 1
-								weight_list_name = "Only_Arms"
+								weight_list_name = "Only_Arms_And_Hands"
 								fade_in_time = 0.2
 								fade_out_time = 0.2
 								looping = false
@@ -364,6 +364,48 @@
 								anim_markup_ordered = false
 								disable_compression = false
 								source_filename = "models/citizen/citizen@holdcardslong.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "HoldCardsShortNew"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = "Only_Arms_And_Hands"
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/citizen/citizen@HoldCardsShortNew.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "HoldCardsLongNew"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = "Only_Arms_And_Hands"
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/citizen/citizen@holdcardslongnew.fbx"
 								start_frame = -1
 								end_frame = -1
 								framerate = -1.0
@@ -515,7 +557,7 @@
 					},
 					{
 						_class = "WeightList"
-						name = "Only_Arms"
+						name = "Only_Arms_And_Hands"
 						default_weight = 0.0
 						weights = 
 						[

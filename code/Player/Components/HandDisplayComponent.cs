@@ -121,7 +121,14 @@ public partial class HandDisplayComponent : EntityComponent<Player>, ISingletonC
         {
             var card = Cards[i];
             card.LocalPosition = (Vector3.Forward * (i + 1)) + (Vector3.Right * (.65f * (i + 1))) + (Vector3.Up * 1.25f);
+            card.LocalRotation = Rotation.FromPitch(90).RotateAroundAxis(Vector3.Forward, -60f) * Rotation.FromRoll(180);
         }
+    }
+
+    [Event.Tick.Server]
+    public void poo()
+    {
+        UpdateCardPositions();
     }
 
     protected override void OnDeactivate()

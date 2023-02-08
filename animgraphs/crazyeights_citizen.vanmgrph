@@ -277,6 +277,27 @@
 			{
 				key = 
 				{
+					m_id = 644385405
+				}
+				value = 
+				{
+					_class = "CSingleFrameAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ -784.0, 96.0 ]
+					m_nNodeID = 
+					{
+						m_id = 644385405
+					}
+					m_networkMode = "ClientPredicted"
+					m_sNote = ""
+					m_sequenceName = "@HoldCardsLongNew"
+					m_nFrameIndex = 0
+					m_tagSpans = [  ]
+				}
+			},
+			{
+				key = 
+				{
 					m_id = 657786736
 				}
 				value = 
@@ -756,7 +777,7 @@
 				{
 					_class = "CSingleFrameAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -704.0, 64.0 ]
+					m_vecPosition = [ -784.0, 48.0 ]
 					m_nNodeID = 
 					{
 						m_id = 881786568
@@ -771,13 +792,34 @@
 			{
 				key = 
 				{
+					m_id = 949851408
+				}
+				value = 
+				{
+					_class = "CSingleFrameAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ -784.0, 0.0 ]
+					m_nNodeID = 
+					{
+						m_id = 949851408
+					}
+					m_networkMode = "ClientPredicted"
+					m_sNote = ""
+					m_sequenceName = "@HoldCardsShortNew"
+					m_nFrameIndex = 0
+					m_tagSpans = [  ]
+				}
+			},
+			{
+				key = 
+				{
 					m_id = 1146863182
 				}
 				value = 
 				{
 					_class = "CBlendAnimNode"
 					m_sName = "Hand Distance"
-					m_vecPosition = [ -528.0, 32.0 ]
+					m_vecPosition = [ -560.0, 16.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1146863182
@@ -791,14 +833,14 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 1647070005
+									m_id = 949851408
 								}
 								m_outputID = 
 								{
 									m_id = 4294967295
 								}
 							}
-							m_name = ""
+							m_name = "One Card"
 							m_blendValue = 0.0
 						},
 						{
@@ -813,8 +855,23 @@
 									m_id = 4294967295
 								}
 							}
-							m_name = ""
-							m_blendValue = 1.0
+							m_name = "A handful of cards"
+							m_blendValue = 0.3
+						},
+						{
+							m_inputConnection = 
+							{
+								m_nodeID = 
+								{
+									m_id = 644385405
+								}
+								m_outputID = 
+								{
+									m_id = 4294967295
+								}
+							}
+							m_name = "A shitload of cards"
+							m_blendValue = 0.4
 						},
 					]
 					m_blendValueSource = "Parameter"
@@ -2104,27 +2161,6 @@
 			{
 				key = 
 				{
-					m_id = 1647070005
-				}
-				value = 
-				{
-					_class = "CSingleFrameAnimNode"
-					m_sName = "Unnamed"
-					m_vecPosition = [ -704.0, 16.0 ]
-					m_nNodeID = 
-					{
-						m_id = 1647070005
-					}
-					m_networkMode = "ClientPredicted"
-					m_sNote = ""
-					m_sequenceName = "@HoldCardsShort"
-					m_nFrameIndex = 0
-					m_tagSpans = [  ]
-				}
-			},
-			{
-				key = 
-				{
 					m_id = 1679011268
 				}
 				value = 
@@ -2391,7 +2427,7 @@
 					}
 					m_networkMode = "ClientPredicted"
 					m_sNote = ""
-					m_weightListName = "Only_Arms"
+					m_weightListName = "Only_Arms_And_Hands"
 					m_inputConnection1 = 
 					{
 						m_nodeID = 

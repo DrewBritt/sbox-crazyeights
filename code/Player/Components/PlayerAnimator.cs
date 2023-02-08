@@ -28,7 +28,7 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
         int cards = 0;
         if(player.HandDisplay != null)
             cards = player.HandDisplay.Cards.Count;
-        player.SetAnimParameter("hold_blend_weight", cards / 14f);
+        player.SetAnimParameter("hold_blend_weight", cards / 20f);
 
         // Facial poses
         if(timeSinceFacialPose < 5)
