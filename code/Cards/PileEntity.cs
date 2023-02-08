@@ -12,7 +12,7 @@ public partial class PileEntity : DeckEntity
     /// <summary>
     /// Displays the last played card/top card on the pile.
     /// </summary>
-    [Net] private CardEntity TopCardEntity { get; set; }
+    [Net] public CardEntity TopCardEntity { get; private set; }
 
     public override void Spawn()
     {

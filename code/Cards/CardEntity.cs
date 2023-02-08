@@ -17,11 +17,19 @@ public partial class CardEntity : ModelEntity
     public Card Card { get; set; }
     public CardRank Rank => Card.Rank;
     public CardSuit Suit => Card.Suit;
-    public bool IsPlayable() => Card.IsPlayable();
-
     private Texture texture;
     private Material material;
-    
+
+    public bool IsPlayable()
+    {
+        if(Card.Suit == CardSuit.Wild) return true;
+
+        var lastPlayed = GameManager.Current.DiscardPileEntity.TopCardEntity;
+        if(Card.Suit == lastPlayed.Suit || Card.Rank == lastPlayed.Rank)
+            return true;
+        return false;
+    }
+
     /// <summary>
     /// Material cache so we're not creating 80 unique materials when we have a finite number of textures.
     /// </summary>
