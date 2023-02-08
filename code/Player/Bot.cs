@@ -65,7 +65,7 @@ public partial class Bot : Sandbox.Bot
         if(lookAtEntity is Player p)
             lookAt = p.Controller.EyePosition;
         else
-            lookAt = lookAtEntity?.Position ?? player.Position * player.Rotation * 100;
+            lookAt = lookAtEntity.IsValid() ? lookAtEntity.Position : player.Position * player.Rotation * 100;
     }
 
     TimeUntil playCardDelay;
