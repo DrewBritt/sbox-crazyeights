@@ -17,7 +17,7 @@
     "MaxPlayers": 12,
     "MinPlayers": 2,
     "GameNetworkType": "Multiplayer",
-    "MapSelect": "Unrestricted",
+    "MapSelect": "Tagged",
     "MapList": [],
     "RankType": "None",
     "PerMapRanking": false,
@@ -71,6 +71,9 @@
         "Group": "Gameplay"
       }
     ],
-    "CsProjName": ""
+    "CsProjName": "",
+    "ControlModes": {
+      "Keyboard": true
+    }
   }
 }
