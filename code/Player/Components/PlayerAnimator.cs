@@ -4,15 +4,19 @@ namespace CrazyEights;
 
 public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
 {
-    private TimeSince timeSinceGameAction;
-    private int sitPose = 0;
+    [ClientInput] private float voiceLevel { get; set; }
 
     protected override void OnActivate()
     {
         Game.SetRandomSeed(Game.Random.Next());
-        //sitPose = Game.Random.Next(2);
     }
 
+    public virtual void BuildInput()
+    {
+        voiceLevel = Voice.Level;
+    }
+    
+    TimeSince timeSinceGameAction;
     public virtual void Simulate(IClient cl)
     {
         var player = Entity;
@@ -20,7 +24,7 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
         if(player.LifeState != LifeState.Alive)
             return;
 
-        player.SetAnimParameter("sit_pose", sitPose);
+        player.SetAnimParameter("voice", voiceLevel);
         player.SetAnimParameter("hasCards", player.HandDisplay?.Cards.Count > 0);
 
         // Blend between card hold poses
@@ -56,6 +60,10 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
 
     private TimeSince timeSinceEmote;
     private PlayerEmote emote;
+    /// <summary>
+    /// Plays given PlayerEmote, as well as chance to play FacialPose matching emote.
+    /// </summary>
+    /// <param name="emote"></param>
     public void PlayEmote(PlayerEmote emote)
     {
         timeSinceEmote = 0;
@@ -67,7 +75,7 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
     private TimeSince timeSinceFacialPose;
     private PlayerFacialPose pose;
     /// <summary>
-    /// Chance to play a random positive/negative facial pose.
+    /// Chance to play a random facial pose from given positive/negative.
     /// </summary>
     /// <param name="pose"></param>
     public void PlayFacialPose(PlayerFacialPose pose)

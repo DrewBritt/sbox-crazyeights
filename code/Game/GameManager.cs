@@ -58,6 +58,15 @@ public partial class GameManager : Sandbox.GameManager
         base.ClientDisconnect(cl, reason);
     }
 
+    public override bool CanHearPlayerVoice(IClient source, IClient receiver)
+    {
+        if(!base.CanHearPlayerVoice(source, receiver)) return false;
+
+        // Block Spectator voices for Players.
+        if(receiver.Pawn is Player && source.Pawn is Spectator) return false;
+        return true;
+    }
+
     public override void DoPlayerDevCam(IClient client)
     {
         Game.AssertServer();

@@ -47,6 +47,7 @@ public partial class Player : AnimatedEntity
         base.BuildInput();
 
         Controller?.BuildInput();
+        Animator?.BuildInput();
         PlayerCamera?.BuildInput();
     }
 
