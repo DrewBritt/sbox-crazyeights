@@ -64,7 +64,7 @@ public partial class Bot : Sandbox.Bot
         }
 
         // Update position of lookAt constantly in case target (player) is moving around.
-        if(lookAtEntity is Player p)
+        if(lookAtEntity.IsValid() && lookAtEntity is Player p)
             lookAt = p.Controller.EyePosition;
         else
             lookAt = lookAtEntity.IsValid() ? lookAtEntity.Position : player.Position * player.Rotation * 100;
