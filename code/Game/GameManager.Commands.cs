@@ -272,4 +272,13 @@ public partial class GameManager
         Current.Hud.ActivateGameOverOverlay(Current.CurrentPlayer.Client);
     }
     #endregion
+
+    [ConCmd.Server("ce_emote", Help = "Perform an emote as a player")]
+    public static void Emote(PlayerEmote emote)
+    {
+        if(ConsoleSystem.Caller.Pawn is not Player player)
+            return;
+
+        player.Animator.PlayEmote(emote);
+    }
 }

@@ -30,4 +30,9 @@
         var overlay = AddChild<GameOverOverlay>();
         overlay.Activate(winner);
     }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        BindClass("devcamera", () => Game.LocalClient.Components.TryGet<DevCamera>(out DevCamera cam));
+    }
 }

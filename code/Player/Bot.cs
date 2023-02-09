@@ -92,7 +92,7 @@ public partial class Bot : Sandbox.Bot
 
         // Chance for emote
         if(Game.Random.Next(8) == 0)
-            pawn.Animator.PlayEmote(PlayerEmote.ThumbsUp);
+            pawn.Animator.PlayEmote((PlayerEmote)Game.Random.Next(1, 3));
 
         // Ensure bot doesn't play again after turn
         playCardDelay = -2;

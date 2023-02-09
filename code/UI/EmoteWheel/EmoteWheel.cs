@@ -46,6 +46,7 @@ public partial class EmoteWheel : RadialMenu
     private void Select(PlayerEmote emote)
     {
         var player = Game.LocalPawn as Player;
+        GameManager.Emote(emote);
         player.Animator.PlayEmote(emote);
     }
 }
