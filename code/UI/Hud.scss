@@ -12,16 +12,11 @@ hud {
         opacity: 0;
     }
 
-    .preview {
+    .emotewheel {
         position: absolute;
         width: 100%;
-        height: 8%;
-        bottom: 0;
+        height: 100%;
         justify-content: center;
-        font-size: 40px;
-        color: white;
-        text-stroke: 3px black;
-        font-family: $font-primary;
-        font-weight: semibold;
+        align-items: center;
     }
 }

@@ -247,7 +247,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
     private void CheckEmoteWheel()
     {
-        if(Input.Down(InputButton.SecondaryAttack))
-            GameManager.Current.Hud.ActivateEmoteWheelOverlay();
+        //if(Input.Down(InputButton.SecondaryAttack))
+            //GameManager.Current.Hud.ActivateEmoteWheel();
     }
 }

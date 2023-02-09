@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Sandbox;
+﻿using Sandbox;
 
 namespace CrazyEights;
 
@@ -38,7 +37,7 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
 
         // Interactions (emote, play/draw card, etc.)
         if(timeSinceGameAction < 1)
-            player.SetAnimParameter("game_action", 1);
+            player.SetAnimParameter("game_action", 4);
         else if(timeSinceEmote < 5)
             player.SetAnimParameter("game_action", (int)emote);
         else
@@ -61,7 +60,8 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
     {
         timeSinceEmote = 0;
         this.emote = emote;
-        PlayFacialPose((PlayerFacialPose)emote-1);
+
+        PlayFacialPose((PlayerFacialPose)emote);
     }
 
     private TimeSince timeSinceFacialPose;
@@ -82,8 +82,8 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
 
 public enum PlayerEmote
 {
-    ThumbsUp = 2,
-    ThumbsDown = 3
+    ThumbsUp = 1,
+    ThumbsDown = 2,
 }
 
 public enum PlayerFacialPose
