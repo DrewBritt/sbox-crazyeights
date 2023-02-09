@@ -9,6 +9,9 @@ public partial class GameManager
     [ConVar.Replicated("ce_maxturntime", Help = "How long players have to play a card before their turn is forced.", Min = 1, Max = 60)]
     public static int MaxTurnTime { get; set; }
 
+    [ConVar.Replicated("ce_fillbots", Help = "Should we fill the rest of the seats with bots on game start?")]
+    public static bool FillBots { get; set; }
+
     #region State Management
     public BaseState CurrentState { get; set; } = new WaitingForPlayersState();
 

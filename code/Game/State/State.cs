@@ -39,7 +39,7 @@ public class WaitingForPlayersState : BaseState
 
     public override void Tick()
     {
-        if(Game.Clients.Where(c => c.Pawn is Player).Count() > 1)
+        if(Game.Clients.Where(c => c.Pawn is Player).Count() > 1 || GameManager.FillBots)
             SetState(new StagingState());
     }
 }
@@ -54,13 +54,21 @@ public class StagingState : BaseState
     TimeUntil startGame = 10;
     public override void Tick()
     {
-        // Don't start a game if we're by ourselves.
-        if(Game.Clients.Where(c => c.Pawn is Player).Count() == 1)
+        // Don't start a game if we're by ourselves (and not filling).
+        if(!GameManager.FillBots && Game.Clients.Where(c => c.Pawn is Player).Count() == 1)
             SetState(new WaitingForPlayersState());
 
         // Give players time to join and load in.
         if(startGame <= 0)
+        {
+            if(GameManager.FillBots)
+            {
+                var chairCount = Entity.All.OfType<PlayerChair>().Where(c => !c.HasPlayer).Count();
+                while(chairCount-- > 0)
+                    _ = new Bot();
+            }
             SetState(new PlayingState());
+        }
     }
 }
 

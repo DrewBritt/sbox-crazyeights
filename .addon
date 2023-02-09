@@ -60,7 +60,17 @@
         "Group": "Gameplay",
         "Minimum": 3,
         "Maximum": 60
+      },
+      {
+        "DisplayType": "Boolean",
+        "Choices": [],
+        "ConVarName": "ce_fillbots",
+        "DisplayName": "Fill Bots",
+        "DefaultValue": "false",
+        "Description": "Fill remaining seats with interactive bots?",
+        "Group": "Gameplay"
       }
-    ]
+    ],
+    "CsProjName": ""
   }
 }

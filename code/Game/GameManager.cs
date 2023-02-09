@@ -17,7 +17,6 @@ public partial class GameManager : Sandbox.GameManager
         if(Game.IsServer) return;
 
         Hud = new Hud();
-        Log.Info(Game.ServerSteamId);
     }
 
     public override void ClientJoined(IClient client)
