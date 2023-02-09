@@ -9,7 +9,7 @@
   "AssetsPath": "",
   "ResourcePaths": [
     "/fonts/*",
-    "/ui/cards/*"
+    "/ui/*"
   ],
   "HasCode": true,
   "CodePath": "/code/",
@@ -73,7 +73,12 @@
     ],
     "CsProjName": "",
     "ControlModes": {
-      "Keyboard": true
-    }
+      "Keyboard": true,
+      "Gamepad": true
+    },
+    "Summary": "Race to zero cards!",
+    "Description": "Be the first player to shed all of your cards to win!",
+    "Public": true,
+    "ReplaceTags": "crazyeights cards uno colors"
   }
 }
