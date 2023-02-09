@@ -8,14 +8,12 @@
     <inputhint @ref=InteractHint btn="PrimaryAttack" Text="Interact"></inputhint>
     <inputhint @ref=EmoteHint btn="SecondaryAttack" Text="Emote"></inputhint>
     <inputhint btn="Score" Text="Scoreboard" class="visible"></inputhint>
-    <inputhint @ref=SettingsHint btn="Menu" Text="Settings"></inputhint>
 </root>
 
 @code
 {
     private Panel InteractHint { get; set; }
     private Panel EmoteHint { get; set; }
-    private Panel SettingsHint { get; set; }
 
     protected override void OnAfterTreeRender(bool firstTime)
     {
@@ -23,6 +21,5 @@
 
         InteractHint.BindClass("visible", () => (Game.LocalPawn as CrazyEights.Player).Controller.GetInteractableEntity() != null);
         EmoteHint.BindClass("visible", () => Game.LocalPawn is CrazyEights.Player);
-        SettingsHint.BindClass("visible", () => Game.IsServerHost);
     }
 }
