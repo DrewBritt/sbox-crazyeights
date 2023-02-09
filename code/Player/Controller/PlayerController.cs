@@ -134,7 +134,6 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
         if(!tr.Hit) return;
 
-        
         GameManager.Current.Hud.ActivateCrosshair();
         var pawn = tr.Entity as Player;
         pawn.Nameplate.Activate();

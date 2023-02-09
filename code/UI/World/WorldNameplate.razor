@@ -9,7 +9,7 @@
     <label @ref=Voice class="voice">🎙</label>
     <div @ref=Container class="container">
         <image class="avatar" style="background-image: url(avatarbig:@Player.Client.SteamId)"></image>
-        <label class="name">@Player.Client.Name.Truncate(23, "...")</label>
+        <label class="name">@Player.Client.Name.Truncate(10, "..")</label>
     </div>
 </root>
 

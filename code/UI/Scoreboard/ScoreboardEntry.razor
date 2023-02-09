@@ -10,12 +10,12 @@
     <label class="name">@Client.Name.Truncate(13, "...")</label>
 
     <div class="buttons">
-        @if(Client == Game.LocalClient || Game.IsServerHost)
+        @if(Client == Game.LocalClient || Game.LocalClient.IsListenServerHost)
         {
             <button onclick=@SwapPlayer text="Swap"></button>
         }
 
-        @if(Game.IsServerHost)
+        @if(Game.LocalClient.IsListenServerHost)
         {
             <button @onclick=@KickPlayer text="Kick"></button>
         }
