@@ -57,7 +57,7 @@ public partial class GameManager
             var chair = Entity.All.OfType<PlayerChair>().Where(c => !c.HasPlayer).FirstOrDefault();
             if(chair.IsValid())
             {
-                
+
                 var playerPawn = new Player(clientToSwap);
                 chair.SeatPlayer(playerPawn);
 
@@ -69,7 +69,7 @@ public partial class GameManager
             {
                 Current.SpectatorSwapQueue.Add(clientToSwap);
             }
-        } 
+        }
         else if(clientToSwap.Pawn is Player) // Player -> Spectator
         {
             Current.TransferOrCleanupPlayer(clientToSwap);

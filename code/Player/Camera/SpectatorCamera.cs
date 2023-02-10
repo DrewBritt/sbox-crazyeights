@@ -1,5 +1,4 @@
 ﻿using Sandbox;
-using Sandbox.Effects;
 
 namespace CrazyEights;
 

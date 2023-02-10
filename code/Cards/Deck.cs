@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sandbox;
 
 namespace CrazyEights;
 
@@ -19,7 +18,7 @@ public class Deck
     {
         Initialize();
     }
-    
+
     protected virtual void Initialize()
     {
         if(PlayingDeck == null)

@@ -1,7 +1,6 @@
-﻿using Sandbox;
+﻿using System.Collections.Generic;
+using Sandbox;
 using Sandbox.UI;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CrazyEights.UI;
 

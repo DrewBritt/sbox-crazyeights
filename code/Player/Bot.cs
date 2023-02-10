@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Sandbox;
-using static CrazyEights.GameManager;
 
 namespace CrazyEights;
 
@@ -52,7 +51,7 @@ public partial class Bot : Sandbox.Bot
             newTargetWait = Game.Random.Next(3, 10);
 
             // Determine what we want to look at.
-            LookAtAction lookAction = (LookAtAction) Game.Random.Next(5);
+            LookAtAction lookAction = (LookAtAction)Game.Random.Next(5);
             switch(lookAction)
             {
                 case LookAtAction.None: lookAtEntity = null; break;

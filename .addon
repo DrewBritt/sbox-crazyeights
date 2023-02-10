@@ -77,8 +77,8 @@
       "Gamepad": true
     },
     "Summary": "Race to zero cards!",
-    "Description": "Be the first player to shed all of your cards to win!",
+    "Description": "Be the first player to shed all of your cards to win!\n\nCheck out the Fill Bots game setting to fill your table with more players!",
     "Public": true,
-    "ReplaceTags": "crazyeights cards uno colors"
+    "ReplaceTags": "crazyeights cards uno colors social"
   }
 }

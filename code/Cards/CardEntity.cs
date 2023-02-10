@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Sandbox;
 
 namespace CrazyEights;
@@ -71,8 +69,8 @@ public partial class CardEntity : ModelEntity
         //bool success = CardMaterialCache.TryGetValue(new Tuple<CardSuit, CardRank>(suit, rank), out material);
         //if(!success)
         //{
-            
-            //CardMaterialCache.Add(new Tuple<CardSuit,CardRank>(suit, rank), material);
+
+        //CardMaterialCache.Add(new Tuple<CardSuit,CardRank>(suit, rank), material);
         //}
 
         material = Material.Load("materials/card/card_face.vmat").CreateCopy();

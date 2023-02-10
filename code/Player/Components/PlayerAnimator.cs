@@ -15,7 +15,7 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
     {
         voiceLevel = Voice.Level;
     }
-    
+
     TimeSince timeSinceGameAction;
     public virtual void Simulate(IClient cl)
     {
