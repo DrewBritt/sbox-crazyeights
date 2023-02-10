@@ -9,8 +9,6 @@
 
 <root class="radial-menu @GetRootClass()">
     <div class="center @(string.IsNullOrEmpty( Name ) ? "hidden" : string.Empty)">
-        <img @ref="Arrow" src="textures/ui/radial_arrow.png" class="arrow" />
-        
         <div class="info">
             <label class="name" text=@Name></label>
             <label class="description" text=@Description></label>
@@ -54,7 +52,6 @@
     public string Description => HoveredItem?.Description;
     public string Subtitle => HoveredItem?.Subtitle;
     public Panel Dot { get; set; }
-    public Image Arrow { get; set; }
     public bool IsOpen { get; private set; }
 
     private TimeSince TimeSinceButtonHeld { get; set; }
@@ -151,7 +148,6 @@
                 var tx = new PanelTransform();
                 tx.AddRotation( 0f, 0f, 180f - degrees );
                 tx.AddTranslateY( Length.Percent( -30f ) );
-                Arrow.Style.Transform = tx;
             }
 
             if ( HoveredItem != null && Input.Down( InputButton.PrimaryAttack ) )
