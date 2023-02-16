@@ -121,10 +121,10 @@ public class PlayingState : BaseState
 
         // Distribute cards to players (7 each by default)
         Hands = new List<Tuple<Player, Hand>>();
-        List<IClient> playerClients = Game.Clients.Where(p => p.Pawn is Player).ToList();
-        foreach(IClient playerClient in playerClients)
+        List<PlayerChair> occupiedChairs = Entity.All.OfType<PlayerChair>().Where(c => c.HasPlayer).ToList();
+        foreach(PlayerChair chair in occupiedChairs)
         {
-            var player = playerClient.Pawn as Player;
+            var player = chair.Player;
 
             // Populate hand with cards from deck.
             Hand hand = new Hand(player);
