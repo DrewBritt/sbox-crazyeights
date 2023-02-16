@@ -83,6 +83,9 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
     public virtual void FrameSimulate(IClient cl)
     {
+        if(GameManager.Current.CurrentPlayer == Entity)
+            GameManager.Current.Hud.ActivateCrosshair();
+
         CheckNameplates();
         CheckInteractables();
     }
@@ -175,7 +178,6 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
                 cardEnt.LocalPosition += Vector3.Up * 6f;
             }
 
-            GameManager.Current.Hud.ActivateCrosshair();
             if(ent != lastLookedAt) // Play sound once per unique lastLookedAt
                 Sound.FromScreen("click1");
 
