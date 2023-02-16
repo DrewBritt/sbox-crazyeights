@@ -69,7 +69,9 @@ public class PlayerAnimator : EntityComponent<Player>, ISingletonComponent
         timeSinceEmote = 0;
         this.emote = emote;
 
-        PlayFacialPose((PlayerFacialPose)emote);
+        // This is stupid, but I want a negative facial pose if the emote is a thumbsdown or "greater" (middle finger).
+        PlayerFacialPose pose = emote >= PlayerEmote.ThumbsDown ? PlayerFacialPose.Negative : PlayerFacialPose.Positive;
+        PlayFacialPose(pose);
     }
 
     private TimeSince timeSinceFacialPose;
@@ -92,6 +94,7 @@ public enum PlayerEmote
 {
     ThumbsUp = 1,
     ThumbsDown = 2,
+    MiddleFinger = 3
 }
 
 public enum PlayerFacialPose

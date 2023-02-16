@@ -382,7 +382,7 @@
 									m_networkMode = "ClientPredicted"
 									m_sNote = ""
 									m_tagSpans = [  ]
-									m_sequenceName = "@Throw"
+									m_sequenceName = "@MiddleFinger"
 									m_playbackSpeed = 1.0
 									m_bLoop = false
 								}
@@ -3106,7 +3106,7 @@
 					"game.idle",
 					"emote.thumbs_up",
 					"emote.thumbs_down",
-					"emote.throw",
+					"emote.middle_finger",
 					"game.playcard",
 				]
 			},

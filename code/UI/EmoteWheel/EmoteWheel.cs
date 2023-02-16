@@ -21,7 +21,8 @@ public partial class EmoteWheel : RadialMenu
         var emotes = new List<PlayerEmote>
         {
             PlayerEmote.ThumbsUp,
-            PlayerEmote.ThumbsDown
+            PlayerEmote.ThumbsDown,
+            PlayerEmote.MiddleFinger
         };
 
         var player = Game.LocalPawn as Player;
