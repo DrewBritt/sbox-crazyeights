@@ -152,6 +152,8 @@ public partial class GameManager
         // Hide clientside SuitSelectionEntity if it's visible
         player.HideSuitSelection(To.Single(player.Client));
 
+        Current.NotifyPlayerOfLastPlayed(To.Everyone, GameManager.Current.CurrentPlayer.Client);
+
         // Next player's turn.
         Current.AdvancePlayingState();
     }
@@ -196,6 +198,8 @@ public partial class GameManager
         // Hide clientside SuitSelectionEntity if it's visible
         player.HideSuitSelection(To.Single(player.Client));
 
+        Current.NotifyPlayerOfLastPlayed(To.Everyone, GameManager.Current.CurrentPlayer.Client, true);
+
         // Next player's turn.
         Current.AdvancePlayingState();
     }
@@ -234,14 +238,6 @@ public partial class GameManager
         // Turn timer tells player when their turn is nearly up
         Current.Hud.ActivateTurnTimer();
         Sound.FromScreen("playerturn");
-
-        // Green vignette sting
-        Player localPawn = Game.LocalPawn as Player;
-        if(localPawn.PlayerCamera is not null)
-        {
-            localPawn.PlayerCamera.SetVignetteColor(new Color(0f, 1f, 0f, 1f));
-            localPawn.PlayerCamera.SetVignetteIntensity(.25f);
-        }
     }
 
     /// <summary>
@@ -258,8 +254,14 @@ public partial class GameManager
         if(player.PlayerCamera is not null)
         {
             player.PlayerCamera.SetVignetteColor(new Color(1f, 0f, 0f, 1f));
-            player.PlayerCamera.SetVignetteIntensity(.25f);
+            player.PlayerCamera.SetVignetteIntensity(.2f);
         }
+    }
+
+    [ClientRpc]
+    public void NotifyPlayerOfLastPlayed(IClient player, bool drewCard = false)
+    {
+        Current.Hud.ActivateLastPlayed(player, drewCard);
     }
 
     /// <summary>

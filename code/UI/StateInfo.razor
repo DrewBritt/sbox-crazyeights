@@ -1,0 +1,83 @@
+﻿@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@using CrazyEights;
+@inherits Panel;
+@attribute [StyleSheet("/UI/StateInfo.scss")]
+@namespace CrazyEights.UI
+
+<root>
+    <label class="entry" @ref=lastPlayedLabel></label>
+    <label class="entry turntimer" @ref=timeLabel>@TimeString()</label>
+    <label class="entry yourturn" @ref=yourTurnLabel>Your Turn!</label>
+</root>
+
+@code
+{
+    private Label timeLabel { get; set; }
+    private Label yourTurnLabel { get; set; }
+    private Label lastPlayedLabel { get; set; }
+
+    private TimeUntil turnOver = -1;
+    private TimeUntil lastPlayedClose = -1;
+
+    /// <summary>
+    /// Formatted timer text.
+    /// </summary>
+    /// <returns></returns>
+    public string TimeString()
+    {
+        var span = TimeSpan.FromSeconds(turnOver);
+        return $"{span.Minutes:D1}:{span.Seconds:D2}";
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+
+        timeLabel.BindClass("active", () => CrazyEights.GameManager.Current.CurrentPlayer == Game.LocalPawn && turnOver > 0);
+        yourTurnLabel.BindClass("active", () => CrazyEights.GameManager.Current.CurrentPlayer == Game.LocalPawn && (CrazyEights.GameManager.MaxTurnTime - turnOver) < 5);
+        lastPlayedLabel.BindClass("active", () => lastPlayedClose > 0);
+    }
+
+    protected override int BuildHash() => HashCode.Combine(TimeString());
+
+    TimeSince soundPlayed;
+    public override void Tick()
+    {
+        // Not current player,
+        if(CrazyEights.GameManager.Current.CurrentPlayer != Game.LocalPawn) return;
+
+        // Play tick sound every second when panel is active,
+        if(turnOver < 10 && turnOver > 0 && soundPlayed > 1)
+        {
+            soundPlayed = 0;
+            Sound.FromScreen("countdowntick");
+        }
+    }
+
+    /// <summary>
+    /// Sets turnOver to Max Turn Time, priming "Your Turn" notification and timer to appear.
+    /// </summary>
+    public void ActivateTurnTimer()
+    {
+        turnOver = CrazyEights.GameManager.MaxTurnTime;
+    }
+
+    /// <summary>
+    /// Pop in LastPlayed text with player's name and the card they last played.
+    /// </summary>
+    /// <param name="player">Last turn's player.</param>
+    public void ActivateLastPlayed(IClient player, bool drewCard)
+    {
+        if (drewCard)
+            lastPlayedLabel.SetContent($"{player.Name.Truncate(12, "..")} drew a card.");
+        else
+        {
+            var lastCard = CrazyEights.GameManager.Current.DiscardPileEntity.TopCardEntity;
+            lastPlayedLabel.SetContent($"{player.Name.Truncate(12, "..")} played a {lastCard.Suit} {lastCard.Rank}.");
+        }
+
+        lastPlayedClose = 2;
+    }
+}

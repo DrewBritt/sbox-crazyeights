@@ -5,7 +5,7 @@
 @namespace CrazyEights.UI
 
 <root>
-    <turntimer @ref=TurnTimer></turntimer>
+    <stateinfo @ref=StateInfo></stateinfo>
     <crosshair @ref=Crosshair></crosshair>
     <div class="emotewheel">
         <emotewheel></emotewheel>
@@ -19,10 +19,11 @@
 
 @code
 {
-    private TurnTimer TurnTimer { get; set; }
+    private StateInfo StateInfo { get; set; }
     private Crosshair Crosshair { get; set; }
 
-    public void ActivateTurnTimer() => TurnTimer.Activate();
+    public void ActivateTurnTimer() => StateInfo.ActivateTurnTimer();
+    public void ActivateLastPlayed(IClient player, bool drewCard) => StateInfo.ActivateLastPlayed(player, drewCard);
     public void ActivateCrosshair() => Crosshair.Activate();
     public void ActivateGameOverOverlay(IClient winner)
     {
