@@ -149,14 +149,16 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
     {
         if(GameManager.Current.CurrentPlayer == null) return;
 
-        // Disable glow if it was enabled on a card the player didn't play, and they are no longer the player.
+        // Disable glow if it was enabled on the deck/a card the player didn't play, and they are no longer the player.
         // Then we return to avoid tracing every frame we don't need it.
         if(GameManager.Current.CurrentPlayer != Entity)
         {
-            if(lastLookedAt.IsValid() && lastLookedAt.Components.TryGet<Glow>(out var glow))
+            if(lastLookedAt.IsValid())
             {
-                glow.Enabled = false;
-                lastLookedAt = null;
+                if(lastLookedAt is CardEntity && lastLookedAt.Components.TryGet<Glow>(out var lastGlow))
+                    lastGlow.Enabled = false;
+                else if(lastLookedAt is DeckEntity deck)
+                    deck.CardStackParticles.SetPosition(2, Vector3.Zero);
             }
             return;
         }
