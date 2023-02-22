@@ -183,10 +183,19 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
             lastLookedAt = ent as ModelEntity;
 
-            // Apply glow if playable card
-            var glow = ent.Components.GetOrCreate<Glow>();
-            glow.Enabled = true;
-            glow.Color = new Color(1f, 1f, 1f, 1f);
+            // Apply glow for playable card or draw pile.
+            if(lastLookedAt is CardEntity)
+            {
+                var glow = ent.Components.GetOrCreate<Glow>();
+                glow.Enabled = true;
+                glow.Color = new Color(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                var particles = (ent as DeckEntity).CardStackParticles;
+                particles.SetPosition(2, Vector3.One);
+            }
+
 
             // Interaction
             if(Input.Pressed(InputButton.PrimaryAttack))
@@ -195,8 +204,14 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
         else
         {
             // Otherwise we're looking at nothing and want to disable lastLookedAt's glow.
-            if(lastLookedAt.IsValid() && lastLookedAt.Components.TryGet<Glow>(out var lastGlow))
-                lastGlow.Enabled = false;
+            if(lastLookedAt.IsValid())
+            {
+                if(lastLookedAt is CardEntity && lastLookedAt.Components.TryGet<Glow>(out var lastGlow))
+                    lastGlow.Enabled = false;
+                else if(lastLookedAt is DeckEntity deck)
+                    deck.CardStackParticles.SetPosition(2, Vector3.Zero);
+            }
+
             lastLookedAt = null;
         }
     }

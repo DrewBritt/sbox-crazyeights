@@ -9,7 +9,7 @@ namespace CrazyEights;
 public partial class DeckEntity : ModelEntity
 {
     [Net, Change] protected int Count { get; set; }
-    protected Particles CardStackParticles { get; set; }
+    public Particles CardStackParticles { get; protected set; }
 
     public DeckEntity()
     {
