@@ -101,6 +101,12 @@
 
         if ( Input.Released( Button ) || !shouldOpen )
         {
+            if (HoveredItem != null)
+            {
+                HoveredItem.OnSelected?.Invoke();
+                LastCloseTime = 0f;
+            }
+
             HasPressedButton = false;
             IsOpen = false;
         }
@@ -149,14 +155,6 @@
                 var tx = new PanelTransform();
                 tx.AddRotation( 0f, 0f, 180f - degrees );
                 tx.AddTranslateY( Length.Percent( -30f ) );
-            }
-
-            if ( HoveredItem != null && Input.Down( InputButton.PrimaryAttack ) )
-            {
-                HoveredItem.OnSelected?.Invoke();
-                HasPressedButton = false;
-                LastCloseTime = 0f;
-                IsOpen = false;
             }
 
             Input.AnalogLook = Angles.Zero;
