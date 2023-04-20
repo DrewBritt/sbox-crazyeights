@@ -15,7 +15,7 @@
     public string Text { get; set; }
 
     private Image Glyph { get; set; }
-    private InputButton Button { get; set; }
+    private string Action { get; set; }
 
     protected bool IsSet = false;
 
@@ -30,13 +30,13 @@
     {
         base.SetProperty(name, value);
 
-        if(name == "btn")
-            SetButton(Enum.Parse<InputButton>(value, true));
+        if(name == "action")
+            SetAction(value);
     }
 
-    public void SetButton(InputButton button)
+    public void SetAction(string action)
     {
-        Button = button;
+        Action = action;
         IsSet = true;
     }
 
@@ -46,7 +46,7 @@
 
         if(IsSet)
         {
-            Texture glyphTexture = Input.GetGlyph(Button, InputGlyphSize.Small, GlyphStyle.Knockout.WithNeutralColorABXY().WithSolidABXY());
+            Texture glyphTexture = Input.GetGlyph(Action, InputGlyphSize.Small, GlyphStyle.Knockout.WithNeutralColorABXY().WithSolidABXY());
             if(glyphTexture != null)
             {
                 Glyph.Texture = glyphTexture;

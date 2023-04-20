@@ -42,7 +42,6 @@
         public Action OnSelected { get; set; }
     }
 
-    public virtual InputButton Button => InputButton.Score;
     public virtual float OpenDelay => 0f;
 
     public List<Item> Items { get; private set; } = new();
@@ -82,14 +81,15 @@
         var shouldOpen = ShouldOpen();
         var player = Game.LocalPawn as CrazyEights.Player;
 
-        if ( Input.Pressed( Button ) && shouldOpen )
+        if ( Input.Pressed( "Emote" ) && shouldOpen )
         {
             TimeSinceButtonHeld = 0f;
             HasPressedButton = true;
             VirtualMouse = Screen.Size * 0.5f;
+            Log.Info("Pressed");
         }
 
-        if ( HasPressedButton && Input.Down( Button ) && shouldOpen )
+        if ( HasPressedButton && Input.Down( "Emote" ) && shouldOpen )
         {
             if ( !IsOpen && TimeSinceButtonHeld > OpenDelay )
             {
@@ -99,7 +99,7 @@
             }
         }
 
-        if ( Input.Released( Button ) || !shouldOpen )
+        if ( Input.Released( "Emote" ) || !shouldOpen )
         {
             if (HoveredItem != null)
             {
@@ -160,16 +160,9 @@
             Input.AnalogLook = Angles.Zero;
         }
 
-        if ( IsOpen || LastCloseTime < 0.1f )
-        {
-            Input.ClearButton( InputButton.PrimaryAttack );
-            Input.ClearButton( InputButton.SecondaryAttack );
-        }
-
         if ( IsOpen )
         {
             Input.StopProcessing = true;
-            Input.ClearButtons();
             Input.AnalogMove = Vector3.Zero;
         }
     }

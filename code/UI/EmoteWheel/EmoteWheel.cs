@@ -9,8 +9,6 @@ public partial class EmoteWheel : RadialMenu
 {
     public static EmoteWheel Current { get; private set; }
 
-    public override InputButton Button => InputButton.SecondaryAttack;
-
     public EmoteWheel()
     {
         Current = this;

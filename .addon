@@ -13,6 +13,8 @@
   ],
   "HasCode": true,
   "CodePath": "/code/",
+  "PackageReferences": [],
+  "EditorReferences": null,
   "Metadata": {
     "MaxPlayers": 12,
     "MinPlayers": 2,
@@ -79,6 +81,83 @@
     "Summary": "Race to zero cards!",
     "Description": "Be the first player to shed all of your cards to win!\n\nCheck out the Fill Bots game setting to fill your table with more players!",
     "Public": true,
-    "ReplaceTags": "crazyeights cards uno colors social"
+    "ReplaceTags": "crazyeights cards uno colors social",
+    "Compiler": {
+      "RootNamespace": "Sandbox",
+      "DefineConstants": "SANDBOX;ADDON;DEBUG",
+      "NoWarn": "1701;1702;1591;",
+      "References": []
+    },
+    "InputSettings": {
+      "Actions": [
+        {
+          "Name": "Interact",
+          "KeyboardCode": "mouse1",
+          "GamepadCode": "RightTrigger",
+          "GroupName": "Actions"
+        },
+        {
+          "Name": "Emote",
+          "KeyboardCode": "mouse2",
+          "GamepadCode": "LeftTrigger",
+          "GroupName": "Actions"
+        },
+        {
+          "Name": "View",
+          "KeyboardCode": "C",
+          "GamepadCode": "RightJoystickButton",
+          "GroupName": "Other"
+        },
+        {
+          "Name": "Voice",
+          "KeyboardCode": "v",
+          "GamepadCode": "RightJoystickButton",
+          "GroupName": "Other"
+        },
+        {
+          "Name": "Score",
+          "KeyboardCode": "tab",
+          "GamepadCode": "SwitchLeftMenu",
+          "GroupName": "Other"
+        },
+        {
+          "Name": "Menu",
+          "KeyboardCode": "Q",
+          "GamepadCode": "SwitchRightMenu",
+          "GroupName": "Other"
+        },
+        {
+          "Name": "Chat",
+          "KeyboardCode": "enter",
+          "GroupName": "Other"
+        },
+        {
+          "Name": "Forward",
+          "KeyboardCode": "W",
+          "GroupName": "Spectator"
+        },
+        {
+          "Name": "Back",
+          "KeyboardCode": "S",
+          "GroupName": "Spectator"
+        },
+        {
+          "Name": "Left",
+          "KeyboardCode": "A",
+          "GroupName": "Spectator"
+        },
+        {
+          "Name": "Right",
+          "KeyboardCode": "D",
+          "GroupName": "Spectator"
+        },
+        {
+          "Name": "Run",
+          "KeyboardCode": "SHIFT",
+          "GamepadCode": "LeftJoystickButton",
+          "GroupName": "Spectator"
+        }
+      ]
+    }
   }
 }

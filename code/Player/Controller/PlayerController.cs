@@ -200,7 +200,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
 
 
             // Interaction
-            if(Input.Pressed(InputButton.PrimaryAttack))
+            if(Input.Pressed("Interact"))
                 CardInteract(ent);
         }
         else
