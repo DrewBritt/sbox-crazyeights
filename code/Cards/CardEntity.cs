@@ -37,7 +37,7 @@ public partial class CardEntity : ModelEntity
     {
         base.Spawn();
 
-        SetModel("models/card/card.vmdl");
+        SetModel("models/card/cecard.vmdl");
         Transmit = TransmitType.Always;
         EnableTraceAndQueries = true;
         SetupPhysicsFromModel(PhysicsMotionType.Keyframed);
@@ -73,7 +73,7 @@ public partial class CardEntity : ModelEntity
         //CardMaterialCache.Add(new Tuple<CardSuit,CardRank>(suit, rank), material);
         //}
 
-        material = Material.Load("materials/card/card_face.vmat").CreateCopy();
+        material = Material.Load("materials/card/cecard_face.vmat").CreateCopy();
         IsMaterialSet = false;
         SetMaterialOverride(material, "isTarget");
     }

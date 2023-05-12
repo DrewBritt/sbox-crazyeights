@@ -334,7 +334,7 @@
 			m_ModelList = 
 			[
 				{
-					m_model = resource:"models/card/card.vmdl"
+					m_model = resource:"models/card/cecard.vmdl"
 				},
 			]
 			m_bOrientZ = true
@@ -849,7 +849,7 @@
 			m_ModelList = 
 			[
 				{
-					m_model = resource:"models/card/card.vmdl"
+					m_model = resource:"models/card/cecard.vmdl"
 				},
 			]
 			m_bOrientZ = true
