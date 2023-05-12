@@ -39,7 +39,7 @@
     TimeSince Appeared = 0;
     public void Activate() => Appeared = 0;
 
-    [Event.Client.Frame]
+    [GameEvent.Client.Frame]
     private void OnFrame()
     {
         if(!Player.IsValid()) return;

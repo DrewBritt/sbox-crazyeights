@@ -35,7 +35,7 @@ public partial class DeckEntity : ModelEntity
         CardStackParticles = Particles.Create("particles/cards/card_stack.vpcf");
     }
 
-    [Event.Tick.Client]
+    [GameEvent.Tick.Client]
     public void OnTickClient()
     {
         // Update particle system every tick.
@@ -51,7 +51,7 @@ public partial class DeckEntity : ModelEntity
         CardStackParticles.SetPositionComponent(1, 0, Count);
     }
 
-    [Event.Tick.Server]
+    [GameEvent.Tick.Server]
     public virtual void OnTickServer()
     {
         var deck = GameManager.Current.PlayingDeck;

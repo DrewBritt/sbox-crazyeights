@@ -25,10 +25,10 @@
         Navigate("Settings/GameSettings");
     }
 
-    [Event.Client.BuildInput]
+    [GameEvent.Client.BuildInput]
     public void BuildInput()
     {
-        if(Input.Pressed(InputButton.Menu) && Game.LocalClient.IsListenServerHost)
+        if(Input.Pressed("Menu") && Game.LocalClient.IsListenServerHost)
             SetClass("open", !HasClass("open"));
     }
 }

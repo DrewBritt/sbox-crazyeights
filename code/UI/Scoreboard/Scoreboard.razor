@@ -39,10 +39,10 @@
         BindClass("active", () => shouldActivate);
     }
 
-    [Event.Client.BuildInput]
+    [GameEvent.Client.BuildInput]
     private void BuildInput()
     {
-        shouldActivate = Input.Down(InputButton.Score);
+        shouldActivate = Input.Down("Score");
     }
 
     protected override int BuildHash()

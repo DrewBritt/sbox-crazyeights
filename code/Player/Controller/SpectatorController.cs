@@ -41,6 +41,7 @@ public partial class SpectatorController : EntityComponent<Spectator>, ISingleto
         LookInput += Input.AnalogLook;
         MoveInput = Input.AnalogMove;
         RunButton = Input.Down("Run");
+        DuckButton = Input.Down("Duck");
 
         Input.ClearActions();
         Input.AnalogMove = default;

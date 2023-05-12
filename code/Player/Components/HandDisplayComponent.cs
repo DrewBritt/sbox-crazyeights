@@ -67,7 +67,7 @@ public partial class HandDisplayComponent : EntityComponent<Player>, ISingletonC
     /// Called every tick to check if any cards must be spawned as CardEntities.
     /// Waits cardSpawned seconds before spawning a CardEntity.
     /// </summary>
-    [Event.Tick.Server]
+    [GameEvent.Tick.Server]
     public void OnTickServer()
     {
         if(!cardsToAdd.Any()) return;
@@ -125,7 +125,7 @@ public partial class HandDisplayComponent : EntityComponent<Player>, ISingletonC
         }
     }
 
-    [Event.Tick.Server]
+    [GameEvent.Tick.Server]
     public void poo()
     {
         UpdateCardPositions();

@@ -103,12 +103,6 @@
           "GroupName": "Actions"
         },
         {
-          "Name": "View",
-          "KeyboardCode": "C",
-          "GamepadCode": "RightJoystickButton",
-          "GroupName": "Other"
-        },
-        {
           "Name": "Voice",
           "KeyboardCode": "v",
           "GamepadCode": "RightJoystickButton",
@@ -137,7 +131,7 @@
           "GroupName": "Spectator"
         },
         {
-          "Name": "Back",
+          "Name": "Backward",
           "KeyboardCode": "S",
           "GroupName": "Spectator"
         },
@@ -154,10 +148,17 @@
         {
           "Name": "Run",
           "KeyboardCode": "SHIFT",
-          "GamepadCode": "LeftJoystickButton",
+          "GamepadCode": "RightTrigger",
+          "GroupName": "Spectator"
+        },
+        {
+          "Name": "Duck",
+          "KeyboardCode": "CTRL",
+          "GamepadCode": "LeftTrigger",
           "GroupName": "Spectator"
         }
       ]
-    }
+    },
+    "HttpAllowList": null
   }
 }

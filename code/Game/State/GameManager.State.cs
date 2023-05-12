@@ -15,7 +15,7 @@ public partial class GameManager
     #region State Management
     public BaseState CurrentState { get; set; } = new WaitingForPlayersState();
 
-    [Event.Tick.Server]
+    [GameEvent.Tick.Server]
     public void OnTick()
     {
         if(Game.IsClient) return;

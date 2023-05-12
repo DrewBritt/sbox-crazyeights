@@ -85,7 +85,7 @@ public partial class CardEntity : ModelEntity
     // so instead, we wait 1/20 of a second before asking the server
     // to send us the card.
     bool IsCardNetworked = false;
-    [Event.Tick.Client]
+    [GameEvent.Tick.Client]
     public void OnTickClient()
     {
         if(IsCardNetworked) return;
@@ -104,7 +104,7 @@ public partial class CardEntity : ModelEntity
     }
 
     public bool IsMaterialSet = false;
-    [Event.Client.Frame]
+    [GameEvent.Client.Frame]
     public void OnFrame()
     {
         // Lerp alpha to 1
