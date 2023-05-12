@@ -28,11 +28,6 @@ public partial class CardEntity : ModelEntity
         return false;
     }
 
-    /// <summary>
-    /// Material cache so we're not creating 80 unique materials when we have a finite number of textures.
-    /// </summary>
-    //private static Dictionary<Tuple<CardSuit, CardRank>, Material> CardMaterialCache = new();
-
     public override void Spawn()
     {
         base.Spawn();
@@ -48,9 +43,7 @@ public partial class CardEntity : ModelEntity
     }
 
     /// <summary>
-    /// Set Card value on the Client.
-    /// TODO: Look at passing Card, error was throwing earlier regarding not being able to pass Card as a type.
-    /// I call bullshit?
+    /// Set Card value on a client and display correct texture.
     /// </summary>
     /// <param name="suit"></param>
     /// <param name="rank"></param>
@@ -64,43 +57,9 @@ public partial class CardEntity : ModelEntity
         };
 
         texture = Texture.Load(FileSystem.Mounted, Card.FileName);
-
-        // Try to pull from cache, otherwise create a new copy and add it.
-        //bool success = CardMaterialCache.TryGetValue(new Tuple<CardSuit, CardRank>(suit, rank), out material);
-        //if(!success)
-        //{
-
-        //CardMaterialCache.Add(new Tuple<CardSuit,CardRank>(suit, rank), material);
-        //}
-
         material = Material.Load("materials/card/cecard_face.vmat").CreateCopy();
         IsMaterialSet = false;
         SetMaterialOverride(material, "isTarget");
-    }
-
-    // WHAT THE FUCK
-    // Networking the card texture immediately on spawn
-    // SOMETIMES will cause remote clients to not load the texture
-    // (even though the values are successfully networked?)
-    // so instead, we wait 1/20 of a second before asking the server
-    // to send us the card.
-    bool IsCardNetworked = false;
-    [GameEvent.Tick.Client]
-    public void OnTickClient()
-    {
-        if(IsCardNetworked) return;
-
-        SendCard(this.NetworkIdent);
-        IsCardNetworked = true;
-    }
-
-    [ConCmd.Server]
-    private static void SendCard(int networkIdent)
-    {
-        CardEntity card = Entity.All.OfType<CardEntity>().Where(c => c.NetworkIdent == networkIdent).FirstOrDefault();
-        if(card == null || card.Owner != ConsoleSystem.Caller.Pawn) return;
-
-        card.SetCard(To.Single(card.Owner.Client), card.Suit, card.Rank);
     }
 
     public bool IsMaterialSet = false;
