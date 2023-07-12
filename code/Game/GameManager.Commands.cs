@@ -187,6 +187,12 @@ public partial class GameManager
             return;
         }
 
+        if(Current.PlayingDeck.Count == 1)
+        {
+            Current.CommandError(To.Single(ConsoleSystem.Caller), "Crazy Eights: Stop trying to drain the damn draw pile!");
+            return;
+        }
+
         // Add 1 card from top of pile to player hand.
         Card card = Current.PlayingDeck.GrabTopCard();
         player.Hand().AddCard(card);

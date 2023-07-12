@@ -192,7 +192,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
                 glow.Enabled = true;
                 glow.Color = new Color(1f, 1f, 1f, 1f);
             }
-            else
+            else if(lastLookedAt is DeckEntity deck && deck.Count > 1)
             {
                 var particles = (ent as DeckEntity).CardStackParticles;
                 particles.SetPosition(2, Vector3.One);
@@ -229,7 +229,7 @@ public partial class PlayerController : EntityComponent<Player>, ISingletonCompo
         if(card is not DeckEntity && card is not CardEntity) return;
 
         // Player wishes to draw a card
-        if(card is DeckEntity)
+        if(card is DeckEntity deck && deck.Count > 1)
         {
             ConsoleSystem.Run($"ce_drawcard {Entity.Client.IsBot}");
             Entity.Animator.PlayFacialPose(PlayerFacialPose.Negative);
