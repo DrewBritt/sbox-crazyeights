@@ -1,0 +1,18 @@
+@using System;
+@using Sandbox;
+@using Sandbox.MenuSystem;
+@using Sandbox.UI;
+@namespace CrazyEights.UI
+@inherits Panel;
+
+<root style="flex-direction: column; flex-shrink: 1; flex-grow: 1;">
+
+    <PackageList ShowFilters="@true" style="padding-bottom: 50px;" Query="type:map sort:trending" OnSelected="@OnPackageSelected" Take=@(100)></PackageList>
+
+</root>
+
+@code
+{
+    public string Value{ get; set; }
+    public Action<Package> OnPackageSelected;
+}
