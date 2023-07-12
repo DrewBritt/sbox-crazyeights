@@ -79,4 +79,29 @@ public partial class CardEntity : ModelEntity
             material.Set("Color", texture);
         }
     }
+
+    // WHAT THE FUCK
+    // Networking the card texture immediately on spawn
+    // SOMETIMES will cause remote clients to not load the texture
+    // (even though the values are successfully networked?)
+    // so instead, we wait 1/20 of a second before asking the server
+    // to send us the card.
+    bool IsCardNetworked = false;
+    [GameEvent.Tick.Client]
+    public void OnTickClient()
+    {
+        if(IsCardNetworked) return;
+
+        SendCard(this.NetworkIdent);
+        IsCardNetworked = true;
+    }
+
+    [ConCmd.Server]
+    private static void SendCard(int networkIdent)
+    {
+        CardEntity card = Entity.All.OfType<CardEntity>().Where(c => c.NetworkIdent == networkIdent).FirstOrDefault();
+        if(card == null || card.Owner != ConsoleSystem.Caller.Pawn) return;
+
+        card.SetCard(To.Single(card.Owner.Client), card.Suit, card.Rank);
+    }
 }

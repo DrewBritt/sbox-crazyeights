@@ -44,7 +44,7 @@ public partial class HandDisplayComponent : EntityComponent<Player>, ISingletonC
 
         cardEnt.Card = card;
         cardEnt.Owner = Entity;
-        cardEnt.SetCard(To.Single(Entity.Client), card.Suit, card.Rank);
+        //cardEnt.SetCard(To.Single(Entity.Client), card.Suit, card.Rank);
 
         // Position card ent in hand
         cardEnt.SetParent(Entity, "handStartPos");
