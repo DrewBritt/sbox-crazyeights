@@ -1,5 +1,6 @@
 ﻿namespace CrazyEights.Common;
 
+[Title( "Crazy Eights - Network Manager" ), Category( "Crazy Eights - Common" )]
 public sealed class NetworkManager : Component, Component.INetworkListener
 {
 	[Property] public GameObject PlayerPrefab { get; set; }
