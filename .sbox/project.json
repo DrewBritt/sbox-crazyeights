@@ -1,12 +1,12 @@
 {
   "AssetBrowser.History": {
-    "Value": "[\u0022E:\\\\s\\u0026box\\\\games\\\\crazy_eights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\crazy_eights\\\\Assets\\\\scenes\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\crazy_eights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\crazy_eights\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Code\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\\\\scenes\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Code\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Code\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Editor\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\\\\scenes\u0022]",
-    "Timeout": 1742189016,
+    "Value": "[\u0022E:\\\\s\\u0026box\\\\games\\\\crazy_eights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\crazy_eights\\\\Assets\\\\scenes\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\crazy_eights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\crazy_eights\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Code\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\\\\scenes\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Code\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Code\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Editor\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\\\\scenes\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Assets\\\\scenes\u0022,\u0022E:\\\\s\\u0026box\\\\games\\\\sbox-crazyeights\\\\Code\u0022]",
+    "Timeout": 1742189058,
     "DeleteAt": 0
   },
   "AssetBrowser.HistoryIdx": {
-    "Value": "14",
-    "Timeout": 1742189016,
+    "Value": "16",
+    "Timeout": 1742189058,
     "DeleteAt": 0
   },
   "scene.lastopened": {
@@ -20,13 +20,13 @@
     "DeleteAt": 0
   },
   "scenes/minimal.scene.Viewport0": {
-    "Value": "{\u0022CameraPosition\u0022:\u0022-267.452,-379.653,297.7903\u0022,\u0022CameraRotation\u0022:\u0022-0.1150573,0.2337218,0.4264162,0.8662015\u0022,\u0022CameraOrthoHeight\u0022:1000}",
-    "Timeout": 1742189040,
+    "Value": "{\u0022CameraPosition\u0022:\u0022-267.452,-379.653,297.7903\u0022,\u0022CameraRotation\u0022:\u0022-0.1250603,0.256865,0.4195012,0.8616259\u0022,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1742190060,
     "DeleteAt": 0
   },
   "SceneView.Viewport0.Settings": {
-    "Value": "{\u0022CameraPosition\u0022:\u0022-267.452,-379.653,297.7903\u0022,\u0022CameraRotation\u0022:\u0022-0.1150573,0.2337218,0.4264162,0.8662015\u0022,\u0022View\u0022:0,\u0022RenderMode\u0022:0,\u0022WireframeMode\u0022:false,\u0022EnablePostProcessing\u0022:true,\u0022EnablePrefabLighting\u0022:true,\u0022ShowGrid\u0022:true,\u0022GridOpacity\u0022:0.2,\u0022GridAxis\u0022:0,\u0022CameraOrthoHeight\u0022:1000}",
-    "Timeout": 1742189040,
+    "Value": "{\u0022CameraPosition\u0022:\u0022-267.452,-379.653,297.7903\u0022,\u0022CameraRotation\u0022:\u0022-0.1250603,0.256865,0.4195012,0.8616259\u0022,\u0022View\u0022:0,\u0022RenderMode\u0022:0,\u0022WireframeMode\u0022:false,\u0022EnablePostProcessing\u0022:true,\u0022EnablePrefabLighting\u0022:true,\u0022ShowGrid\u0022:true,\u0022GridOpacity\u0022:0.2,\u0022GridAxis\u0022:0,\u0022CameraOrthoHeight\u0022:1000}",
+    "Timeout": 1742190060,
     "DeleteAt": 0
   },
   "gizmo.settings": {

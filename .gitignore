@@ -1,11 +1,51 @@
-# Sandbox
-code/*.csproj
-code/obj
-code/Properties
+﻿# Sandbox
+code/accesslist.txt
+code/code.sln
+Properties
 .intermediate
-.vs
-_bakeresourcecache
-tools_asset_info.bin
-tools_thumbnail_cache.bin
-code/Properties/launchSettings.json
-models/citizen/crazyeights_citizen/
+*.csproj
+*.bat
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Oo]bj/
+.vs/
+.vscode/
+
+# VRAD artifacts
+_bakeresourcecache/
+*_bakeresourcecache.vpk
+
+# Compiled files
+*.scene_c
+*.geq_c
+*.vanmgrph_c
+*.vmat_c
+*.vmdl_c
+*.vsnd_c
+*.vtex_c
+*.zip
+*.vpcf_c
+*.vpost_c
+*.sound_c
+*.csg_c
+*.csgmat_c
+*.prefab_c
+*.tsta_c
+*.tlvl_c
+
+# Allowlist
+!*_dev.vpk
+!models/citizen_clothes/*/*
+.idea
+grubs.sln
+Libraries/facepunch.libsdf/.bin
+Libraries/trndlr.quickswitcher/.bin
+.sbox/project.json
+.sbox
